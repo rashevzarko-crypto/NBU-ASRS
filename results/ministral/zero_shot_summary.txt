@@ -1,0 +1,23 @@
+Zero-Shot LLM: Ministral 3 8B-Instruct (FP8, vLLM)
+=======================================================
+Test set: 8044 reports | Model: mistralai/Ministral-3-8B-Instruct-2512
+vLLM: dtype=auto (FP8), max_model_len=4096, temperature=0.0, max_tokens=256
+
+Category                             Precision     Recall         F1    ROC-AUC
+---------------------------------------------------------------------------
+Aircraft Equipment Problem              0.7868     0.7601     0.7733     0.8389
+Airspace Violation                      0.5691     0.2201     0.3175     0.6066
+ATC Issue                               0.3325     0.8942     0.4848     0.7627
+Conflict                                0.7681     0.7375     0.7525     0.8280
+Deviation - Altitude                    0.5312     0.8623     0.6574     0.8563
+Deviation - Procedural                  0.7517     0.5084     0.6065     0.5968
+Deviation - Speed                       0.4417     0.6824     0.5363     0.8283
+Deviation - Track/Heading               0.5654     0.5127     0.5378     0.7302
+Flight Deck/Cabin Event                 0.1357     0.9058     0.2360     0.7316
+Ground Event/Encounter                  0.2763     0.6968     0.3957     0.7664
+Ground Excursion                        0.2209     0.8439     0.3501     0.8893
+Ground Incursion                        0.4809     0.2572     0.3352     0.6177
+Inflight Event/Encounter                0.5572     0.3054     0.3945     0.6177
+---------------------------------------------------------------------------
+MACRO                                   0.4937     0.6298     0.4906     0.7439
+MICRO                                   0.4856     0.6169     0.5434     0.7420

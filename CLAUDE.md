@@ -10,9 +10,9 @@ Master's thesis at New Bulgarian University: "Multimodal Deep Learning for Runwa
 
 ## Core Experiment: Four-Way Model Comparison
 Classify ASRS reports across 13 anomaly categories (multi-label), comparing:
-1. Zero-shot LLM (Llama 3.1 8B-Instruct, prompt-based)
-2. Few-shot LLM (same model, 3-5 examples in prompt)
-3. Fine-tuned LLM (Llama 3.1 8B + QLoRA)
+1. Zero-shot LLM (prompt-based, no examples)
+2. Few-shot LLM (examples in prompt)
+3. Fine-tuned LLM (QLoRA on base model)
 4. Classic ML (TF-IDF + XGBoost on text)
 
 All four models evaluated on the **same frozen test set**.
@@ -38,6 +38,14 @@ All four models evaluated on the **same frozen test set**.
 - All experiments use the same frozen test set
 - Never hardcode category names — read from CSV headers
 - GPU budget: L4 only, ~$50 total for Modal
+
+## Output Format Contract
+All experiment metrics CSVs must follow this exact structure:
+- **Columns:** Category, Precision, Recall, F1, ROC-AUC
+- **Rows:** 13 category rows (alphabetical) + MACRO + MICRO (15 rows total)
+- **File naming:** `results/{experiment}_metrics.csv` (e.g., `zero_shot_metrics.csv`, `few_shot_metrics.csv`, `finetune_metrics.csv`)
+- **Companion files:** `results/{experiment}_raw_outputs.csv` (per-report predictions), `results/{experiment}_summary.txt` (human-readable table matching `classic_ml_summary.txt` format)
+- **Reference file:** `results/classic_ml_text_metrics.csv` is the canonical format — match it exactly
 
 ## What NOT to Do
 - Don't modify train/test CSVs once created — they are frozen
