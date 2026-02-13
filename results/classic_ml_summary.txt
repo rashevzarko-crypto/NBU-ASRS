@@ -1,0 +1,24 @@
+Classic ML Baseline: TF-IDF + XGBoost (Text Only)
+=======================================================
+Train set: 31,850 reports | Test set: 8,044 reports
+TF-IDF: max_features=50000, ngram_range=(1,2), sublinear_tf=True
+XGBoost: n_estimators=300, max_depth=6, lr=0.1, scale_pos_weight=auto
+
+Category                        Precision     Recall         F1    ROC-AUC
+------------------------------------------------------------------------
+Aircraft Equipment Problem         0.8134     0.8180     0.8157     0.9438
+Airspace Violation                 0.4804     0.6950     0.5681     0.9377
+ATC Issue                          0.6053     0.7549     0.6719     0.9156
+Conflict                           0.7691     0.8358     0.8011     0.9433
+Deviation - Altitude               0.6636     0.8086     0.7289     0.9494
+Deviation - Procedural             0.8117     0.7791     0.7951     0.7940
+Deviation - Speed                  0.5508     0.6052     0.5767     0.9490
+Deviation - Track/Heading          0.5920     0.7331     0.6550     0.9275
+Flight Deck/Cabin Event            0.7013     0.7784     0.7378     0.9633
+Ground Event/Encounter             0.5032     0.7195     0.5922     0.9232
+Ground Excursion                   0.5723     0.5723     0.5723     0.9734
+Ground Incursion                   0.6457     0.8382     0.7294     0.9758
+Inflight Event/Encounter           0.7045     0.7651     0.7336     0.9202
+------------------------------------------------------------------------
+MACRO                              0.6472     0.7464     0.6906     0.9320
+MICRO                              0.7134     0.7814     0.7459     0.9500

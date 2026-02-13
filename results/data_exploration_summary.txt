@@ -1,0 +1,42 @@
+ASRS Data Exploration Summary
+========================================
+Raw CSV files: 61
+Total rows (before dedup): 282,371
+Unique reports (after dedup by ACN): 172,183
+Reports with second narrative: 15,720 (9.1%)
+
+Unique raw anomaly strings: 8,272
+Mapped to categories: 64 unique strings
+Unmapped: 8,208 unique strings
+
+Reports with >= 1 mapped category: 172,183 (100.0%)
+Reports with 0 mapped categories: 0 (0.0%)
+
+Per-category counts (sorted):
+  112,606  Deviation - Procedural
+   49,305  Aircraft Equipment Problem
+   46,285  Conflict
+   38,658  Inflight Event/Encounter
+   29,422  ATC Issue
+   28,369  Deviation - Altitude
+   20,268  Deviation - Track/Heading
+   14,234  Ground Event/Encounter
+   12,601  Ground Incursion
+   12,291  Flight Deck/Cabin Event
+    6,834  Airspace Violation
+    5,000  Deviation - Speed
+    3,718  Ground Excursion
+
+Label count distribution:
+  1 labels: 38,403
+  2 labels: 77,602
+  3 labels: 41,494
+  4 labels: 12,224
+  5 labels: 2,178
+  6 labels: 260
+  7 labels: 21
+  9 labels: 1
+
+Imbalance ratio (max/min): 30.3x
+  Most common:  Deviation - Procedural (112,606)
+  Least common: Ground Excursion (3,718)
