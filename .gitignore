@@ -1,6 +1,17 @@
 # Raw data files (too large for Git)
 raw data/
 
+# Large processed data (>10MB)
+data/asrs_multilabel.csv
+data/train_set.csv
+data/test_set.csv
+
+# Large result files
+results/classic_ml_text_predictions.csv
+
+# Windows artifacts
+nul
+
 # Python
 __pycache__/
 *.py[cod]
