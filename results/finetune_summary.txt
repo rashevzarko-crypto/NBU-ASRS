@@ -1,0 +1,25 @@
+Fine-Tuned LLM (QLoRA): Qwen3-8B
+=======================================================
+Test set: 8044 reports | Model: Qwen/Qwen3-8B
+QLoRA: 4-bit NF4, r=16, alpha=16, target=[q_proj, v_proj], dropout=0.05
+Training: 2 epochs, batch=4, grad_accum=4, lr=2e-5, cosine, bf16, paged_adamw_8bit
+Inference: vLLM, dtype=auto, max_model_len=4096, temperature=0.0
+
+Category                             Precision     Recall         F1    ROC-AUC
+---------------------------------------------------------------------------
+Aircraft Equipment Problem              0.7990     0.7667     0.7825     0.8448
+Airspace Violation                      0.1879     0.0881     0.1199     0.5362
+ATC Issue                               0.5000     0.3115     0.3838     0.6237
+Conflict                                0.8390     0.6359     0.7235     0.7956
+Deviation - Altitude                    0.6077     0.7958     0.6892     0.8474
+Deviation - Procedural                  0.6908     0.8170     0.7486     0.5658
+Deviation - Speed                       0.4610     0.5322     0.4940     0.7568
+Deviation - Track/Heading               0.4017     0.6186     0.4871     0.7481
+Flight Deck/Cabin Event                 0.3946     0.3298     0.3593     0.6455
+Ground Event/Encounter                  0.5420     0.4962     0.5181     0.7293
+Ground Excursion                        0.5361     0.3006     0.3852     0.6474
+Ground Incursion                        0.5201     0.4634     0.4901     0.7149
+Inflight Event/Encounter                0.4397     0.4531     0.4463     0.6432
+---------------------------------------------------------------------------
+MACRO                                   0.5323     0.5084     0.5098     0.6999
+MICRO                                   0.6252     0.6385     0.6318     0.7803

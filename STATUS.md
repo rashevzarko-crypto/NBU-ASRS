@@ -1,6 +1,6 @@
 # NBU-ASRS Project Status
 
-Last updated: 2026-02-13 (Qwen3-8B zero-shot & few-shot complete, QLoRA training ~95%)
+Last updated: 2026-02-14 (all four Qwen3-8B experiments complete)
 
 > **Model switch #1:** Changed from meta-llama/Llama-3.1-8B-Instruct to mistralai/Ministral-3-8B-Instruct-2512 on 2026-02-13 (Llama gate approval delay).
 >
@@ -20,8 +20,8 @@ Last updated: 2026-02-13 (Qwen3-8B zero-shot & few-shot complete, QLoRA training
 | Fine-tuned LLM (Ministral) | ✅ Complete (archived) | `results/ministral/finetune_*.csv/.txt` |
 | Zero-shot LLM (Qwen3) | ✅ Complete | `results/zero_shot_metrics.csv`, `results/zero_shot_raw_outputs.csv`, `results/zero_shot_summary.txt` |
 | Few-shot LLM (Qwen3) | ✅ Complete | `results/few_shot_metrics.csv`, `results/few_shot_raw_outputs.csv`, `results/few_shot_summary.txt` |
-| QLoRA fine-tuning (Qwen3) | 🔄 In progress (~95%) | Adapter on Modal volume |
-| Fine-tuned LLM inference (Qwen3) | ❌ Pending | `results/finetune_metrics.csv` |
+| QLoRA fine-tuning (Qwen3) | ✅ Complete | Adapter on Modal volume `asrs-finetune-vol` |
+| Fine-tuned LLM inference (Qwen3) | ✅ Complete | `results/finetune_metrics.csv`, `results/finetune_raw_outputs.csv`, `results/finetune_summary.txt` |
 | Final comparison & visualization | ❌ Not started | |
 | Thesis writing | ❌ Not started | |
 
@@ -110,14 +110,32 @@ Last updated: 2026-02-13 (Qwen3-8B zero-shot & few-shot complete, QLoRA training
 | Few-shot LLM (Ministral) | 0.540 | 0.536 | 0.746 | FP8, 3 examples/cat, 0% parse failures |
 | Fine-tuned LLM (Ministral) | 0.489 | 0.542 | 0.744 | LoRA on FP8 (not true QLoRA), 0% parse failures |
 
-### Qwen3-8B (pending)
+### Qwen3-8B (complete)
 
 | Model | Macro-F1 | Micro-F1 | Macro-AUC | Notes |
 |-------|----------|----------|-----------|-------|
 | Classic ML (TF-IDF + XGBoost) | 0.691 | 0.746 | 0.932 | Same baseline |
 | Zero-shot LLM (Qwen3) | 0.459 | 0.473 | 0.727 | 26.4 min on L4, ~$0.35, 0% parse failures |
 | Few-shot LLM (Qwen3) | 0.453 | 0.468 | 0.704 | 34.2 min on L4, ~$0.46, 0% parse failures |
-| Fine-tuned LLM (Qwen3) | — | — | — | Pending (proper QLoRA 4-bit NF4) |
+| Fine-tuned LLM (Qwen3) | 0.510 | 0.632 | 0.700 | QLoRA 4-bit NF4, 3h47m train A100 + ~20min inference L4 |
+
+### Per-Category Results (Fine-tuned Qwen3-8B)
+
+| Category | Precision | Recall | F1 | ROC-AUC |
+|----------|-----------|--------|-----|---------|
+| Aircraft Equipment Problem | 0.799 | 0.767 | 0.783 | 0.845 |
+| Airspace Violation | 0.188 | 0.088 | 0.120 | 0.536 |
+| ATC Issue | 0.500 | 0.312 | 0.384 | 0.624 |
+| Conflict | 0.839 | 0.636 | 0.724 | 0.796 |
+| Deviation - Altitude | 0.608 | 0.796 | 0.689 | 0.847 |
+| Deviation - Procedural | 0.691 | 0.817 | 0.749 | 0.566 |
+| Deviation - Speed | 0.461 | 0.532 | 0.494 | 0.757 |
+| Deviation - Track/Heading | 0.402 | 0.619 | 0.487 | 0.748 |
+| Flight Deck/Cabin Event | 0.395 | 0.330 | 0.359 | 0.646 |
+| Ground Event/Encounter | 0.542 | 0.496 | 0.518 | 0.729 |
+| Ground Excursion | 0.536 | 0.301 | 0.385 | 0.647 |
+| Ground Incursion | 0.520 | 0.463 | 0.490 | 0.715 |
+| Inflight Event/Encounter | 0.440 | 0.453 | 0.446 | 0.643 |
 
 ## Per-Category Results (Classic ML)
 
@@ -148,6 +166,7 @@ Last updated: 2026-02-13 (Qwen3-8B zero-shot & few-shot complete, QLoRA training
 | Few-shot LLM (Qwen3) | L4 (Modal) | ~34.2 min | ~$0.46 | 2026-02-13 |
 | Fine-tuned LLM training (Ministral) | A100 (Modal) | ~3h48min (228 min) | ~$10.66 | 2026-02-13 |
 | Fine-tuned LLM inference (Ministral) | L4 (Modal) | ~21.7 min | ~$0.29 | 2026-02-13 |
-| QLoRA fine-tuning (Qwen3) | A100 (Modal) | ~3h50min (est.) | ~$10.70 (est.) | 2026-02-13 |
+| QLoRA training (Qwen3) | A100 (Modal) | ~3h47min (227.9 min) | ~$10.56 | 2026-02-13 |
+| Fine-tuned LLM inference (Qwen3) | L4 (Modal) | ~20 min | ~$0.27 | 2026-02-14 |
 
-**Total Modal spend:** ~$23.08 (Ministral: ~$11.61 + Qwen3: ~$11.47 so far, inference pending)
+**Total Modal spend:** ~$23.21 (Ministral: ~$11.61 + Qwen3: ~$11.60)
