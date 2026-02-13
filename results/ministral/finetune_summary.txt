@@ -1,0 +1,25 @@
+Fine-Tuned LLM (QLoRA): Ministral 3 8B-Instruct
+=======================================================
+Test set: 8044 reports | Model: mistralai/Ministral-3-8B-Instruct-2512
+QLoRA: r=16, alpha=16, target=[q_proj, v_proj], dropout=0.05
+Training: 2 epochs, batch=4, grad_accum=4, lr=2e-5, cosine, bf16
+Inference: vLLM, dtype=auto, max_model_len=4096, temperature=0.0
+
+Category                             Precision     Recall         F1    ROC-AUC
+---------------------------------------------------------------------------
+Aircraft Equipment Problem              0.7873     0.7462     0.7662     0.8328
+Airspace Violation                      0.5635     0.2233     0.3198     0.6081
+ATC Issue                               0.3313     0.8818     0.4817     0.7581
+Conflict                                0.7717     0.7338     0.7523     0.8271
+Deviation - Altitude                    0.5204     0.8676     0.6506     0.8552
+Deviation - Procedural                  0.7567     0.4975     0.6003     0.5988
+Deviation - Speed                       0.4343     0.6953     0.5347     0.8341
+Deviation - Track/Heading               0.5567     0.5201     0.5378     0.7325
+Flight Deck/Cabin Event                 0.1401     0.9040     0.2426     0.7393
+Ground Event/Encounter                  0.2765     0.7014     0.3966     0.7682
+Ground Excursion                        0.2097     0.8208     0.3341     0.8764
+Ground Incursion                        0.4775     0.2709     0.3457     0.6238
+Inflight Event/Encounter                0.5519     0.3098     0.3969     0.6186
+---------------------------------------------------------------------------
+MACRO                                   0.4906     0.6287     0.4892     0.7441
+MICRO                                   0.4853     0.6123     0.5415     0.7401

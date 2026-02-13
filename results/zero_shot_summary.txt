@@ -1,0 +1,23 @@
+Zero-Shot LLM: Qwen3-8B (vLLM)
+=======================================================
+Test set: 8044 reports | Model: Qwen/Qwen3-8B
+vLLM: dtype=auto, max_model_len=8192, temperature=0.0, max_tokens=256
+
+Category                             Precision     Recall         F1    ROC-AUC
+---------------------------------------------------------------------------
+Aircraft Equipment Problem              0.8141     0.6426     0.7182     0.7920
+Airspace Violation                      0.4575     0.2201     0.2972     0.6047
+ATC Issue                               0.3275     0.7513     0.4562     0.7172
+Conflict                                0.6159     0.7815     0.6889     0.8015
+Deviation - Altitude                    0.5632     0.8328     0.6720     0.8529
+Deviation - Procedural                  0.7268     0.2327     0.3526     0.5344
+Deviation - Speed                       0.4639     0.6609     0.5451     0.8191
+Deviation - Track/Heading               0.2762     0.8040     0.4112     0.7619
+Flight Deck/Cabin Event                 0.1347     0.8028     0.2307     0.7036
+Ground Event/Encounter                  0.2064     0.6410     0.3123     0.7098
+Ground Excursion                        0.2864     0.6821     0.4034     0.8224
+Ground Incursion                        0.4415     0.3918     0.4152     0.6764
+Inflight Event/Encounter                0.3559     0.6657     0.4638     0.6591
+---------------------------------------------------------------------------
+MACRO                                   0.4361     0.6238     0.4590     0.7273
+MICRO                                   0.4079     0.5614     0.4725     0.6978

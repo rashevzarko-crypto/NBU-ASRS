@@ -1,6 +1,10 @@
 # NBU-ASRS Project Status
 
-Last updated: 2025-02-13
+Last updated: 2026-02-13 (Qwen3-8B zero-shot & few-shot complete, QLoRA training ~95%)
+
+> **Model switch #1:** Changed from meta-llama/Llama-3.1-8B-Instruct to mistralai/Ministral-3-8B-Instruct-2512 on 2026-02-13 (Llama gate approval delay).
+>
+> **Model switch #2:** Changed from Ministral-3-8B to Qwen/Qwen3-8B on 2026-02-13. Reason: Ministral 3 8B is stored as a multimodal `Mistral3ForConditionalGeneration` with FP8 quantization, preventing proper QLoRA (4-bit NF4) training. Fine-tuning produced no improvement over zero-shot (Macro-F1: 0.489 vs 0.491). Qwen3-8B is a pure text-only CausalLM, Apache 2.0, no gate, supporting standard QLoRA workflow. Ministral results archived in `results/ministral/`.
 
 ## Progress Tracker
 
@@ -11,10 +15,13 @@ Last updated: 2025-02-13
 | Classic ML baseline | ✅ Complete | `results/classic_ml_text_metrics.csv`, `results/classic_ml_f1_barchart.png` |
 | Structured features extraction | ✅ Complete | `data/structured_features.csv` (39,894 rows) |
 | Modal scripts scaffolding | ✅ Complete | `scripts/modal_zero_shot.py`, `scripts/modal_few_shot.py`, `scripts/modal_finetune.py` |
-| Zero-shot LLM | ❌ Not started | |
-| Few-shot LLM | ❌ Not started | |
-| QLoRA fine-tuning | ❌ Not started | |
-| Fine-tuned LLM inference | ❌ Not started | |
+| Zero-shot LLM (Ministral) | ✅ Complete (archived) | `results/ministral/zero_shot_*.csv/.txt` |
+| Few-shot LLM (Ministral) | ✅ Complete (archived) | `results/ministral/few_shot_*.csv/.txt` |
+| Fine-tuned LLM (Ministral) | ✅ Complete (archived) | `results/ministral/finetune_*.csv/.txt` |
+| Zero-shot LLM (Qwen3) | ✅ Complete | `results/zero_shot_metrics.csv`, `results/zero_shot_raw_outputs.csv`, `results/zero_shot_summary.txt` |
+| Few-shot LLM (Qwen3) | ✅ Complete | `results/few_shot_metrics.csv`, `results/few_shot_raw_outputs.csv`, `results/few_shot_summary.txt` |
+| QLoRA fine-tuning (Qwen3) | 🔄 In progress (~95%) | Adapter on Modal volume |
+| Fine-tuned LLM inference (Qwen3) | ❌ Pending | `results/finetune_metrics.csv` |
 | Final comparison & visualization | ❌ Not started | |
 | Thesis writing | ❌ Not started | |
 
@@ -56,22 +63,34 @@ Last updated: 2025-02-13
 - Runs locally, no GPU
 
 ### Zero-shot LLM
-- Model: meta-llama/Llama-3.1-8B-Instruct (4-bit quantized via bitsandbytes)
+- Model: Qwen/Qwen3-8B (Apache 2.0, text-only CausalLM)
 - GPU: Modal L4 (24GB)
+- vLLM: dtype=auto, max_model_len=8192, gpu_memory_utilization=0.90
+- chat_template_kwargs: enable_thinking=False
 - Prompt: system role + category list + narrative → JSON list output
-- Inference only on 8,044 test set
+- Inference on 8,044 test set
 
 ### Few-shot LLM
-- Same model and GPU as zero-shot
-- 3 examples per category in prompt (selected from train set)
-- max_model_len ~8192 for longer context
+- Same model: Qwen/Qwen3-8B (Apache 2.0)
+- GPU: Modal L4 (24GB)
+- vLLM: dtype=auto, max_model_len=16384, gpu_memory_utilization=0.90
+- chat_template_kwargs: enable_thinking=False
+- 3 examples per category (39 total), selected from train set
+- Example selection: sort by label_count ascending then narrative length ascending (prefer single-label, shorter)
+- Narrative truncation: examples 600 chars, test narratives 1500 chars
+- Batch size: 16 (down from 64 in zero-shot due to longer prompts)
 
 ### Fine-tuned LLM (QLoRA)
-- Base: meta-llama/Llama-3.1-8B-Instruct
-- QLoRA: r=16, alpha=16, target_modules=[q_proj, v_proj], dropout=0.05
-- Training: 31,850 samples, 3 epochs, batch_size=4, lr=2e-5
-- GPU: Modal L4 (24GB)
-- Inference on 8,044 test set, same GPU
+- Base: Qwen/Qwen3-8B
+- Training: 4-bit NF4 quantization via BitsAndBytesConfig (proper QLoRA)
+- LoRA: r=16, alpha=16, target_modules=[q_proj, v_proj], dropout=0.05
+- Training: 31,850 samples, 2 epochs, batch_size=4, grad_accum=4, lr=2e-5
+- Scheduler: cosine with warmup_ratio=0.05, optim=paged_adamw_8bit, bf16=True
+- max_length=1024, narrative truncation=1500 chars
+- Training GPU: Modal A100 (80GB), timeout=14400s (4h)
+- Inference GPU: Modal L4 (24GB), vLLM with LoRA adapter
+- chat_template_kwargs: enable_thinking=False
+- Inference on 8,044 test set, batch_size=64
 
 ## Infrastructure
 
@@ -82,12 +101,23 @@ Last updated: 2025-02-13
 
 ## Results
 
+### Ministral 3 8B (archived — see `results/ministral/`)
+
 | Model | Macro-F1 | Micro-F1 | Macro-AUC | Notes |
 |-------|----------|----------|-----------|-------|
 | Classic ML (TF-IDF + XGBoost) | 0.691 | 0.746 | 0.932 | 13 binary classifiers, text only |
-| Zero-shot LLM | — | — | — | |
-| Few-shot LLM | — | — | — | |
-| Fine-tuned LLM (QLoRA) | — | — | — | |
+| Zero-shot LLM (Ministral) | 0.491 | 0.543 | 0.744 | FP8, zero-shot, 0% parse failures |
+| Few-shot LLM (Ministral) | 0.540 | 0.536 | 0.746 | FP8, 3 examples/cat, 0% parse failures |
+| Fine-tuned LLM (Ministral) | 0.489 | 0.542 | 0.744 | LoRA on FP8 (not true QLoRA), 0% parse failures |
+
+### Qwen3-8B (pending)
+
+| Model | Macro-F1 | Micro-F1 | Macro-AUC | Notes |
+|-------|----------|----------|-----------|-------|
+| Classic ML (TF-IDF + XGBoost) | 0.691 | 0.746 | 0.932 | Same baseline |
+| Zero-shot LLM (Qwen3) | 0.459 | 0.473 | 0.727 | 26.4 min on L4, ~$0.35, 0% parse failures |
+| Few-shot LLM (Qwen3) | 0.453 | 0.468 | 0.704 | 34.2 min on L4, ~$0.46, 0% parse failures |
+| Fine-tuned LLM (Qwen3) | — | — | — | Pending (proper QLoRA 4-bit NF4) |
 
 ## Per-Category Results (Classic ML)
 
@@ -112,3 +142,12 @@ Last updated: 2025-02-13
 | Experiment | GPU | Duration | Cost | Date |
 |-----------|-----|----------|------|------|
 | Classic ML (XGBoost) | CPU (local) | ~55 min | $0 | 2025-02-12 |
+| Zero-shot LLM (Ministral) | L4 (Modal) | ~18.5 min | ~$0.25 | 2026-02-13 |
+| Zero-shot LLM (Qwen3) | L4 (Modal) | ~26.4 min | ~$0.35 | 2026-02-13 |
+| Few-shot LLM (Ministral) | L4 (Modal) | ~30.5 min | ~$0.41 | 2026-02-13 |
+| Few-shot LLM (Qwen3) | L4 (Modal) | ~34.2 min | ~$0.46 | 2026-02-13 |
+| Fine-tuned LLM training (Ministral) | A100 (Modal) | ~3h48min (228 min) | ~$10.66 | 2026-02-13 |
+| Fine-tuned LLM inference (Ministral) | L4 (Modal) | ~21.7 min | ~$0.29 | 2026-02-13 |
+| QLoRA fine-tuning (Qwen3) | A100 (Modal) | ~3h50min (est.) | ~$10.70 (est.) | 2026-02-13 |
+
+**Total Modal spend:** ~$23.08 (Ministral: ~$11.61 + Qwen3: ~$11.47 so far, inference pending)
