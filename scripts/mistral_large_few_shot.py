@@ -379,14 +379,32 @@ def download_and_process(job_id: str = None):
 # ---------------------------------------------------------------------------
 
 def _normalize(items: list, cat_lower: dict[str, str]) -> list[str]:
-    """Map parsed items to exact category names via case-insensitive match."""
+    """Map parsed items to exact category names via case-insensitive match.
+
+    Handles subcategory format (e.g., "Aircraft Equipment Problem: Less Severe")
+    by stripping the ": subcategory" suffix before matching.
+    """
     result = []
+    seen = set()
     for item in items:
         if not isinstance(item, str):
             continue
         key = item.strip().lower()
+        # Exact match first
         if key in cat_lower:
-            result.append(cat_lower[key])
+            cat = cat_lower[key]
+            if cat not in seen:
+                result.append(cat)
+                seen.add(cat)
+            continue
+        # Strip subcategory suffix
+        if ":" in key:
+            prefix = key.split(":")[0].strip()
+            if prefix in cat_lower:
+                cat = cat_lower[prefix]
+                if cat not in seen:
+                    result.append(cat)
+                    seen.add(cat)
     return result
 
 

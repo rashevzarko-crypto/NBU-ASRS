@@ -1,6 +1,6 @@
 # NBU-ASRS Project Status
 
-Last updated: 2026-02-14 (Taxonomy prompt experiments complete, 12-model comparison)
+Last updated: 2026-02-14 (Fixed Mistral Large 3 ZS parsing bug: 0.312→0.658 Macro-F1)
 
 > **Model switch #1:** Changed from meta-llama/Llama-3.1-8B-Instruct to mistralai/Ministral-3-8B-Instruct-2512 on 2026-02-13 (Llama gate approval delay).
 >
@@ -122,6 +122,7 @@ Last updated: 2026-02-14 (Taxonomy prompt experiments complete, 12-model compari
 |-------|--------|----------|----------|-----------|
 | Classic ML 32K | — | 0.691 | 0.746 | 0.932 |
 | Classic ML 164K | — | 0.678 | 0.739 | 0.942 |
+| Mistral Large 3 zero-shot | taxonomy | 0.658 | 0.712 | 0.793 |
 | Mistral Large 3 few-shot | taxonomy | 0.640 | 0.686 | 0.793 |
 | Ministral 8B few-shot | basic | 0.540 | 0.536 | 0.746 |
 | Qwen3-8B few-shot | taxonomy | 0.526 | 0.544 | 0.706 |
@@ -131,7 +132,6 @@ Last updated: 2026-02-14 (Taxonomy prompt experiments complete, 12-model compari
 | Ministral 8B fine-tuned (LoRA/FP8) | basic | 0.489 | 0.542 | 0.744 |
 | Qwen3-8B zero-shot | basic | 0.459 | 0.473 | 0.727 |
 | Qwen3-8B few-shot | basic | 0.453 | 0.468 | 0.704 |
-| Mistral Large 3 zero-shot | taxonomy | 0.312 | 0.399 | 0.614 |
 
 ### Ministral 3 8B (archived — see `results/ministral/`)
 
