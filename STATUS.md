@@ -1,6 +1,6 @@
 # NBU-ASRS Project Status
 
-Last updated: 2026-02-14 (all four Qwen3-8B experiments complete)
+Last updated: 2026-02-14 (Classic ML full-dataset metrics fixed, all experiments complete)
 
 > **Model switch #1:** Changed from meta-llama/Llama-3.1-8B-Instruct to mistralai/Ministral-3-8B-Instruct-2512 on 2026-02-13 (Llama gate approval delay).
 >
@@ -22,6 +22,8 @@ Last updated: 2026-02-14 (all four Qwen3-8B experiments complete)
 | Few-shot LLM (Qwen3) | ✅ Complete | `results/few_shot_metrics.csv`, `results/few_shot_raw_outputs.csv`, `results/few_shot_summary.txt` |
 | QLoRA fine-tuning (Qwen3) | ✅ Complete | Adapter on Modal volume `asrs-finetune-vol` |
 | Fine-tuned LLM inference (Qwen3) | ✅ Complete | `results/finetune_metrics.csv`, `results/finetune_raw_outputs.csv`, `results/finetune_summary.txt` |
+| Few-shot LLM (Mistral Large 3) | ✅ Complete | `results/mistral_large_metrics.csv`, `results/mistral_large_raw_outputs.csv`, `results/mistral_large_summary.txt` |
+| Classic ML full dataset (164K) | ✅ Complete | `results/classic_ml_full_metrics.csv`, `results/classic_ml_full_summary.txt` |
 | Final comparison & visualization | ❌ Not started | |
 | Thesis writing | ❌ Not started | |
 
@@ -92,6 +94,16 @@ Last updated: 2026-02-14 (all four Qwen3-8B experiments complete)
 - chat_template_kwargs: enable_thinking=False
 - Inference on 8,044 test set, batch_size=64
 
+### Few-shot LLM (Mistral Large 3)
+- Model: mistral-large-latest (Mistral Large 3, proprietary)
+- API: Mistral Batch API (free tier), no GPU needed
+- temperature=0.0, max_tokens=256
+- Taxonomy-enriched system prompt with NASA ASRS subcategories and discriminative hints
+- 2 examples per category (26 total), selected from train set
+- Example selection: sort by label_count ascending then narrative length ascending (prefer single-label, shorter)
+- Narrative truncation: examples 600 chars, test narratives 1500 chars
+- Batch processing: ~4 min for 8,044 reports, 0 failures, 2 parse failures (0.0%)
+
 ## Infrastructure
 
 - **Local (VS Code + Jupyter):** Data processing, classic ML, visualization
@@ -100,6 +112,20 @@ Last updated: 2026-02-14 (all four Qwen3-8B experiments complete)
 - **GitHub:** github.com/rashevzarko-crypto/NBU-ASRS
 
 ## Results
+
+### All Models Comparison
+
+| Model | Prompt | Macro-F1 | Micro-F1 | Macro-AUC |
+|-------|--------|----------|----------|-----------|
+| Classic ML 32K | — | 0.691 | 0.746 | 0.932 |
+| Classic ML 164K | — | 0.678 | 0.739 | 0.942 |
+| Mistral Large 3 few-shot | taxonomy | 0.640 | 0.686 | 0.793 |
+| Ministral 8B few-shot | basic | 0.540 | 0.536 | 0.746 |
+| Qwen3-8B fine-tuned (QLoRA) | basic | 0.510 | 0.632 | 0.700 |
+| Ministral 8B zero-shot | basic | 0.491 | 0.543 | 0.744 |
+| Ministral 8B fine-tuned (LoRA/FP8) | basic | 0.489 | 0.542 | 0.744 |
+| Qwen3-8B zero-shot | basic | 0.459 | 0.473 | 0.727 |
+| Qwen3-8B few-shot | basic | 0.453 | 0.468 | 0.704 |
 
 ### Ministral 3 8B (archived — see `results/ministral/`)
 
@@ -110,14 +136,23 @@ Last updated: 2026-02-14 (all four Qwen3-8B experiments complete)
 | Few-shot LLM (Ministral) | 0.540 | 0.536 | 0.746 | FP8, 3 examples/cat, 0% parse failures |
 | Fine-tuned LLM (Ministral) | 0.489 | 0.542 | 0.744 | LoRA on FP8 (not true QLoRA), 0% parse failures |
 
-### Qwen3-8B (complete)
+### Per-Category Results (Mistral Large 3 Few-Shot)
 
-| Model | Macro-F1 | Micro-F1 | Macro-AUC | Notes |
-|-------|----------|----------|-----------|-------|
-| Classic ML (TF-IDF + XGBoost) | 0.691 | 0.746 | 0.932 | Same baseline |
-| Zero-shot LLM (Qwen3) | 0.459 | 0.473 | 0.727 | 26.4 min on L4, ~$0.35, 0% parse failures |
-| Few-shot LLM (Qwen3) | 0.453 | 0.468 | 0.704 | 34.2 min on L4, ~$0.46, 0% parse failures |
-| Fine-tuned LLM (Qwen3) | 0.510 | 0.632 | 0.700 | QLoRA 4-bit NF4, 3h47m train A100 + ~20min inference L4 |
+| Category | Precision | Recall | F1 | ROC-AUC |
+|----------|-----------|--------|-----|---------|
+| Aircraft Equipment Problem | 0.918 | 0.640 | 0.754 | 0.809 |
+| Airspace Violation | 0.693 | 0.390 | 0.499 | 0.691 |
+| ATC Issue | 0.461 | 0.619 | 0.528 | 0.735 |
+| Conflict | 0.881 | 0.636 | 0.739 | 0.803 |
+| Deviation - Altitude | 0.693 | 0.818 | 0.750 | 0.873 |
+| Deviation - Procedural | 0.719 | 0.822 | 0.767 | 0.610 |
+| Deviation - Speed | 0.597 | 0.592 | 0.595 | 0.790 |
+| Deviation - Track/Heading | 0.638 | 0.744 | 0.687 | 0.844 |
+| Flight Deck/Cabin Event | 0.614 | 0.796 | 0.693 | 0.879 |
+| Ground Event/Encounter | 0.434 | 0.649 | 0.520 | 0.786 |
+| Ground Excursion | 0.422 | 0.798 | 0.552 | 0.887 |
+| Ground Incursion | 0.596 | 0.738 | 0.660 | 0.849 |
+| Inflight Event/Encounter | 0.453 | 0.784 | 0.574 | 0.756 |
 
 ### Per-Category Results (Fine-tuned Qwen3-8B)
 
@@ -137,7 +172,25 @@ Last updated: 2026-02-14 (all four Qwen3-8B experiments complete)
 | Ground Incursion | 0.520 | 0.463 | 0.490 | 0.715 |
 | Inflight Event/Encounter | 0.440 | 0.453 | 0.446 | 0.643 |
 
-## Per-Category Results (Classic ML)
+### Per-Category Results (Classic ML Full 164K)
+
+| Category | Precision | Recall | F1 | ROC-AUC |
+|----------|-----------|--------|-----|---------|
+| Aircraft Equipment Problem | 0.806 | 0.849 | 0.827 | 0.951 |
+| Airspace Violation | 0.380 | 0.808 | 0.517 | 0.953 |
+| ATC Issue | 0.566 | 0.809 | 0.666 | 0.928 |
+| Conflict | 0.761 | 0.866 | 0.810 | 0.951 |
+| Deviation - Altitude | 0.638 | 0.869 | 0.736 | 0.955 |
+| Deviation - Procedural | 0.831 | 0.762 | 0.795 | 0.809 |
+| Deviation - Speed | 0.375 | 0.807 | 0.512 | 0.956 |
+| Deviation - Track/Heading | 0.532 | 0.823 | 0.646 | 0.940 |
+| Flight Deck/Cabin Event | 0.612 | 0.862 | 0.716 | 0.971 |
+| Ground Event/Encounter | 0.443 | 0.813 | 0.574 | 0.941 |
+| Ground Excursion | 0.428 | 0.838 | 0.566 | 0.981 |
+| Ground Incursion | 0.567 | 0.906 | 0.698 | 0.979 |
+| Inflight Event/Encounter | 0.699 | 0.803 | 0.747 | 0.930 |
+
+## Per-Category Results (Classic ML 32K Baseline)
 
 | Category | F1 | AUC | Notes |
 |----------|-----|-----|-------|
@@ -168,5 +221,8 @@ Last updated: 2026-02-14 (all four Qwen3-8B experiments complete)
 | Fine-tuned LLM inference (Ministral) | L4 (Modal) | ~21.7 min | ~$0.29 | 2026-02-13 |
 | QLoRA training (Qwen3) | A100 (Modal) | ~3h47min (227.9 min) | ~$10.56 | 2026-02-13 |
 | Fine-tuned LLM inference (Qwen3) | L4 (Modal) | ~20 min | ~$0.27 | 2026-02-14 |
+| Few-shot LLM (Mistral Large 3) | API (Batch) | ~4 min | $0 (free tier) | 2026-02-14 |
+| Classic ML full (164K XGBoost) | 32-core CPU (Modal) | ~30 min | ~$0.64 | 2026-02-14 |
 
-**Total Modal spend:** ~$23.21 (Ministral: ~$11.61 + Qwen3: ~$11.60)
+**Total Modal spend:** ~$23.85 (Ministral: ~$11.61 + Qwen3: ~$11.60 + Classic ML full: ~$0.64)
+**Total Mistral API spend:** $0 (free tier batch)
