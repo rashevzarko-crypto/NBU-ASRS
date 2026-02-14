@@ -1,0 +1,26 @@
+Few-Shot LLM: Qwen3-8B (vLLM, taxonomy-enriched prompt, THINKING MODE)
+============================================================
+Test set: 8044 reports | Model: Qwen/Qwen3-8B
+vLLM: dtype=auto, max_model_len=32768, temperature=0.0, max_tokens=4096
+Few-shot: 3 examples/category, 600 char truncation, sorted by label_count+length
+Prompt: taxonomy-enriched with NASA ASRS subcategories and discriminative hints
+Thinking: enable_thinking=True (chain-of-thought reasoning before JSON answer)
+
+Category                             Precision     Recall         F1    ROC-AUC
+---------------------------------------------------------------------------
+Aircraft Equipment Problem              0.9240     0.5294     0.6731     0.7560
+Airspace Violation                      0.5776     0.4214     0.4873     0.7043
+ATC Issue                               0.4024     0.4150     0.4086     0.6442
+Conflict                                0.8777     0.6456     0.7440     0.8063
+Deviation - Altitude                    0.7713     0.5204     0.6215     0.7450
+Deviation - Procedural                  0.8575     0.3601     0.5072     0.6239
+Deviation - Speed                       0.7300     0.3133     0.4384     0.6549
+Deviation - Track/Heading               0.7029     0.2055     0.3180     0.5970
+Flight Deck/Cabin Event                 0.8083     0.5812     0.6761     0.7853
+Ground Event/Encounter                  0.5221     0.4284     0.4706     0.6966
+Ground Excursion                        0.5363     0.5549     0.5455     0.7722
+Ground Incursion                        0.7355     0.3884     0.5084     0.6887
+Inflight Event/Encounter                0.6922     0.4220     0.5243     0.6839
+---------------------------------------------------------------------------
+MACRO                                   0.7029     0.4450     0.5325     0.7045
+MICRO                                   0.7438     0.4442     0.5563     0.7065
