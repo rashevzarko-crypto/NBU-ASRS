@@ -1,6 +1,6 @@
 # NBU-ASRS Project Status
 
-Last updated: 2026-02-14 (Fixed Mistral Large 3 ZS parsing bug: 0.312→0.658 Macro-F1)
+Last updated: 2026-02-14 (Added Qwen3-8B few-shot taxonomy + thinking mode experiment)
 
 > **Model switch #1:** Changed from meta-llama/Llama-3.1-8B-Instruct to mistralai/Ministral-3-8B-Instruct-2512 on 2026-02-13 (Llama gate approval delay).
 >
@@ -27,6 +27,7 @@ Last updated: 2026-02-14 (Fixed Mistral Large 3 ZS parsing bug: 0.312→0.658 Ma
 | Zero-shot taxonomy (Qwen3) | ✅ Complete | `results/zero_shot_taxonomy_metrics.csv`, `results/zero_shot_taxonomy_raw_outputs.csv`, `results/zero_shot_taxonomy_summary.txt` |
 | Few-shot taxonomy (Qwen3) | ✅ Complete | `results/few_shot_taxonomy_metrics.csv`, `results/few_shot_taxonomy_raw_outputs.csv`, `results/few_shot_taxonomy_summary.txt` |
 | Zero-shot (Mistral Large 3) | ✅ Complete | `results/mistral_large_zs_metrics.csv`, `results/mistral_large_zs_raw_outputs.csv`, `results/mistral_large_zs_summary.txt` |
+| Few-shot taxonomy + thinking (Qwen3) | ✅ Complete | `results/few_shot_taxonomy_thinking_metrics.csv`, `results/few_shot_taxonomy_thinking_raw_outputs.csv`, `results/few_shot_taxonomy_thinking_summary.txt` |
 | Final comparison & visualization | ❌ Not started | |
 | Thesis writing | ❌ Not started | |
 
@@ -105,6 +106,19 @@ Last updated: 2026-02-14 (Fixed Mistral Large 3 ZS parsing bug: 0.312→0.658 Ma
 - Batch processing: ~5 min for 8,044 reports, 2 parse failures (0.0%)
 - Note: original run had 43% parse failures due to _normalize() bug (subcategory colon format); fixed via fix_mistral_large_zs.py
 
+### Few-shot taxonomy + thinking (Qwen3-8B)
+- Model: Qwen/Qwen3-8B (Apache 2.0, text-only CausalLM)
+- GPU: Modal A100 (80GB) — L4 too slow due to high output token count from thinking
+- vLLM: dtype=auto, max_model_len=32768, gpu_memory_utilization=0.90
+- chat_template_kwargs: enable_thinking=True (chain-of-thought reasoning)
+- temperature=0.0, max_tokens=4096 (thinking blocks can be long)
+- Taxonomy-enriched system prompt with NASA ASRS subcategories and discriminative hints
+- 3 examples per category (39 total), same selection as few-shot taxonomy
+- Batch size: 32
+- Thinking stats: 99.6% outputs had `<think>` blocks, avg 2986 chars, median 2513, max 15945
+- Parse results: 7990 json, 4 regex, 31 fuzzy, 0 empty (0% failures)
+- strip_thinking() regex removes `<think>...</think>` before JSON parsing
+
 ### Few-shot LLM (Mistral Large 3)
 - Model: mistral-large-latest (Mistral Large 3, proprietary)
 - API: Mistral Batch API (free tier), no GPU needed
@@ -133,6 +147,7 @@ Last updated: 2026-02-14 (Fixed Mistral Large 3 ZS parsing bug: 0.312→0.658 Ma
 | Mistral Large 3 zero-shot | taxonomy | 0.658 | 0.712 | 0.793 |
 | Mistral Large 3 few-shot | taxonomy | 0.640 | 0.686 | 0.793 |
 | Ministral 8B few-shot | basic | 0.540 | 0.536 | 0.746 |
+| Qwen3-8B few-shot + thinking | taxonomy | 0.533 | 0.556 | 0.705 |
 | Qwen3-8B few-shot | taxonomy | 0.526 | 0.544 | 0.706 |
 | Qwen3-8B fine-tuned (QLoRA) | basic | 0.510 | 0.632 | 0.700 |
 | Qwen3-8B zero-shot | taxonomy | 0.499 | 0.605 | 0.701 |
@@ -185,6 +200,24 @@ Last updated: 2026-02-14 (Fixed Mistral Large 3 ZS parsing bug: 0.312→0.658 Ma
 | Ground Excursion | 0.422 | 0.798 | 0.552 | 0.887 |
 | Ground Incursion | 0.596 | 0.738 | 0.660 | 0.849 |
 | Inflight Event/Encounter | 0.453 | 0.784 | 0.574 | 0.756 |
+
+### Per-Category Results (Qwen3-8B Few-Shot Taxonomy + Thinking)
+
+| Category | Precision | Recall | F1 | ROC-AUC |
+|----------|-----------|--------|-----|---------|
+| Aircraft Equipment Problem | 0.924 | 0.529 | 0.673 | 0.756 |
+| Airspace Violation | 0.578 | 0.421 | 0.487 | 0.704 |
+| ATC Issue | 0.402 | 0.415 | 0.409 | 0.644 |
+| Conflict | 0.878 | 0.646 | 0.744 | 0.806 |
+| Deviation - Altitude | 0.771 | 0.520 | 0.622 | 0.745 |
+| Deviation - Procedural | 0.858 | 0.360 | 0.507 | 0.624 |
+| Deviation - Speed | 0.730 | 0.313 | 0.438 | 0.655 |
+| Deviation - Track/Heading | 0.703 | 0.206 | 0.318 | 0.597 |
+| Flight Deck/Cabin Event | 0.808 | 0.581 | 0.676 | 0.785 |
+| Ground Event/Encounter | 0.522 | 0.428 | 0.471 | 0.697 |
+| Ground Excursion | 0.536 | 0.555 | 0.546 | 0.772 |
+| Ground Incursion | 0.735 | 0.388 | 0.508 | 0.689 |
+| Inflight Event/Encounter | 0.692 | 0.422 | 0.524 | 0.684 |
 
 ### Per-Category Results (Fine-tuned Qwen3-8B)
 
@@ -258,6 +291,7 @@ Last updated: 2026-02-14 (Fixed Mistral Large 3 ZS parsing bug: 0.312→0.658 Ma
 | Zero-shot taxonomy (Qwen3) | L4 (Modal) | ~24.4 min | ~$0.33 | 2026-02-14 |
 | Few-shot taxonomy (Qwen3) | L4 (Modal) | ~33.6 min | ~$0.45 | 2026-02-14 |
 | Zero-shot LLM (Mistral Large 3) | API (Batch) | ~5 min | $0 (free tier) | 2026-02-14 |
+| Few-shot taxonomy + thinking (Qwen3) | A100 (Modal) | ~144 min | ~$6.67 | 2026-02-14 |
 
-**Total Modal spend:** ~$24.63 (Ministral: ~$11.61 + Qwen3: ~$12.38 + Classic ML full: ~$0.64)
+**Total Modal spend:** ~$31.30 (Ministral: ~$11.61 + Qwen3: ~$19.05 + Classic ML full: ~$0.64)
 **Total Mistral API spend:** $0 (free tier batch)
