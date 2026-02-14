@@ -1,0 +1,24 @@
+Few-Shot LLM: Mistral Large 3 (Batch API, taxonomy-enriched prompt)
+======================================================================
+Test set: 8044 reports | Model: mistral-large-latest
+Batch API: temperature=0.0, max_tokens=256
+Few-shot: 2 examples/category, 600 char truncation, taxonomy subcategories in prompt
+
+Category                             Precision     Recall         F1    ROC-AUC
+---------------------------------------------------------------------------
+Aircraft Equipment Problem              0.9182     0.6400     0.7542     0.8086
+Airspace Violation                      0.6927     0.3899     0.4990     0.6914
+ATC Issue                               0.4606     0.6185     0.5280     0.7349
+Conflict                                0.8812     0.6364     0.7390     0.8025
+Deviation - Altitude                    0.6929     0.8177     0.7502     0.8732
+Deviation - Procedural                  0.7189     0.8218     0.7669     0.6096
+Deviation - Speed                       0.5974     0.5923     0.5948     0.7902
+Deviation - Track/Heading               0.6382     0.7436     0.6869     0.8438
+Flight Deck/Cabin Event                 0.6137     0.7958     0.6930     0.8787
+Ground Event/Encounter                  0.4335     0.6486     0.5196     0.7862
+Ground Excursion                        0.4220     0.7977     0.5520     0.8868
+Ground Incursion                        0.5964     0.7376     0.6596     0.8492
+Inflight Event/Encounter                0.4534     0.7835     0.5744     0.7555
+---------------------------------------------------------------------------
+MACRO                                   0.6245     0.6941     0.6398     0.7931
+MICRO                                   0.6468     0.7303     0.6860     0.8246
