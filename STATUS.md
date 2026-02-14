@@ -97,6 +97,14 @@ Last updated: 2026-02-14 (Fixed Mistral Large 3 ZS parsing bug: 0.312→0.658 Ma
 - chat_template_kwargs: enable_thinking=False
 - Inference on 8,044 test set, batch_size=64
 
+### Zero-shot LLM (Mistral Large 3)
+- Model: mistral-large-latest (Mistral Large 3, proprietary)
+- API: Mistral Batch API (free tier), no GPU needed
+- temperature=0.0, max_tokens=256
+- Taxonomy-enriched system prompt with NASA ASRS subcategories and discriminative hints
+- Batch processing: ~5 min for 8,044 reports, 2 parse failures (0.0%)
+- Note: original run had 43% parse failures due to _normalize() bug (subcategory colon format); fixed via fix_mistral_large_zs.py
+
 ### Few-shot LLM (Mistral Large 3)
 - Model: mistral-large-latest (Mistral Large 3, proprietary)
 - API: Mistral Batch API (free tier), no GPU needed
@@ -141,6 +149,24 @@ Last updated: 2026-02-14 (Fixed Mistral Large 3 ZS parsing bug: 0.312→0.658 Ma
 | Zero-shot LLM (Ministral) | 0.491 | 0.543 | 0.744 | FP8, zero-shot, 0% parse failures |
 | Few-shot LLM (Ministral) | 0.540 | 0.536 | 0.746 | FP8, 3 examples/cat, 0% parse failures |
 | Fine-tuned LLM (Ministral) | 0.489 | 0.542 | 0.744 | LoRA on FP8 (not true QLoRA), 0% parse failures |
+
+### Per-Category Results (Mistral Large 3 Zero-Shot, corrected)
+
+| Category | Precision | Recall | F1 | ROC-AUC |
+|----------|-----------|--------|-----|---------|
+| Aircraft Equipment Problem | 0.819 | 0.812 | 0.816 | 0.870 |
+| Airspace Violation | 0.616 | 0.443 | 0.516 | 0.716 |
+| ATC Issue | 0.410 | 0.754 | 0.531 | 0.766 |
+| Conflict | 0.862 | 0.639 | 0.734 | 0.801 |
+| Deviation - Altitude | 0.750 | 0.768 | 0.759 | 0.859 |
+| Deviation - Procedural | 0.709 | 0.900 | 0.793 | 0.603 |
+| Deviation - Speed | 0.649 | 0.579 | 0.612 | 0.785 |
+| Deviation - Track/Heading | 0.707 | 0.656 | 0.680 | 0.810 |
+| Flight Deck/Cabin Event | 0.579 | 0.766 | 0.660 | 0.862 |
+| Ground Event/Encounter | 0.496 | 0.608 | 0.546 | 0.776 |
+| Ground Excursion | 0.498 | 0.786 | 0.610 | 0.884 |
+| Ground Incursion | 0.676 | 0.661 | 0.668 | 0.818 |
+| Inflight Event/Encounter | 0.604 | 0.654 | 0.628 | 0.765 |
 
 ### Per-Category Results (Mistral Large 3 Few-Shot)
 
