@@ -1,6 +1,6 @@
 # NBU-ASRS Project Status
 
-Last updated: 2026-02-14 (Classic ML full-dataset metrics fixed, all experiments complete)
+Last updated: 2026-02-14 (Taxonomy prompt experiments complete, 12-model comparison)
 
 > **Model switch #1:** Changed from meta-llama/Llama-3.1-8B-Instruct to mistralai/Ministral-3-8B-Instruct-2512 on 2026-02-13 (Llama gate approval delay).
 >
@@ -24,6 +24,9 @@ Last updated: 2026-02-14 (Classic ML full-dataset metrics fixed, all experiments
 | Fine-tuned LLM inference (Qwen3) | ✅ Complete | `results/finetune_metrics.csv`, `results/finetune_raw_outputs.csv`, `results/finetune_summary.txt` |
 | Few-shot LLM (Mistral Large 3) | ✅ Complete | `results/mistral_large_metrics.csv`, `results/mistral_large_raw_outputs.csv`, `results/mistral_large_summary.txt` |
 | Classic ML full dataset (164K) | ✅ Complete | `results/classic_ml_full_metrics.csv`, `results/classic_ml_full_summary.txt` |
+| Zero-shot taxonomy (Qwen3) | ✅ Complete | `results/zero_shot_taxonomy_metrics.csv`, `results/zero_shot_taxonomy_raw_outputs.csv`, `results/zero_shot_taxonomy_summary.txt` |
+| Few-shot taxonomy (Qwen3) | ✅ Complete | `results/few_shot_taxonomy_metrics.csv`, `results/few_shot_taxonomy_raw_outputs.csv`, `results/few_shot_taxonomy_summary.txt` |
+| Zero-shot (Mistral Large 3) | ✅ Complete | `results/mistral_large_zs_metrics.csv`, `results/mistral_large_zs_raw_outputs.csv`, `results/mistral_large_zs_summary.txt` |
 | Final comparison & visualization | ❌ Not started | |
 | Thesis writing | ❌ Not started | |
 
@@ -121,11 +124,14 @@ Last updated: 2026-02-14 (Classic ML full-dataset metrics fixed, all experiments
 | Classic ML 164K | — | 0.678 | 0.739 | 0.942 |
 | Mistral Large 3 few-shot | taxonomy | 0.640 | 0.686 | 0.793 |
 | Ministral 8B few-shot | basic | 0.540 | 0.536 | 0.746 |
+| Qwen3-8B few-shot | taxonomy | 0.526 | 0.544 | 0.706 |
 | Qwen3-8B fine-tuned (QLoRA) | basic | 0.510 | 0.632 | 0.700 |
+| Qwen3-8B zero-shot | taxonomy | 0.499 | 0.605 | 0.701 |
 | Ministral 8B zero-shot | basic | 0.491 | 0.543 | 0.744 |
 | Ministral 8B fine-tuned (LoRA/FP8) | basic | 0.489 | 0.542 | 0.744 |
 | Qwen3-8B zero-shot | basic | 0.459 | 0.473 | 0.727 |
 | Qwen3-8B few-shot | basic | 0.453 | 0.468 | 0.704 |
+| Mistral Large 3 zero-shot | taxonomy | 0.312 | 0.399 | 0.614 |
 
 ### Ministral 3 8B (archived — see `results/ministral/`)
 
@@ -223,6 +229,9 @@ Last updated: 2026-02-14 (Classic ML full-dataset metrics fixed, all experiments
 | Fine-tuned LLM inference (Qwen3) | L4 (Modal) | ~20 min | ~$0.27 | 2026-02-14 |
 | Few-shot LLM (Mistral Large 3) | API (Batch) | ~4 min | $0 (free tier) | 2026-02-14 |
 | Classic ML full (164K XGBoost) | 32-core CPU (Modal) | ~30 min | ~$0.64 | 2026-02-14 |
+| Zero-shot taxonomy (Qwen3) | L4 (Modal) | ~24.4 min | ~$0.33 | 2026-02-14 |
+| Few-shot taxonomy (Qwen3) | L4 (Modal) | ~33.6 min | ~$0.45 | 2026-02-14 |
+| Zero-shot LLM (Mistral Large 3) | API (Batch) | ~5 min | $0 (free tier) | 2026-02-14 |
 
-**Total Modal spend:** ~$23.85 (Ministral: ~$11.61 + Qwen3: ~$11.60 + Classic ML full: ~$0.64)
+**Total Modal spend:** ~$24.63 (Ministral: ~$11.61 + Qwen3: ~$12.38 + Classic ML full: ~$0.64)
 **Total Mistral API spend:** $0 (free tier batch)
