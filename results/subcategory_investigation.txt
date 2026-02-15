@@ -1,0 +1,244 @@
+================================================================================
+ASRS SUBCATEGORY INVESTIGATION
+================================================================================
+
+QUESTION: Do subcategory-level labels exist in the raw ASRS data?
+ANSWER: YES. The raw anomaly strings contain full subcategory-level labels.
+
+Total unique anomaly strings in deduped 172K dataset: 8,272
+Strings mapping to 13 parent categories: 64
+Unmapped strings (Other, legacy, free-text): 8,208
+
+================================================================================
+PER-PARENT SUBCATEGORY BREAKDOWN
+================================================================================
+
+--- Aircraft Equipment Problem (4 subcategories, 49,424 total mentions) ---
+    28,535  ( 57.7%)  Critical
+    20,875  ( 42.2%)  Less Severe
+        13  (  0.0%)  Unique Event
+         1  (  0.0%)  Recurrent Event
+
+--- Airspace Violation (1 subcategories, 6,834 total mentions) ---
+     6,834  (100.0%)  All Types
+
+--- ATC Issue (1 subcategories, 29,422 total mentions) ---
+    29,422  (100.0%)  All Types
+
+--- Conflict (3 subcategories, 47,186 total mentions) ---
+    21,269  ( 45.1%)  Airborne Conflict
+    13,234  ( 28.0%)  Ground Conflict
+    12,683  ( 26.9%)  NMAC
+
+--- Deviation - Altitude (4 subcategories, 32,510 total mentions) ---
+    13,382  ( 41.2%)  Excursion From Assigned Altitude
+    11,048  ( 34.0%)  Overshoot
+     5,193  ( 16.0%)  Crossing Restriction Not Met
+     2,887  (  8.9%)  Undershoot
+
+--- Deviation - Procedural (11 subcategories, 168,202 total mentions) ---
+    69,608  ( 41.4%)  Published Material / Policy
+    50,836  ( 30.2%)  Clearance
+    32,620  ( 19.4%)  FAR
+     5,566  (  3.3%)  Maintenance
+     3,846  (  2.3%)  Other / Unknown
+     1,528  (  0.9%)  MEL / CDL
+     1,263  (  0.8%)  Landing Without Clearance
+     1,051  (  0.6%)  Weight And Balance
+     1,001  (  0.6%)  Hazardous Material Violation
+       622  (  0.4%)  Unauthorized Flight Operations (UAS)
+       261  (  0.2%)  Security
+
+--- Deviation - Speed (1 subcategories, 5,000 total mentions) ---
+     5,000  (100.0%)  All Types
+
+--- Deviation - Track/Heading (1 subcategories, 20,268 total mentions) ---
+    20,268  (100.0%)  Heading All Types
+
+--- Flight Deck/Cabin Event (5 subcategories, 13,642 total mentions) ---
+     5,998  ( 44.0%)  Aircraft Event Smoke / Fire / Fumes / Odor
+     3,318  ( 24.3%)  Aircraft Event Other / Unknown
+     2,444  ( 17.9%)  Aircraft Event Illness / Injury
+     1,660  ( 12.2%)  Aircraft Event Passenger Misconduct
+       222  (  1.6%)  Aircraft Event Passenger Electronic Device
+
+--- Ground Event/Encounter (14 subcategories, 16,482 total mentions) ---
+     5,378  ( 32.6%)  Encounter Loss Of Aircraft Control
+     4,422  ( 26.8%)  Encounter Other / Unknown
+     1,292  (  7.8%)  Encounter Ground Strike - Aircraft
+     1,059  (  6.4%)  Encounter Vehicle
+       999  (  6.1%)  Encounter Object
+       900  (  5.5%)  Encounter Ground Equipment Issue
+       685  (  4.2%)  Encounter Gear Up Landing
+       543  (  3.3%)  Encounter Weather / Turbulence
+       415  (  2.5%)  Encounter Person / Animal / Bird
+       295  (  1.8%)  Encounter FOD
+       272  (  1.7%)  Encounter Aircraft
+       147  (  0.9%)  Encounter Fuel Issue
+        61  (  0.4%)  Encounter Jet Blast
+        14  (  0.1%)  Encounter Loss Of VLOS (UAS)
+
+--- Ground Excursion (3 subcategories, 3,762 total mentions) ---
+     2,915  ( 77.5%)  Runway
+       734  ( 19.5%)  Taxiway
+       113  (  3.0%)  Ramp
+
+--- Ground Incursion (3 subcategories, 12,868 total mentions) ---
+    10,415  ( 80.9%)  Runway
+     2,275  ( 17.7%)  Taxiway
+       178  (  1.4%)  Ramp
+
+--- Inflight Event/Encounter (13 subcategories, 48,588 total mentions) ---
+    17,681  ( 36.4%)  Encounter Weather / Turbulence
+     7,720  ( 15.9%)  Encounter CFTT / CFIT
+     6,689  ( 13.8%)  Encounter Loss Of Aircraft Control
+     4,879  ( 10.0%)  Encounter Other / Unknown
+     3,665  (  7.5%)  Encounter Unstabilized Approach
+     2,388  (  4.9%)  Encounter Fuel Issue
+     2,335  (  4.8%)  Encounter Wake Vortex Encounter
+     2,068  (  4.3%)  Encounter VFR In IMC
+       685  (  1.4%)  Encounter Bird / Animal
+       377  (  0.8%)  Encounter Object
+        53  (  0.1%)  Encounter Fly Away (UAS)
+        36  (  0.1%)  Encounter Aircraft
+        12  (  0.0%)  Encounter Laser
+
+================================================================================
+SUMMARY STATISTICS
+================================================================================
+Total unique subcategory labels across all parents: 64
+
+Parents with meaningful subcategories (>1 distinct value):
+  Aircraft Equipment Problem: 4 subcategories -- YES
+  Airspace Violation: 0 subcategories -- NO (single "All Types" bucket)
+  ATC Issue: 0 subcategories -- NO (single "All Types" bucket)
+  Conflict: 3 subcategories -- YES
+  Deviation - Altitude: 4 subcategories -- YES
+  Deviation - Procedural: 11 subcategories -- YES
+  Deviation - Speed: 0 subcategories -- NO (single "All Types" bucket)
+  Deviation - Track/Heading: 0 subcategories -- NO (single "All Types" bucket)
+  Flight Deck/Cabin Event: 5 subcategories -- YES
+  Ground Event/Encounter: 14 subcategories -- YES
+  Ground Excursion: 3 subcategories -- YES
+  Ground Incursion: 3 subcategories -- YES
+  Inflight Event/Encounter: 13 subcategories -- YES
+
+Subcategory-level imbalance:
+  Most common:  Deviation - Procedural > Published Material / Policy (69,608)
+  Least common (>10): Inflight Event/Encounter > Encounter Laser (12)
+  Imbalance ratio: 5801x
+
+Top 20 subcategories by count:
+   1.   69,608  Deviation - Procedural > Published Material / Policy
+   2.   50,836  Deviation - Procedural > Clearance
+   3.   32,620  Deviation - Procedural > FAR
+   4.   29,422  ATC Issue > All Types
+   5.   28,535  Aircraft Equipment Problem > Critical
+   6.   21,269  Conflict > Airborne Conflict
+   7.   20,875  Aircraft Equipment Problem > Less Severe
+   8.   20,268  Deviation - Track/Heading > Heading All Types
+   9.   17,681  Inflight Event/Encounter > Encounter Weather / Turbulence
+  10.   13,382  Deviation - Altitude > Excursion From Assigned Altitude
+  11.   13,234  Conflict > Ground Conflict
+  12.   12,683  Conflict > NMAC
+  13.   11,048  Deviation - Altitude > Overshoot
+  14.   10,415  Ground Incursion > Runway
+  15.    7,720  Inflight Event/Encounter > Encounter CFTT / CFIT
+  16.    6,834  Airspace Violation > All Types
+  17.    6,689  Inflight Event/Encounter > Encounter Loss Of Aircraft Control
+  18.    5,998  Flight Deck/Cabin Event > Aircraft Event Smoke / Fire / Fumes / Odor
+  19.    5,566  Deviation - Procedural > Maintenance
+  20.    5,378  Ground Event/Encounter > Encounter Loss Of Aircraft Control
+
+Bottom 20 subcategories by count:
+           685  Ground Event/Encounter > Encounter Gear Up Landing
+           685  Inflight Event/Encounter > Encounter Bird / Animal
+           622  Deviation - Procedural > Unauthorized Flight Operations (UAS)
+           543  Ground Event/Encounter > Encounter Weather / Turbulence
+           415  Ground Event/Encounter > Encounter Person / Animal / Bird
+           377  Inflight Event/Encounter > Encounter Object
+           295  Ground Event/Encounter > Encounter FOD
+           272  Ground Event/Encounter > Encounter Aircraft
+           261  Deviation - Procedural > Security
+           222  Flight Deck/Cabin Event > Aircraft Event Passenger Electronic Device
+           178  Ground Incursion > Ramp
+           147  Ground Event/Encounter > Encounter Fuel Issue
+           113  Ground Excursion > Ramp
+            61  Ground Event/Encounter > Encounter Jet Blast
+            53  Inflight Event/Encounter > Encounter Fly Away (UAS)
+            36  Inflight Event/Encounter > Encounter Aircraft
+            14  Ground Event/Encounter > Encounter Loss Of VLOS (UAS)
+            13  Aircraft Equipment Problem > Unique Event
+            12  Inflight Event/Encounter > Encounter Laser
+             1  Aircraft Equipment Problem > Recurrent Event
+
+================================================================================
+TOP 30 UNMAPPED ANOMALY STRINGS
+================================================================================
+    24,817  Other Unspecified
+     8,318  Critical
+     4,932  Less Severe
+     2,515  Other Airspace Violation Entry or Exit
+     1,482  Other Runway Or Taxiway Excursion
+       300  No Specific Anomaly Occurred Unwanted Situation
+       140  Other ATC HANDLING
+       114  Other SEE AND AVOID
+       107  Other No Specific Anomaly Occurred
+        87  Other FLC DISTR
+        67  Other CLRNC INTERP
+        65  Other Security Breach Concerns
+        41  CRM
+        41  Other TCAS RA
+        37  Other CREW CONCEPT CRM
+        36  Other SIMILAR CALL SIGNS
+        34  Other FATIGUE
+        33  Other ATC Handling
+        32  Other CTLR HANDLING
+        31  Other CREW CONCEPT
+        27  Other See and Avoid
+        26  Other CLRNC/INTERP
+        25  Other Fatigue
+        23  Other CRM
+        23  Other LANGUAGE BARRIER
+        22  Other Low Fuel
+        22  Other Low Fuel State
+        21  Other PLT DISTR
+        20  Other Fuel Starvation
+        20  Other SEE AND AVOID CONCEPT
+
+Total unmapped mentions: 53,436
+  "Other" category strings: 39,561
+  Standalone keywords (CRM, Critical, Less Severe, Hearback): 13,875
+
+================================================================================
+CATEGORIES WITHOUT MEANINGFUL SUBCATEGORIES
+================================================================================
+These 4 categories have only a single "All Types" bucket:
+  - Airspace Violation (6,834 mentions)
+  - ATC Issue (29,422 mentions)
+  - Deviation - Speed (5,000 mentions)
+  - Deviation - Track/Heading (20,268 mentions)
+
+The remaining 9 categories have 3-14 subcategories each.
+
+================================================================================
+KEY FINDING
+================================================================================
+The raw ASRS data contains FULL subcategory-level anomaly labels, not just the 13
+top-level categories. Notebook 01 used prefix matching to collapse subcategories
+into 13 parent categories via CATEGORY_PREFIXES. The original subcategory strings
+are preserved in the raw CSVs in the Events/Anomaly column.
+
+Format: "{Parent Category} {Subcategory}"
+  e.g. "Aircraft Equipment Problem Critical"
+       "Conflict Airborne Conflict"
+       "Deviation / Discrepancy - Procedural Clearance"
+
+The Anomaly column in the deduped dataframe (172K reports) contains these
+semicolon-delimited subcategory strings. The current processed files
+(asrs_multilabel.csv, train_set.csv, test_set.csv) only have the 13 binary
+top-level category columns -- subcategory information was discarded during mapping.
+
+However, the original Anomaly column is NOT preserved in the processed CSVs.
+To recover subcategory labels, one would need to re-run the dedup pipeline from
+the 61 raw CSV files and retain the raw anomaly strings.

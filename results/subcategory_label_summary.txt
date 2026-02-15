@@ -1,0 +1,183 @@
+ASRS Subcategory-Level Multi-Label Dataset Summary
+============================================================
+
+Full dataset: 172,173 reports
+Train set: 32,089 reports
+Test set: 8,017 reports
+Label columns: 48
+Threshold: 500 mentions minimum
+
+Full label count: mean=2.63, median=2.0, min=1, max=13
+Train label count: mean=2.63, median=2.0, min=1, max=10
+Test label count: mean=2.62, median=2.0, min=1, max=10
+
+Zero-label reports: full=0, train=0, test=0
+
+============================================================
+MERGE DECISIONS (threshold = 500)
+============================================================
+  Aircraft Equipment Problem: 2 kept, dropped Other/Unknown (14 < 500, from: Unique Event (13), Recurrent Event (1))
+  Airspace Violation: parent-level column (All Types)
+  ATC Issue: parent-level column (All Types)
+  Conflict: all 3 subcategories above threshold
+  Deviation - Altitude: all 4 subcategories above threshold
+  Deviation - Procedural: 9 kept + Other/Unknown (4,107 merged from: Security (261))
+  Deviation - Speed: parent-level column (All Types)
+  Deviation - Track/Heading: parent-level column (All Types)
+  Flight Deck/Cabin Event: 3 kept + Other/Unknown (3,540 merged from: Passenger Electronic Device (222))
+  Ground Event/Encounter: 7 kept + Other/Unknown (5,626 merged from: Person / Animal / Bird (415), FOD (295), Aircraft (272), Fuel Issue (147), Jet Blast (61), Loss Of VLOS (UAS) (14))
+  Ground Excursion: 2 kept, dropped Other/Unknown (113 < 500, from: Ramp (113))
+  Ground Incursion: 2 kept, dropped Other/Unknown (178 < 500, from: Ramp (178))
+  Inflight Event/Encounter: 8 kept + Other/Unknown (5,357 merged from: Object (377), Fly Away (UAS) (53), Aircraft (36), Laser (12))
+
+============================================================
+PER-COLUMN DISTRIBUTION
+============================================================
+Column                                                 Full    Train     Test   Train%    Test%
+----------------------------------------------------------------------------------
+ATC Issue                                            29,422    5,472    1,363   17.05%   17.00%
+Aircraft Equipment Problem: Critical                 28,535    5,307    1,322   16.54%   16.49%
+Aircraft Equipment Problem: Less Severe              20,875    3,883      967   12.10%   12.06%
+Airspace Violation                                    6,834    1,271      317    3.96%    3.95%
+Conflict: Airborne Conflict                          21,269    3,955      986   12.33%   12.30%
+Conflict: Ground Conflict                            13,234    2,462      613    7.67%    7.65%
+Conflict: NMAC                                       12,683    2,359      588    7.35%    7.33%
+Deviation - Altitude: Crossing Restriction Not Met    5,193      965      241    3.01%    3.01%
+Deviation - Altitude: Excursion From Assigned Altitude   13,382    2,489      620    7.76%    7.73%
+Deviation - Altitude: Overshoot                      11,048    2,055      512    6.40%    6.39%
+Deviation - Altitude: Undershoot                      2,887      537      134    1.67%    1.67%
+Deviation - Procedural: Clearance                    50,836    9,454    2,356   29.46%   29.39%
+Deviation - Procedural: FAR                          32,620    6,066    1,512   18.90%   18.86%
+Deviation - Procedural: Hazardous Material Violation    1,001      187       46    0.58%    0.57%
+Deviation - Procedural: Landing Without Clearance     1,263      235       58    0.73%    0.72%
+Deviation - Procedural: MEL/CDL                       1,528      284       71    0.89%    0.89%
+Deviation - Procedural: Maintenance                   5,566    1,035      258    3.23%    3.22%
+Deviation - Procedural: Other/Unknown                 4,105      764      190    2.38%    2.37%
+Deviation - Procedural: Published Material/Policy    69,608   12,946    3,226   40.34%   40.24%
+Deviation - Procedural: Unauthorized Flight Operations (UAS)      622      116       29    0.36%    0.36%
+Deviation - Procedural: Weight And Balance            1,051      195       49    0.61%    0.61%
+Deviation - Speed                                     5,000      930      232    2.90%    2.89%
+Deviation - Track/Heading                            20,268    3,770      939   11.75%   11.71%
+Flight Deck/Cabin Event: Illness/Injury               2,444      455      113    1.42%    1.41%
+Flight Deck/Cabin Event: Other/Unknown                3,534      657      164    2.05%    2.05%
+Flight Deck/Cabin Event: Passenger Misconduct         1,660      309       77    0.96%    0.96%
+Flight Deck/Cabin Event: Smoke/Fire/Fumes/Odor        5,998    1,115      278    3.47%    3.47%
+Ground Event/Encounter: Gear Up Landing                 685      127       32    0.40%    0.40%
+Ground Event/Encounter: Ground Equipment Issue          900      167       42    0.52%    0.52%
+Ground Event/Encounter: Ground Strike - Aircraft      1,292      240       60    0.75%    0.75%
+Ground Event/Encounter: Loss Of Aircraft Control      5,378    1,000      249    3.12%    3.11%
+Ground Event/Encounter: Object                          999      186       46    0.58%    0.57%
+Ground Event/Encounter: Other/Unknown                 5,410    1,006      251    3.14%    3.13%
+Ground Event/Encounter: Vehicle                       1,059      197       49    0.61%    0.61%
+Ground Event/Encounter: Weather/Turbulence              543      101       25    0.31%    0.31%
+Ground Excursion: Runway                              2,915      542      135    1.69%    1.68%
+Ground Excursion: Taxiway                               734      137       34    0.43%    0.42%
+Ground Incursion: Runway                             10,415    1,937      483    6.04%    6.02%
+Ground Incursion: Taxiway                             2,275      423      106    1.32%    1.32%
+Inflight Event/Encounter: Bird/Animal                   685      127       32    0.40%    0.40%
+Inflight Event/Encounter: CFTT/CFIT                   7,720    1,436      358    4.48%    4.47%
+Inflight Event/Encounter: Fuel Issue                  2,388      444      111    1.38%    1.38%
+Inflight Event/Encounter: Loss Of Aircraft Control    6,689    1,244      310    3.88%    3.87%
+Inflight Event/Encounter: Other/Unknown               5,347      994      248    3.10%    3.09%
+Inflight Event/Encounter: Unstabilized Approach       3,665      681      170    2.12%    2.12%
+Inflight Event/Encounter: VFR In IMC                  2,068      384       96    1.20%    1.20%
+Inflight Event/Encounter: Wake Vortex Encounter       2,335      434      108    1.35%    1.35%
+Inflight Event/Encounter: Weather/Turbulence         17,681    3,289      819   10.25%   10.22%
+
+Imbalance ratio: 128.2x
+  Most common:  Deviation - Procedural: Published Material/Policy (69,608)
+  Least common: Ground Event/Encounter: Weather/Turbulence (543)
+
+============================================================
+RAW SUBCATEGORY COUNTS (before threshold)
+============================================================
+
+  Aircraft Equipment Problem:
+     28,535  Critical  [OK]
+     20,875  Less Severe  [OK]
+         13  Unique Event  [DROPPED] (<500)
+          1  Recurrent Event  [DROPPED] (<500)
+
+  Airspace Violation:
+      6,834  All Types  [OK]
+
+  ATC Issue:
+     29,422  All Types  [OK]
+
+  Conflict:
+     21,269  Airborne Conflict  [OK]
+     13,234  Ground Conflict  [OK]
+     12,683  NMAC  [OK]
+
+  Deviation - Altitude:
+     13,382  Excursion From Assigned Altitude  [OK]
+     11,048  Overshoot  [OK]
+      5,193  Crossing Restriction Not Met  [OK]
+      2,887  Undershoot  [OK]
+
+  Deviation - Procedural:
+     69,608  Published Material / Policy  [OK]
+     50,836  Clearance  [OK]
+     32,620  FAR  [OK]
+      5,566  Maintenance  [OK]
+      3,846  Other / Unknown  [OK]
+      1,528  MEL / CDL  [OK]
+      1,263  Landing Without Clearance  [OK]
+      1,051  Weight And Balance  [OK]
+      1,001  Hazardous Material Violation  [OK]
+        622  Unauthorized Flight Operations (UAS)  [OK]
+        261  Security  [DROPPED] (<500)
+
+  Deviation - Speed:
+      5,000  All Types  [OK]
+
+  Deviation - Track/Heading:
+     20,268  All Types  [OK]
+
+  Flight Deck/Cabin Event:
+      5,998  Smoke / Fire / Fumes / Odor  [OK]
+      3,318  Other / Unknown  [OK]
+      2,444  Illness / Injury  [OK]
+      1,660  Passenger Misconduct  [OK]
+        222  Passenger Electronic Device  [DROPPED] (<500)
+
+  Ground Event/Encounter:
+      5,378  Loss Of Aircraft Control  [OK]
+      4,422  Other / Unknown  [OK]
+      1,292  Ground Strike - Aircraft  [OK]
+      1,059  Vehicle  [OK]
+        999  Object  [OK]
+        900  Ground Equipment Issue  [OK]
+        685  Gear Up Landing  [OK]
+        543  Weather / Turbulence  [OK]
+        415  Person / Animal / Bird  [DROPPED] (<500)
+        295  FOD  [DROPPED] (<500)
+        272  Aircraft  [DROPPED] (<500)
+        147  Fuel Issue  [DROPPED] (<500)
+         61  Jet Blast  [DROPPED] (<500)
+         14  Loss Of VLOS (UAS)  [DROPPED] (<500)
+
+  Ground Excursion:
+      2,915  Runway  [OK]
+        734  Taxiway  [OK]
+        113  Ramp  [DROPPED] (<500)
+
+  Ground Incursion:
+     10,415  Runway  [OK]
+      2,275  Taxiway  [OK]
+        178  Ramp  [DROPPED] (<500)
+
+  Inflight Event/Encounter:
+     17,681  Weather / Turbulence  [OK]
+      7,720  CFTT / CFIT  [OK]
+      6,689  Loss Of Aircraft Control  [OK]
+      4,879  Other / Unknown  [OK]
+      3,665  Unstabilized Approach  [OK]
+      2,388  Fuel Issue  [OK]
+      2,335  Wake Vortex Encounter  [OK]
+      2,068  VFR In IMC  [OK]
+        685  Bird / Animal  [OK]
+        377  Object  [DROPPED] (<500)
+         53  Fly Away (UAS)  [DROPPED] (<500)
+         36  Aircraft  [DROPPED] (<500)
+         12  Laser  [DROPPED] (<500)

@@ -1,6 +1,6 @@
 # NBU-ASRS Project Status
 
-Last updated: 2026-02-14 (Added Qwen3-8B few-shot taxonomy + thinking mode experiment)
+Last updated: 2026-02-15 (Classic ML subcategory baseline: Macro-F1 0.510, Micro-F1 0.600)
 
 > **Model switch #1:** Changed from meta-llama/Llama-3.1-8B-Instruct to mistralai/Ministral-3-8B-Instruct-2512 on 2026-02-13 (Llama gate approval delay).
 >
@@ -28,6 +28,8 @@ Last updated: 2026-02-14 (Added Qwen3-8B few-shot taxonomy + thinking mode exper
 | Few-shot taxonomy (Qwen3) | ✅ Complete | `results/few_shot_taxonomy_metrics.csv`, `results/few_shot_taxonomy_raw_outputs.csv`, `results/few_shot_taxonomy_summary.txt` |
 | Zero-shot (Mistral Large 3) | ✅ Complete | `results/mistral_large_zs_metrics.csv`, `results/mistral_large_zs_raw_outputs.csv`, `results/mistral_large_zs_summary.txt` |
 | Few-shot taxonomy + thinking (Qwen3) | ✅ Complete | `results/few_shot_taxonomy_thinking_metrics.csv`, `results/few_shot_taxonomy_thinking_raw_outputs.csv`, `results/few_shot_taxonomy_thinking_summary.txt` |
+| Subcategory dataset build | ✅ Complete | `data/asrs_subcategory_multilabel.csv` (172,173), `data/subcategory_train_set.csv` (32,089), `data/subcategory_test_set.csv` (8,017), `results/subcategory_label_summary.txt` |
+| Classic ML subcategory (48 labels) | ✅ Complete | `results/classic_ml_subcategory_metrics.csv`, `results/classic_ml_subcategory_predictions.csv`, `results/classic_ml_subcategory_summary.txt`, `results/classic_ml_subcategory_f1_barchart.png` |
 | Final comparison & visualization | ❌ Not started | |
 | Thesis writing | ❌ Not started | |
 
@@ -155,6 +157,20 @@ Last updated: 2026-02-14 (Added Qwen3-8B few-shot taxonomy + thinking mode exper
 | Ministral 8B fine-tuned (LoRA/FP8) | basic | 0.489 | 0.542 | 0.744 |
 | Qwen3-8B zero-shot | basic | 0.459 | 0.473 | 0.727 |
 | Qwen3-8B few-shot | basic | 0.453 | 0.468 | 0.704 |
+
+### Subcategory (48-label) Classic ML
+
+| Metric | 13-label | 48-label | Delta |
+|--------|----------|----------|-------|
+| Macro-F1 | 0.691 | 0.510 | -0.181 |
+| Micro-F1 | 0.746 | 0.600 | -0.146 |
+| Macro-AUC | 0.932 | 0.934 | +0.002 |
+
+Parent-group comparison (avg subcategory F1 vs parent F1):
+- Biggest drops: Ground Event/Encounter (-0.325, 8 subs), Deviation-Procedural (-0.298, 10 subs), Aircraft Equipment Problem (-0.243, 2 subs)
+- Slight gains: ATC Issue (+0.011, 1 sub), Airspace Violation (+0.022, 1 sub), Deviation-Track/Heading (+0.008, 1 sub)
+- Best subcategories: Hazardous Material Violation (F1=0.824), Smoke/Fire/Fumes/Odor (F1=0.815), Wake Vortex Encounter (F1=0.813)
+- Worst subcategories: Weather/Turbulence (Ground) (F1=0.000), Ground Equipment Issue (F1=0.118), Vehicle (F1=0.164)
 
 ### Ministral 3 8B (archived — see `results/ministral/`)
 
@@ -292,6 +308,7 @@ Last updated: 2026-02-14 (Added Qwen3-8B few-shot taxonomy + thinking mode exper
 | Few-shot taxonomy (Qwen3) | L4 (Modal) | ~33.6 min | ~$0.45 | 2026-02-14 |
 | Zero-shot LLM (Mistral Large 3) | API (Batch) | ~5 min | $0 (free tier) | 2026-02-14 |
 | Few-shot taxonomy + thinking (Qwen3) | A100 (Modal) | ~144 min | ~$6.67 | 2026-02-14 |
+| Classic ML subcategory (48 XGBoost) | 32-core CPU (Modal) | ~142 min | ~$3.03 | 2026-02-15 |
 
-**Total Modal spend:** ~$31.30 (Ministral: ~$11.61 + Qwen3: ~$19.05 + Classic ML full: ~$0.64)
+**Total Modal spend:** ~$34.33 (Ministral: ~$11.61 + Qwen3: ~$19.05 + Classic ML full: ~$0.64 + Classic ML subcategory: ~$3.03)
 **Total Mistral API spend:** $0 (free tier batch)

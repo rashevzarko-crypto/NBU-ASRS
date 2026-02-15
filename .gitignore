@@ -5,9 +5,13 @@ raw data/
 data/asrs_multilabel.csv
 data/train_set.csv
 data/test_set.csv
+data/asrs_subcategory_multilabel.csv
+data/subcategory_train_set.csv
+data/subcategory_test_set.csv
 
 # Large result files
 results/classic_ml_text_predictions.csv
+results/classic_ml_subcategory_predictions.csv
 
 # Windows artifacts
 nul
