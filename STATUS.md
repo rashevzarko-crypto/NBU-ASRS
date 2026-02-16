@@ -1,6 +1,6 @@
 # NBU-ASRS Project Status
 
-Last updated: 2026-02-15 (Classic ML subcategory baseline: Macro-F1 0.510, Micro-F1 0.600)
+Last updated: 2026-02-16 (Subcategory ZS experiments: Mistral Large Macro-F1 0.449, Qwen3 Macro-F1 0.235)
 
 > **Model switch #1:** Changed from meta-llama/Llama-3.1-8B-Instruct to mistralai/Ministral-3-8B-Instruct-2512 on 2026-02-13 (Llama gate approval delay).
 >
@@ -30,6 +30,8 @@ Last updated: 2026-02-15 (Classic ML subcategory baseline: Macro-F1 0.510, Micro
 | Few-shot taxonomy + thinking (Qwen3) | ✅ Complete | `results/few_shot_taxonomy_thinking_metrics.csv`, `results/few_shot_taxonomy_thinking_raw_outputs.csv`, `results/few_shot_taxonomy_thinking_summary.txt` |
 | Subcategory dataset build | ✅ Complete | `data/asrs_subcategory_multilabel.csv` (172,173), `data/subcategory_train_set.csv` (32,089), `data/subcategory_test_set.csv` (8,017), `results/subcategory_label_summary.txt` |
 | Classic ML subcategory (48 labels) | ✅ Complete | `results/classic_ml_subcategory_metrics.csv`, `results/classic_ml_subcategory_predictions.csv`, `results/classic_ml_subcategory_summary.txt`, `results/classic_ml_subcategory_f1_barchart.png` |
+| Zero-shot subcategory (Mistral Large 3) | ✅ Complete | `results/mistral_large_subcategory_metrics.csv`, `results/mistral_large_subcategory_raw_outputs.csv`, `results/mistral_large_subcategory_summary.txt` |
+| Zero-shot subcategory (Qwen3-8B) | ✅ Complete | `results/qwen_zero_shot_subcategory_metrics.csv`, `results/qwen_zero_shot_subcategory_raw_outputs.csv`, `results/qwen_zero_shot_subcategory_summary.txt` |
 | Final comparison & visualization | ❌ Not started | |
 | Thesis writing | ❌ Not started | |
 
@@ -158,19 +160,31 @@ Last updated: 2026-02-15 (Classic ML subcategory baseline: Macro-F1 0.510, Micro
 | Qwen3-8B zero-shot | basic | 0.459 | 0.473 | 0.727 |
 | Qwen3-8B few-shot | basic | 0.453 | 0.468 | 0.704 |
 
-### Subcategory (48-label) Classic ML
+### Subcategory (48-label) All Models
 
-| Metric | 13-label | 48-label | Delta |
-|--------|----------|----------|-------|
-| Macro-F1 | 0.691 | 0.510 | -0.181 |
-| Micro-F1 | 0.746 | 0.600 | -0.146 |
-| Macro-AUC | 0.932 | 0.934 | +0.002 |
+| Model | Macro-F1 | Micro-F1 | Macro-AUC |
+|-------|----------|----------|-----------|
+| Classic ML (XGBoost) | 0.510 | 0.600 | 0.934 |
+| Mistral Large 3 ZS | 0.449 | 0.494 | 0.744 |
+| Qwen3-8B ZS | 0.235 | 0.304 | 0.629 |
 
-Parent-group comparison (avg subcategory F1 vs parent F1):
+Parent-group comparison (Classic ML):
 - Biggest drops: Ground Event/Encounter (-0.325, 8 subs), Deviation-Procedural (-0.298, 10 subs), Aircraft Equipment Problem (-0.243, 2 subs)
 - Slight gains: ATC Issue (+0.011, 1 sub), Airspace Violation (+0.022, 1 sub), Deviation-Track/Heading (+0.008, 1 sub)
 - Best subcategories: Hazardous Material Violation (F1=0.824), Smoke/Fire/Fumes/Odor (F1=0.815), Wake Vortex Encounter (F1=0.813)
 - Worst subcategories: Weather/Turbulence (Ground) (F1=0.000), Ground Equipment Issue (F1=0.118), Vehicle (F1=0.164)
+
+Mistral Large 3 subcategory highlights:
+- Best: Passenger Misconduct (F1=0.876), Smoke/Fire (F1=0.825), Haz Mat (F1=0.791)
+- Worst: Undershoot (F1=0.007), Other/Unknown procedural (F1=0.019), Ground Equipment (F1=0.033)
+- Beats Classic ML on 11/48 subcategories (notable: Landing Without Clearance +0.194, Gear Up Landing +0.196, UAS +0.177)
+- Runtime: 119 min real-time API, 7 network errors, 0.1% parse failures
+
+Qwen3-8B subcategory highlights:
+- Best: Smoke/Fire (F1=0.673), Passenger Misconduct (F1=0.596), Clearance (F1=0.584)
+- Worst: CFTT/CFIT (F1=0.005), Undershoot (F1=0.015), Ground Equipment (F1=0.029)
+- Dramatic drop from parent-level (Macro-F1: 0.499 → 0.235, Micro-F1: 0.605 → 0.304)
+- Runtime: ~30 min on Modal L4, vLLM engine crash after inference (results saved)
 
 ### Ministral 3 8B (archived — see `results/ministral/`)
 
@@ -309,6 +323,8 @@ Parent-group comparison (avg subcategory F1 vs parent F1):
 | Zero-shot LLM (Mistral Large 3) | API (Batch) | ~5 min | $0 (free tier) | 2026-02-14 |
 | Few-shot taxonomy + thinking (Qwen3) | A100 (Modal) | ~144 min | ~$6.67 | 2026-02-14 |
 | Classic ML subcategory (48 XGBoost) | 32-core CPU (Modal) | ~142 min | ~$3.03 | 2026-02-15 |
+| Zero-shot subcategory (Mistral Large 3) | API (Real-time) | ~119 min | paid plan | 2026-02-16 |
+| Zero-shot subcategory (Qwen3-8B) | L4 (Modal) | ~30 min | ~$0.40 | 2026-02-16 |
 
-**Total Modal spend:** ~$34.33 (Ministral: ~$11.61 + Qwen3: ~$19.05 + Classic ML full: ~$0.64 + Classic ML subcategory: ~$3.03)
-**Total Mistral API spend:** $0 (free tier batch)
+**Total Modal spend:** ~$34.73 (Ministral: ~$11.61 + Qwen3: ~$19.45 + Classic ML full: ~$0.64 + Classic ML subcategory: ~$3.03)
+**Total Mistral API spend:** paid plan (real-time API for subcategory experiment)
