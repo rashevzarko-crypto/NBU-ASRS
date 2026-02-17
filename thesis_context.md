@@ -2,7 +2,7 @@
 
 > **Purpose:** This file is self-contained. It provides ALL data, results, prompts, configs, and sample reports needed to write the thesis. No other files are needed.
 >
-> **Last generated:** 2026-02-14
+> **Last generated:** 2026-02-17
 
 ---
 
@@ -10,41 +10,181 @@
 
 # NBU-ASRS Project Status
 
-Last updated: 2026-02-14 (Added Qwen3-8B few-shot taxonomy + thinking mode experiment)
+Last updated: 2026-02-17 (Classic ML tuning Phase 3 complete — baseline confirmed optimal)
 
 > **Model switch #1:** Changed from meta-llama/Llama-3.1-8B-Instruct to mistralai/Ministral-3-8B-Instruct-2512 on 2026-02-13 (Llama gate approval delay).
 >
 > **Model switch #2:** Changed from Ministral-3-8B to Qwen/Qwen3-8B on 2026-02-13. Reason: Ministral 3 8B is stored as a multimodal `Mistral3ForConditionalGeneration` with FP8 quantization, preventing proper QLoRA (4-bit NF4) training. Fine-tuning produced no improvement over zero-shot (Macro-F1: 0.489 vs 0.491). Qwen3-8B is a pure text-only CausalLM, Apache 2.0, no gate, supporting standard QLoRA workflow. Ministral results archived in `results/ministral/`.
 
-### Progress Tracker
+## Progress Tracker
 
 | Phase | Status | Output Files |
 |-------|--------|-------------|
-| Data exploration | Complete | `data/asrs_multilabel.csv`, `results/data_exploration_summary.txt`, `results/co_occurrence_heatmap.png` |
-| Stratified sampling | Complete | `data/train_set.csv` (31,850), `data/test_set.csv` (8,044) |
-| Classic ML baseline | Complete | `results/classic_ml_text_metrics.csv`, `results/classic_ml_f1_barchart.png` |
-| Zero-shot LLM (Qwen3) | Complete | `results/zero_shot_metrics.csv`, `results/zero_shot_raw_outputs.csv`, `results/zero_shot_summary.txt` |
-| Few-shot LLM (Qwen3) | Complete | `results/few_shot_metrics.csv`, `results/few_shot_raw_outputs.csv`, `results/few_shot_summary.txt` |
-| QLoRA fine-tuning (Qwen3) | Complete | Adapter on Modal volume `asrs-finetune-vol` |
-| Fine-tuned LLM inference (Qwen3) | Complete | `results/finetune_metrics.csv`, `results/finetune_raw_outputs.csv`, `results/finetune_summary.txt` |
-| Few-shot LLM (Mistral Large 3) | Complete | `results/mistral_large_metrics.csv`, `results/mistral_large_raw_outputs.csv`, `results/mistral_large_summary.txt` |
-| Classic ML full dataset (164K) | Complete | `results/classic_ml_full_metrics.csv`, `results/classic_ml_full_summary.txt` |
-| Zero-shot taxonomy (Qwen3) | Complete | `results/zero_shot_taxonomy_metrics.csv`, `results/zero_shot_taxonomy_raw_outputs.csv`, `results/zero_shot_taxonomy_summary.txt` |
-| Few-shot taxonomy (Qwen3) | Complete | `results/few_shot_taxonomy_metrics.csv`, `results/few_shot_taxonomy_raw_outputs.csv`, `results/few_shot_taxonomy_summary.txt` |
-| Zero-shot (Mistral Large 3) | Complete | `results/mistral_large_zs_metrics.csv`, `results/mistral_large_zs_raw_outputs.csv`, `results/mistral_large_zs_summary.txt` |
-| Few-shot taxonomy + thinking (Qwen3) | Complete | `results/few_shot_taxonomy_thinking_metrics.csv`, `results/few_shot_taxonomy_thinking_raw_outputs.csv`, `results/few_shot_taxonomy_thinking_summary.txt` |
-| Zero-shot LLM (Ministral) | Complete (archived) | `results/ministral/zero_shot_*.csv/.txt` |
-| Few-shot LLM (Ministral) | Complete (archived) | `results/ministral/few_shot_*.csv/.txt` |
-| Fine-tuned LLM (Ministral) | Complete (archived) | `results/ministral/finetune_*.csv/.txt` |
+| Data exploration | ✅ Complete | `data/asrs_multilabel.csv`, `results/data_exploration_summary.txt`, `results/co_occurrence_heatmap.png` |
+| Stratified sampling | ✅ Complete | `data/train_set.csv` (31,850), `data/test_set.csv` (8,044) |
+| Classic ML baseline | ✅ Complete | `results/classic_ml_text_metrics.csv`, `results/classic_ml_f1_barchart.png` |
+| Structured features extraction | ✅ Complete | `data/structured_features.csv` (39,894 rows) |
+| Modal scripts scaffolding | ✅ Complete | `scripts/modal_zero_shot.py`, `scripts/modal_few_shot.py`, `scripts/modal_finetune.py` |
+| Zero-shot LLM (Ministral) | ✅ Complete (archived) | `results/ministral/zero_shot_*.csv/.txt` |
+| Few-shot LLM (Ministral) | ✅ Complete (archived) | `results/ministral/few_shot_*.csv/.txt` |
+| Fine-tuned LLM (Ministral) | ✅ Complete (archived) | `results/ministral/finetune_*.csv/.txt` |
+| Zero-shot LLM (Qwen3) | ✅ Complete | `results/zero_shot_metrics.csv`, `results/zero_shot_raw_outputs.csv`, `results/zero_shot_summary.txt` |
+| Few-shot LLM (Qwen3) | ✅ Complete | `results/few_shot_metrics.csv`, `results/few_shot_raw_outputs.csv`, `results/few_shot_summary.txt` |
+| QLoRA fine-tuning (Qwen3) | ✅ Complete | Adapter on Modal volume `asrs-finetune-vol` |
+| Fine-tuned LLM inference (Qwen3) | ✅ Complete | `results/finetune_metrics.csv`, `results/finetune_raw_outputs.csv`, `results/finetune_summary.txt` |
+| Few-shot LLM (Mistral Large 3) | ✅ Complete | `results/mistral_large_metrics.csv`, `results/mistral_large_raw_outputs.csv`, `results/mistral_large_summary.txt` |
+| Classic ML full dataset (164K) | ✅ Complete | `results/classic_ml_full_metrics.csv`, `results/classic_ml_full_summary.txt` |
+| Zero-shot taxonomy (Qwen3) | ✅ Complete | `results/zero_shot_taxonomy_metrics.csv`, `results/zero_shot_taxonomy_raw_outputs.csv`, `results/zero_shot_taxonomy_summary.txt` |
+| Few-shot taxonomy (Qwen3) | ✅ Complete | `results/few_shot_taxonomy_metrics.csv`, `results/few_shot_taxonomy_raw_outputs.csv`, `results/few_shot_taxonomy_summary.txt` |
+| Zero-shot (Mistral Large 3) | ✅ Complete | `results/mistral_large_zs_metrics.csv`, `results/mistral_large_zs_raw_outputs.csv`, `results/mistral_large_zs_summary.txt` |
+| Few-shot taxonomy + thinking (Qwen3) | ✅ Complete | `results/few_shot_taxonomy_thinking_metrics.csv`, `results/few_shot_taxonomy_thinking_raw_outputs.csv`, `results/few_shot_taxonomy_thinking_summary.txt` |
+| Subcategory dataset build | ✅ Complete | `data/asrs_subcategory_multilabel.csv` (172,173), `data/subcategory_train_set.csv` (32,089), `data/subcategory_test_set.csv` (8,017), `results/subcategory_label_summary.txt` |
+| Classic ML subcategory (48 labels) | ✅ Complete | `results/classic_ml_subcategory_metrics.csv`, `results/classic_ml_subcategory_predictions.csv`, `results/classic_ml_subcategory_summary.txt`, `results/classic_ml_subcategory_f1_barchart.png` |
+| Zero-shot subcategory (Mistral Large 3) | ✅ Complete | `results/mistral_large_subcategory_metrics.csv`, `results/mistral_large_subcategory_raw_outputs.csv`, `results/mistral_large_subcategory_summary.txt` |
+| Zero-shot subcategory (Qwen3-8B) | ✅ Complete | `results/qwen_zero_shot_subcategory_metrics.csv`, `results/qwen_zero_shot_subcategory_raw_outputs.csv`, `results/qwen_zero_shot_subcategory_summary.txt` |
+| Zero-shot parent (DeepSeek V3.2) | ✅ Complete | `results/deepseek_v32_parent_metrics.csv`, `results/deepseek_v32_parent_raw_outputs.csv`, `results/deepseek_v32_parent_summary.txt` |
+| Zero-shot subcategory (DeepSeek V3.2) | ✅ Complete | `results/deepseek_v32_subcategory_metrics.csv`, `results/deepseek_v32_subcategory_raw_outputs.csv`, `results/deepseek_v32_subcategory_summary.txt` |
+| Zero-shot + thinking parent (DeepSeek V3.2) | ✅ Complete | `results/deepseek_v32_thinking_parent_metrics.csv`, `results/deepseek_v32_thinking_parent_raw_outputs.csv`, `results/deepseek_v32_thinking_parent_summary.txt` |
+| Zero-shot + thinking subcategory (DeepSeek V3.2) | ✅ Complete | `results/deepseek_v32_thinking_subcategory_metrics.csv`, `results/deepseek_v32_thinking_subcategory_raw_outputs.csv`, `results/deepseek_v32_thinking_subcategory_summary.txt` |
+| Classic ML hyperparameter tuning | ✅ Complete | `results/tfidf_ablation.csv`, `results/model_comparison.csv`, `results/classic_ml_tuning_summary.txt` |
+| Classic ML tuned final eval | ✅ Complete | `results/classic_ml_tuned_parent_metrics.csv`, `results/classic_ml_tuned_subcategory_metrics.csv`, `results/classic_ml_tuned_parent_summary.txt`, `results/classic_ml_tuned_subcategory_summary.txt`, `results/classic_ml_tuned_result.json` |
+| Final comparison & visualization | ❌ Not started | |
+| Thesis writing | ❌ Not started | |
 
-### All Models Comparison (Ranked by Macro-F1)
+## Dataset Parameters
+
+- **Source:** NASA ASRS database, 61 CSV files, 282,371 raw rows
+- **Unique reports:** 172,183 (after ACN dedup)
+- **Anomaly categories:** 13 top-level ASRS categories (multi-label)
+- **Sample size:** 39,894 reports (stratified from 172K)
+- **Train set:** 31,850 reports
+- **Test set:** 8,044 reports (FROZEN — same for all experiments)
+- **Stratification:** MultilabelStratifiedShuffleSplit, random_state=42
+- **Imbalance ratio:** 30.3x (Deviation-Procedural: 112K vs Ground Excursion: 3.7K in full dataset)
+- **Label distribution:** median 2 labels per report; 22% single-label, 78% multi-label
+
+## Category Distribution (Full 172K Dataset)
+
+| Category | Count | % of reports |
+|----------|-------|-------------|
+| Deviation - Procedural | 112,606 | 65.4% |
+| Aircraft Equipment Problem | 49,305 | 28.6% |
+| Conflict | 46,285 | 26.9% |
+| Inflight Event/Encounter | 38,658 | 22.5% |
+| ATC Issue | 29,422 | 17.1% |
+| Deviation - Altitude | 28,369 | 16.5% |
+| Deviation - Track/Heading | 20,268 | 11.8% |
+| Ground Event/Encounter | 14,234 | 8.3% |
+| Ground Incursion | 12,601 | 7.3% |
+| Flight Deck/Cabin Event | 12,291 | 7.1% |
+| Airspace Violation | 6,834 | 4.0% |
+| Deviation - Speed | 5,000 | 2.9% |
+| Ground Excursion | 3,718 | 2.2% |
+
+## Model Configurations
+
+### Classic ML (TF-IDF + XGBoost)
+- TF-IDF: max_features=50000, ngram_range=(1,2), sublinear_tf=True
+- XGBoost: 13 independent binary classifiers, n_estimators=300, max_depth=6, lr=0.1, tree_method=hist, scale_pos_weight per category
+- Runs locally, no GPU
+
+### Zero-shot LLM
+- Model: Qwen/Qwen3-8B (Apache 2.0, text-only CausalLM)
+- GPU: Modal L4 (24GB)
+- vLLM: dtype=auto, max_model_len=8192, gpu_memory_utilization=0.90
+- chat_template_kwargs: enable_thinking=False
+- Prompt: system role + category list + narrative → JSON list output
+- Inference on 8,044 test set
+
+### Few-shot LLM
+- Same model: Qwen/Qwen3-8B (Apache 2.0)
+- GPU: Modal L4 (24GB)
+- vLLM: dtype=auto, max_model_len=16384, gpu_memory_utilization=0.90
+- chat_template_kwargs: enable_thinking=False
+- 3 examples per category (39 total), selected from train set
+- Example selection: sort by label_count ascending then narrative length ascending (prefer single-label, shorter)
+- Narrative truncation: examples 600 chars, test narratives 1500 chars
+- Batch size: 16 (down from 64 in zero-shot due to longer prompts)
+
+### Fine-tuned LLM (QLoRA)
+- Base: Qwen/Qwen3-8B
+- Training: 4-bit NF4 quantization via BitsAndBytesConfig (proper QLoRA)
+- LoRA: r=16, alpha=16, target_modules=[q_proj, v_proj], dropout=0.05
+- Training: 31,850 samples, 2 epochs, batch_size=4, grad_accum=4, lr=2e-5
+- Scheduler: cosine with warmup_ratio=0.05, optim=paged_adamw_8bit, bf16=True
+- max_length=1024, narrative truncation=1500 chars
+- Training GPU: Modal A100 (80GB), timeout=14400s (4h)
+- Inference GPU: Modal L4 (24GB), vLLM with LoRA adapter
+- chat_template_kwargs: enable_thinking=False
+- Inference on 8,044 test set, batch_size=64
+
+### Zero-shot LLM (Mistral Large 3)
+- Model: mistral-large-latest (Mistral Large 3, proprietary)
+- API: Mistral Batch API (free tier), no GPU needed
+- temperature=0.0, max_tokens=256
+- Taxonomy-enriched system prompt with NASA ASRS subcategories and discriminative hints
+- Batch processing: ~5 min for 8,044 reports, 2 parse failures (0.0%)
+- Note: original run had 43% parse failures due to _normalize() bug (subcategory colon format); fixed via fix_mistral_large_zs.py
+
+### Few-shot taxonomy + thinking (Qwen3-8B)
+- Model: Qwen/Qwen3-8B (Apache 2.0, text-only CausalLM)
+- GPU: Modal A100 (80GB) — L4 too slow due to high output token count from thinking
+- vLLM: dtype=auto, max_model_len=32768, gpu_memory_utilization=0.90
+- chat_template_kwargs: enable_thinking=True (chain-of-thought reasoning)
+- temperature=0.0, max_tokens=4096 (thinking blocks can be long)
+- Taxonomy-enriched system prompt with NASA ASRS subcategories and discriminative hints
+- 3 examples per category (39 total), same selection as few-shot taxonomy
+- Batch size: 32
+- Thinking stats: 99.6% outputs had `<think>` blocks, avg 2986 chars, median 2513, max 15945
+- Parse results: 7990 json, 4 regex, 31 fuzzy, 0 empty (0% failures)
+- strip_thinking() regex removes `<think>...</think>` before JSON parsing
+
+### Few-shot LLM (Mistral Large 3)
+- Model: mistral-large-latest (Mistral Large 3, proprietary)
+- API: Mistral Batch API (free tier), no GPU needed
+- temperature=0.0, max_tokens=256
+- Taxonomy-enriched system prompt with NASA ASRS subcategories and discriminative hints
+- 2 examples per category (26 total), selected from train set
+- Example selection: sort by label_count ascending then narrative length ascending (prefer single-label, shorter)
+- Narrative truncation: examples 600 chars, test narratives 1500 chars
+- Batch processing: ~4 min for 8,044 reports, 0 failures, 2 parse failures (0.0%)
+
+### Zero-shot LLM (DeepSeek V3.2)
+- Model: deepseek-ai/DeepSeek-V3.2 (671B MoE, non-reasoning)
+- API: DeepInfra OpenAI-compatible, 50 concurrent requests via aiohttp
+- temperature=0.0, max_tokens=500
+- Taxonomy-enriched system prompt (same as Mistral Large 3)
+- Cost: $0.26/M input (uncached), $0.13/M (cached), $0.38/M output
+- Prefix caching: ~62% parent, ~79% subcategory
+- Parse failures: 3/8044 parent (0.0%), 3/8017 subcategory (0.0%)
+
+### Zero-shot + Thinking LLM (DeepSeek V3.2)
+- Model: deepseek-ai/DeepSeek-V3.2 (671B MoE, reasoning mode)
+- API: DeepInfra OpenAI-compatible, 50 concurrent requests via aiohttp
+- temperature=0.0, max_tokens=4096, reasoning=True
+- Taxonomy-enriched system prompt (same as non-thinking)
+- Reasoning tokens via `reasoning_content` field (clean JSON in `content`)
+- Script: `scripts/deepseek_v32_deepinfra.py` (same script, `--thinking` flag)
+
+## Infrastructure
+
+- **Local (VS Code + Jupyter):** Data processing, classic ML, visualization
+- **Modal (cloud GPU):** All LLM experiments (L4 @ ~$0.80/hr)
+- **Budget:** $50 total Modal, estimated ~$27 for all experiments
+- **GitHub:** github.com/rashevzarko-crypto/NBU-ASRS
+
+## Results
+
+### All Models Comparison
 
 | Model | Prompt | Macro-F1 | Micro-F1 | Macro-AUC |
 |-------|--------|----------|----------|-----------|
-| Classic ML 32K | -- | 0.691 | 0.746 | 0.932 |
-| Classic ML 164K | -- | 0.678 | 0.739 | 0.942 |
+| Classic ML 32K | — | 0.691 | 0.746 | 0.932 |
+| Classic ML 164K | — | 0.678 | 0.739 | 0.942 |
 | Mistral Large 3 zero-shot | taxonomy | 0.658 | 0.712 | 0.793 |
 | Mistral Large 3 few-shot | taxonomy | 0.640 | 0.686 | 0.793 |
+| DeepSeek V3.2 zero-shot + thinking | taxonomy | 0.681 | 0.723 | 0.810 |
+| DeepSeek V3.2 zero-shot | taxonomy | 0.623 | 0.693 | 0.746 |
 | Ministral 8B few-shot | basic | 0.540 | 0.536 | 0.746 |
 | Qwen3-8B few-shot + thinking | taxonomy | 0.533 | 0.556 | 0.705 |
 | Qwen3-8B few-shot | taxonomy | 0.526 | 0.544 | 0.706 |
@@ -55,7 +195,234 @@ Last updated: 2026-02-14 (Added Qwen3-8B few-shot taxonomy + thinking mode exper
 | Qwen3-8B zero-shot | basic | 0.459 | 0.473 | 0.727 |
 | Qwen3-8B few-shot | basic | 0.453 | 0.468 | 0.704 |
 
-### Compute Log
+### Subcategory (48-label) All Models
+
+| Model | Macro-F1 | Micro-F1 | Macro-AUC |
+|-------|----------|----------|-----------|
+| Classic ML (XGBoost) | 0.510 | 0.600 | 0.934 |
+| Mistral Large 3 ZS | 0.449 | 0.494 | 0.744 |
+| DeepSeek V3.2 ZS | 0.422 | 0.456 | 0.708 |
+| DeepSeek V3.2 ZS + thinking | 0.419 | 0.466 | 0.690 |
+| Qwen3-8B ZS | 0.235 | 0.304 | 0.629 |
+
+Parent-group comparison (Classic ML):
+- Biggest drops: Ground Event/Encounter (-0.325, 8 subs), Deviation-Procedural (-0.298, 10 subs), Aircraft Equipment Problem (-0.243, 2 subs)
+- Slight gains: ATC Issue (+0.011, 1 sub), Airspace Violation (+0.022, 1 sub), Deviation-Track/Heading (+0.008, 1 sub)
+- Best subcategories: Hazardous Material Violation (F1=0.824), Smoke/Fire/Fumes/Odor (F1=0.815), Wake Vortex Encounter (F1=0.813)
+- Worst subcategories: Weather/Turbulence (Ground) (F1=0.000), Ground Equipment Issue (F1=0.118), Vehicle (F1=0.164)
+
+Mistral Large 3 subcategory highlights:
+- Best: Passenger Misconduct (F1=0.876), Smoke/Fire (F1=0.825), Haz Mat (F1=0.791)
+- Worst: Undershoot (F1=0.007), Other/Unknown procedural (F1=0.019), Ground Equipment (F1=0.033)
+- Beats Classic ML on 11/48 subcategories (notable: Landing Without Clearance +0.194, Gear Up Landing +0.196, UAS +0.177)
+- Runtime: 119 min real-time API, 7 network errors, 0.1% parse failures
+
+Qwen3-8B subcategory highlights:
+- Best: Smoke/Fire (F1=0.673), Passenger Misconduct (F1=0.596), Clearance (F1=0.584)
+- Worst: CFTT/CFIT (F1=0.005), Undershoot (F1=0.015), Ground Equipment (F1=0.029)
+- Dramatic drop from parent-level (Macro-F1: 0.499 → 0.235, Micro-F1: 0.605 → 0.304)
+- Runtime: ~30 min on Modal L4, vLLM engine crash after inference (results saved)
+
+### Classic ML Hyperparameter Tuning Results
+
+**TF-IDF Ablation (8 configs, 3-fold CV):**
+- All configs within 0.005 Macro-F1 (range: 0.6248 - 0.6296)
+- Best: no_sublinear (sublinear_tf=False), CV Macro-F1 = 0.6296
+- Baseline (sublinear_tf=True), CV Macro-F1 = 0.6280, delta = +0.0016
+- Conclusion: TF-IDF parameters have negligible impact
+
+**Model Comparison (RandomizedSearchCV, 3-fold CV):**
+
+| Model | CV Macro-F1 | Test Macro-F1 | Test Micro-F1 |
+|-------|------------|---------------|---------------|
+| XGBoost | 0.679 | 0.691 | 0.746 |
+| LogisticRegression | 0.504 | 0.670 | 0.738 |
+| LinearSVC | 0.473 | 0.655 | 0.750 |
+
+- XGBoost: baseline params (300 trees, depth 6, lr 0.1) are near-optimal
+- LinearSVC: highest Micro-F1 (0.750) but weaker Macro-F1 (0.655) — biases toward frequent labels
+- LogisticRegression: competitive but 3.5h for RSCV due to SAGA solver on sparse 50K features
+- Final results: existing baseline (Macro-F1 0.691, Micro-F1 0.746) confirmed as effectively tuned
+- Note: Modal billing limit reached during XGB hyperparameter search; baseline params confirmed optimal from 7/16 holdout combos
+
+**Phase 3 Final Evaluation (baseline XGBoost retrained + evaluated on both tasks):**
+
+| Task | Macro-F1 | Micro-F1 | Macro-AUC | vs Baseline |
+|------|----------|----------|-----------|-------------|
+| Parent (13-label) | 0.6928 | 0.7454 | 0.9321 | +0.002 / -0.001 |
+| Subcategory (48-label) | 0.5099 | 0.5998 | 0.9339 | -0.0001 / -0.0002 |
+
+- Retrained with baseline params (300 trees, depth 6, lr 0.1, hist, scale_pos_weight) on full train set
+- Per-label scale_pos_weight for class imbalance
+- Confirms baseline is effectively optimal — tuning provides negligible improvement
+- Script: `scripts/modal_classic_ml_phase3.py` (with Modal Volume for result persistence)
+
+### DeepSeek V3.2 Thinking Analysis
+
+**Parent (13-label):** Macro-F1 0.681 vs 0.623 non-thinking (+0.058). Significant improvement — thinking adds real value at 671B scale.
+- Biggest gains: Airspace Violation (+0.126 F1), ATC Issue (+0.160 F1), Ground Excursion (+0.013 F1)
+- Cost: $6.73 (vs $1.39 non-thinking, 4.8x more expensive), 291 min (vs 6.5 min, 45x slower)
+- 0.6% empty parse failures (46/8044), 14 failed requests
+
+**Subcategory (48-label):** Macro-F1 0.419 vs 0.422 non-thinking (-0.003). Thinking HURT performance.
+- 21.6% parse failures (1729/8017 empty) — thinking generates too-long outputs for 48-label task
+- Cost: $5.24 (vs $1.92 non-thinking, 2.7x), 545 min (vs 7.5 min, 73x slower)
+- Conclusion: thinking mode useful at 671B scale for parent categories, but fails on complex 48-label subcategory task
+
+### Per-Category Results (DeepSeek V3.2 Zero-Shot + Thinking, Parent)
+
+| Category | Precision | Recall | F1 | ROC-AUC |
+|----------|-----------|--------|-----|---------|
+| Aircraft Equipment Problem | 0.861 | 0.783 | 0.820 | 0.866 |
+| Airspace Violation | 0.601 | 0.572 | 0.586 | 0.778 |
+| ATC Issue | 0.441 | 0.685 | 0.536 | 0.753 |
+| Conflict | 0.833 | 0.840 | 0.837 | 0.889 |
+| Deviation - Altitude | 0.739 | 0.815 | 0.775 | 0.879 |
+| Deviation - Procedural | 0.797 | 0.721 | 0.757 | 0.688 |
+| Deviation - Speed | 0.595 | 0.592 | 0.594 | 0.790 |
+| Deviation - Track/Heading | 0.721 | 0.661 | 0.690 | 0.814 |
+| Flight Deck/Cabin Event | 0.745 | 0.700 | 0.722 | 0.841 |
+| Ground Event/Encounter | 0.487 | 0.631 | 0.549 | 0.785 |
+| Ground Excursion | 0.557 | 0.740 | 0.635 | 0.864 |
+| Ground Incursion | 0.764 | 0.624 | 0.687 | 0.804 |
+| Inflight Event/Encounter | 0.684 | 0.640 | 0.661 | 0.777 |
+
+### Per-Category Results (DeepSeek V3.2 Zero-Shot, Parent)
+
+| Category | Precision | Recall | F1 | ROC-AUC |
+|----------|-----------|--------|-----|---------|
+| Aircraft Equipment Problem | 0.874 | 0.688 | 0.770 | 0.824 |
+| Airspace Violation | 0.663 | 0.352 | 0.460 | 0.672 |
+| ATC Issue | 0.483 | 0.308 | 0.376 | 0.620 |
+| Conflict | 0.876 | 0.698 | 0.777 | 0.831 |
+| Deviation - Altitude | 0.700 | 0.813 | 0.752 | 0.872 |
+| Deviation - Procedural | 0.689 | 0.866 | 0.768 | 0.567 |
+| Deviation - Speed | 0.785 | 0.361 | 0.494 | 0.679 |
+| Deviation - Track/Heading | 0.777 | 0.560 | 0.651 | 0.770 |
+| Flight Deck/Cabin Event | 0.788 | 0.585 | 0.671 | 0.786 |
+| Ground Event/Encounter | 0.467 | 0.573 | 0.515 | 0.757 |
+| Ground Excursion | 0.599 | 0.647 | 0.622 | 0.819 |
+| Ground Incursion | 0.795 | 0.549 | 0.649 | 0.769 |
+| Inflight Event/Encounter | 0.610 | 0.568 | 0.588 | 0.732 |
+
+### Ministral 3 8B (archived — see `results/ministral/`)
+
+| Model | Macro-F1 | Micro-F1 | Macro-AUC | Notes |
+|-------|----------|----------|-----------|-------|
+| Classic ML (TF-IDF + XGBoost) | 0.691 | 0.746 | 0.932 | 13 binary classifiers, text only |
+| Zero-shot LLM (Ministral) | 0.491 | 0.543 | 0.744 | FP8, zero-shot, 0% parse failures |
+| Few-shot LLM (Ministral) | 0.540 | 0.536 | 0.746 | FP8, 3 examples/cat, 0% parse failures |
+| Fine-tuned LLM (Ministral) | 0.489 | 0.542 | 0.744 | LoRA on FP8 (not true QLoRA), 0% parse failures |
+
+### Per-Category Results (Mistral Large 3 Zero-Shot, corrected)
+
+| Category | Precision | Recall | F1 | ROC-AUC |
+|----------|-----------|--------|-----|---------|
+| Aircraft Equipment Problem | 0.819 | 0.812 | 0.816 | 0.870 |
+| Airspace Violation | 0.616 | 0.443 | 0.516 | 0.716 |
+| ATC Issue | 0.410 | 0.754 | 0.531 | 0.766 |
+| Conflict | 0.862 | 0.639 | 0.734 | 0.801 |
+| Deviation - Altitude | 0.750 | 0.768 | 0.759 | 0.859 |
+| Deviation - Procedural | 0.709 | 0.900 | 0.793 | 0.603 |
+| Deviation - Speed | 0.649 | 0.579 | 0.612 | 0.785 |
+| Deviation - Track/Heading | 0.707 | 0.656 | 0.680 | 0.810 |
+| Flight Deck/Cabin Event | 0.579 | 0.766 | 0.660 | 0.862 |
+| Ground Event/Encounter | 0.496 | 0.608 | 0.546 | 0.776 |
+| Ground Excursion | 0.498 | 0.786 | 0.610 | 0.884 |
+| Ground Incursion | 0.676 | 0.661 | 0.668 | 0.818 |
+| Inflight Event/Encounter | 0.604 | 0.654 | 0.628 | 0.765 |
+
+### Per-Category Results (Mistral Large 3 Few-Shot)
+
+| Category | Precision | Recall | F1 | ROC-AUC |
+|----------|-----------|--------|-----|---------|
+| Aircraft Equipment Problem | 0.918 | 0.640 | 0.754 | 0.809 |
+| Airspace Violation | 0.693 | 0.390 | 0.499 | 0.691 |
+| ATC Issue | 0.461 | 0.619 | 0.528 | 0.735 |
+| Conflict | 0.881 | 0.636 | 0.739 | 0.803 |
+| Deviation - Altitude | 0.693 | 0.818 | 0.750 | 0.873 |
+| Deviation - Procedural | 0.719 | 0.822 | 0.767 | 0.610 |
+| Deviation - Speed | 0.597 | 0.592 | 0.595 | 0.790 |
+| Deviation - Track/Heading | 0.638 | 0.744 | 0.687 | 0.844 |
+| Flight Deck/Cabin Event | 0.614 | 0.796 | 0.693 | 0.879 |
+| Ground Event/Encounter | 0.434 | 0.649 | 0.520 | 0.786 |
+| Ground Excursion | 0.422 | 0.798 | 0.552 | 0.887 |
+| Ground Incursion | 0.596 | 0.738 | 0.660 | 0.849 |
+| Inflight Event/Encounter | 0.453 | 0.784 | 0.574 | 0.756 |
+
+### Per-Category Results (Qwen3-8B Few-Shot Taxonomy + Thinking)
+
+| Category | Precision | Recall | F1 | ROC-AUC |
+|----------|-----------|--------|-----|---------|
+| Aircraft Equipment Problem | 0.924 | 0.529 | 0.673 | 0.756 |
+| Airspace Violation | 0.578 | 0.421 | 0.487 | 0.704 |
+| ATC Issue | 0.402 | 0.415 | 0.409 | 0.644 |
+| Conflict | 0.878 | 0.646 | 0.744 | 0.806 |
+| Deviation - Altitude | 0.771 | 0.520 | 0.622 | 0.745 |
+| Deviation - Procedural | 0.858 | 0.360 | 0.507 | 0.624 |
+| Deviation - Speed | 0.730 | 0.313 | 0.438 | 0.655 |
+| Deviation - Track/Heading | 0.703 | 0.206 | 0.318 | 0.597 |
+| Flight Deck/Cabin Event | 0.808 | 0.581 | 0.676 | 0.785 |
+| Ground Event/Encounter | 0.522 | 0.428 | 0.471 | 0.697 |
+| Ground Excursion | 0.536 | 0.555 | 0.546 | 0.772 |
+| Ground Incursion | 0.735 | 0.388 | 0.508 | 0.689 |
+| Inflight Event/Encounter | 0.692 | 0.422 | 0.524 | 0.684 |
+
+### Per-Category Results (Fine-tuned Qwen3-8B)
+
+| Category | Precision | Recall | F1 | ROC-AUC |
+|----------|-----------|--------|-----|---------|
+| Aircraft Equipment Problem | 0.799 | 0.767 | 0.783 | 0.845 |
+| Airspace Violation | 0.188 | 0.088 | 0.120 | 0.536 |
+| ATC Issue | 0.500 | 0.312 | 0.384 | 0.624 |
+| Conflict | 0.839 | 0.636 | 0.724 | 0.796 |
+| Deviation - Altitude | 0.608 | 0.796 | 0.689 | 0.847 |
+| Deviation - Procedural | 0.691 | 0.817 | 0.749 | 0.566 |
+| Deviation - Speed | 0.461 | 0.532 | 0.494 | 0.757 |
+| Deviation - Track/Heading | 0.402 | 0.619 | 0.487 | 0.748 |
+| Flight Deck/Cabin Event | 0.395 | 0.330 | 0.359 | 0.646 |
+| Ground Event/Encounter | 0.542 | 0.496 | 0.518 | 0.729 |
+| Ground Excursion | 0.536 | 0.301 | 0.385 | 0.647 |
+| Ground Incursion | 0.520 | 0.463 | 0.490 | 0.715 |
+| Inflight Event/Encounter | 0.440 | 0.453 | 0.446 | 0.643 |
+
+### Per-Category Results (Classic ML Full 164K)
+
+| Category | Precision | Recall | F1 | ROC-AUC |
+|----------|-----------|--------|-----|---------|
+| Aircraft Equipment Problem | 0.806 | 0.849 | 0.827 | 0.951 |
+| Airspace Violation | 0.380 | 0.808 | 0.517 | 0.953 |
+| ATC Issue | 0.566 | 0.809 | 0.666 | 0.928 |
+| Conflict | 0.761 | 0.866 | 0.810 | 0.951 |
+| Deviation - Altitude | 0.638 | 0.869 | 0.736 | 0.955 |
+| Deviation - Procedural | 0.831 | 0.762 | 0.795 | 0.809 |
+| Deviation - Speed | 0.375 | 0.807 | 0.512 | 0.956 |
+| Deviation - Track/Heading | 0.532 | 0.823 | 0.646 | 0.940 |
+| Flight Deck/Cabin Event | 0.612 | 0.862 | 0.716 | 0.971 |
+| Ground Event/Encounter | 0.443 | 0.813 | 0.574 | 0.941 |
+| Ground Excursion | 0.428 | 0.838 | 0.566 | 0.981 |
+| Ground Incursion | 0.567 | 0.906 | 0.698 | 0.979 |
+| Inflight Event/Encounter | 0.699 | 0.803 | 0.747 | 0.930 |
+
+## Per-Category Results (Classic ML 32K Baseline)
+
+| Category | F1 | AUC | Notes |
+|----------|-----|-----|-------|
+| Aircraft Equipment Problem | 0.816 | 0.944 | Strong |
+| Conflict | 0.801 | 0.943 | Strong |
+| Deviation - Procedural | 0.795 | 0.794 | High F1, low AUC (ubiquitous category) |
+| Flight Deck/Cabin Event | 0.738 | 0.963 | |
+| Inflight Event/Encounter | 0.734 | 0.920 | |
+| Ground Incursion | 0.729 | 0.976 | |
+| Deviation - Altitude | 0.729 | 0.949 | |
+| ATC Issue | 0.672 | 0.916 | |
+| Deviation - Track/Heading | 0.655 | 0.928 | |
+| Ground Event/Encounter | 0.592 | 0.923 | Weak — low precision |
+| Deviation - Speed | 0.577 | 0.949 | Weak — rare category |
+| Ground Excursion | 0.572 | 0.973 | Weak — rarest category |
+| Airspace Violation | 0.568 | 0.938 | Weak — low precision |
+
+## Compute Log
 
 | Experiment | GPU | Duration | Cost | Date |
 |-----------|-----|----------|------|------|
@@ -64,9 +431,9 @@ Last updated: 2026-02-14 (Added Qwen3-8B few-shot taxonomy + thinking mode exper
 | Zero-shot LLM (Qwen3) | L4 (Modal) | ~26.4 min | ~$0.35 | 2026-02-13 |
 | Few-shot LLM (Ministral) | L4 (Modal) | ~30.5 min | ~$0.41 | 2026-02-13 |
 | Few-shot LLM (Qwen3) | L4 (Modal) | ~34.2 min | ~$0.46 | 2026-02-13 |
-| Fine-tuned LLM training (Ministral) | A100 (Modal) | ~3h48min | ~$10.66 | 2026-02-13 |
+| Fine-tuned LLM training (Ministral) | A100 (Modal) | ~3h48min (228 min) | ~$10.66 | 2026-02-13 |
 | Fine-tuned LLM inference (Ministral) | L4 (Modal) | ~21.7 min | ~$0.29 | 2026-02-13 |
-| QLoRA training (Qwen3) | A100 (Modal) | ~3h47min | ~$10.56 | 2026-02-13 |
+| QLoRA training (Qwen3) | A100 (Modal) | ~3h47min (227.9 min) | ~$10.56 | 2026-02-13 |
 | Fine-tuned LLM inference (Qwen3) | L4 (Modal) | ~20 min | ~$0.27 | 2026-02-14 |
 | Few-shot LLM (Mistral Large 3) | API (Batch) | ~4 min | $0 (free tier) | 2026-02-14 |
 | Classic ML full (164K XGBoost) | 32-core CPU (Modal) | ~30 min | ~$0.64 | 2026-02-14 |
@@ -74,9 +441,19 @@ Last updated: 2026-02-14 (Added Qwen3-8B few-shot taxonomy + thinking mode exper
 | Few-shot taxonomy (Qwen3) | L4 (Modal) | ~33.6 min | ~$0.45 | 2026-02-14 |
 | Zero-shot LLM (Mistral Large 3) | API (Batch) | ~5 min | $0 (free tier) | 2026-02-14 |
 | Few-shot taxonomy + thinking (Qwen3) | A100 (Modal) | ~144 min | ~$6.67 | 2026-02-14 |
+| Classic ML subcategory (48 XGBoost) | 32-core CPU (Modal) | ~142 min | ~$3.03 | 2026-02-15 |
+| Zero-shot subcategory (Mistral Large 3) | API (Real-time) | ~119 min | paid plan | 2026-02-16 |
+| Zero-shot subcategory (Qwen3-8B) | L4 (Modal) | ~30 min | ~$0.40 | 2026-02-16 |
+| Zero-shot parent (DeepSeek V3.2) | API (DeepInfra) | ~6.5 min | ~$1.39 | 2026-02-16 |
+| Zero-shot subcategory (DeepSeek V3.2) | API (DeepInfra) | ~7.5 min | ~$1.92 | 2026-02-16 |
+| Zero-shot + thinking parent (DeepSeek V3.2) | API (DeepInfra) | ~291 min | ~$6.73 | 2026-02-17 |
+| Zero-shot + thinking subcategory (DeepSeek V3.2) | API (DeepInfra) | ~545 min | ~$5.24 | 2026-02-17 |
+| Classic ML tuning Phase 3 | 32-core CPU (Modal) | ~154 min | ~$3.30 | 2026-02-17 |
 
-**Total Modal spend:** ~$31.30 (Ministral: ~$11.61 + Qwen3: ~$19.05 + Classic ML full: ~$0.64)
-**Total Mistral API spend:** $0 (free tier batch)
+**Total Modal spend:** ~$38.03 (Ministral: ~$11.61 + Qwen3: ~$19.45 + Classic ML full: ~$0.64 + Classic ML subcategory: ~$3.03 + Classic ML tuning Phase 3: ~$3.30)
+**Total Mistral API spend:** paid plan (real-time API for subcategory experiment)
+**Total DeepInfra spend:** ~$15.28 (DeepSeek V3.2: parent ~$1.39 + subcategory ~$1.92 + thinking parent ~$6.73 + thinking subcategory ~$5.24)
+
 
 ---
 
@@ -375,7 +752,29 @@ Config: TF-IDF max_features=50000, ngram_range=(1,2), sublinear_tf=True. XGBoost
 
 Config: Same as 32K but trained on 164,139 reports (full dataset minus test set). Higher recall across all categories, but lower precision due to class imbalance amplification.
 
-### Experiment 3: Qwen3-8B Zero-Shot (basic prompt)
+### Experiment 3: Classic ML Tuned (TF-IDF + XGBoost, 31,850 train, Phase 3)
+
+| Category | Precision | Recall | F1 | ROC-AUC |
+|----------|-----------|--------|------|---------|
+| Aircraft Equipment Problem | 0.8131 | 0.8237 | 0.8183 | 0.9440 |
+| Airspace Violation | 0.5000 | 0.7075 | 0.5859 | 0.9361 |
+| ATC Issue | 0.6077 | 0.7491 | 0.6710 | 0.9158 |
+| Conflict | 0.7683 | 0.8353 | 0.8004 | 0.9436 |
+| Deviation - Altitude | 0.6650 | 0.8064 | 0.7289 | 0.9478 |
+| Deviation - Procedural | 0.8081 | 0.7787 | 0.7931 | 0.7919 |
+| Deviation - Speed | 0.5391 | 0.5923 | 0.5644 | 0.9491 |
+| Deviation - Track/Heading | 0.5810 | 0.7331 | 0.6482 | 0.9286 |
+| Flight Deck/Cabin Event | 0.7009 | 0.7853 | 0.7407 | 0.9643 |
+| Ground Event/Encounter | 0.5010 | 0.7255 | 0.5927 | 0.9259 |
+| Ground Excursion | 0.5892 | 0.6301 | 0.6089 | 0.9723 |
+| Ground Incursion | 0.6385 | 0.8245 | 0.7197 | 0.9760 |
+| Inflight Event/Encounter | 0.7049 | 0.7651 | 0.7338 | 0.9216 |
+| **MACRO** | **0.6474** | **0.7505** | **0.6928** | **0.9321** |
+| **MICRO** | **0.7122** | **0.7819** | **0.7454** | **0.9499** |
+
+Config: Same TF-IDF and XGBoost params as 32K baseline. Retrained via modal_classic_ml_phase3.py with per-label scale_pos_weight. Delta vs baseline: Macro-F1 +0.002, Micro-F1 -0.001. Confirms baseline is near-optimal.
+
+### Experiment 4: Qwen3-8B Zero-Shot (basic prompt)
 
 | Category | Precision | Recall | F1 | ROC-AUC |
 |----------|-----------|--------|------|---------|
@@ -395,7 +794,9 @@ Config: Same as 32K but trained on 164,139 reports (full dataset minus test set)
 | **MACRO** | **0.4361** | **0.6238** | **0.4590** | **0.7273** |
 | **MICRO** | **0.4079** | **0.5614** | **0.4725** | **0.6978** |
 
-### Experiment 4: Qwen3-8B Few-Shot (basic prompt, 3 examples/category)
+Config: Qwen3-8B, vLLM, max_model_len=8192, temperature=0.0, max_tokens=256, enable_thinking=False. Basic system prompt.
+
+### Experiment 5: Qwen3-8B Few-Shot (basic prompt, 3 examples/category)
 
 | Category | Precision | Recall | F1 | ROC-AUC |
 |----------|-----------|--------|------|---------|
@@ -415,7 +816,9 @@ Config: Same as 32K but trained on 164,139 reports (full dataset minus test set)
 | **MACRO** | **0.5363** | **0.4787** | **0.4525** | **0.7042** |
 | **MICRO** | **0.5439** | **0.4099** | **0.4675** | **0.6700** |
 
-### Experiment 5: Qwen3-8B Fine-Tuned (QLoRA 4-bit NF4)
+Config: Same model, max_model_len=16384, batch_size=16. 39 examples (3 per category), narrative truncated to 600 chars (examples) / 1500 chars (test).
+
+### Experiment 6: Qwen3-8B Fine-Tuned (QLoRA 4-bit NF4)
 
 | Category | Precision | Recall | F1 | ROC-AUC |
 |----------|-----------|--------|------|---------|
@@ -437,7 +840,7 @@ Config: Same as 32K but trained on 164,139 reports (full dataset minus test set)
 
 Config: QLoRA 4-bit NF4, r=16, alpha=16, target=[q_proj, v_proj], dropout=0.05. Training: 2 epochs, batch=4, grad_accum=4, lr=2e-5, cosine scheduler, paged_adamw_8bit, bf16. 3,982 steps, final loss 1.691, token accuracy 66.8%. Training time: 3h47m on A100.
 
-### Experiment 6: Qwen3-8B Zero-Shot Taxonomy
+### Experiment 7: Qwen3-8B Zero-Shot Taxonomy
 
 | Category | Precision | Recall | F1 | ROC-AUC |
 |----------|-----------|--------|------|---------|
@@ -457,7 +860,9 @@ Config: QLoRA 4-bit NF4, r=16, alpha=16, target=[q_proj, v_proj], dropout=0.05. 
 | **MACRO** | **0.5628** | **0.5283** | **0.4990** | **0.7011** |
 | **MICRO** | **0.5805** | **0.6325** | **0.6054** | **0.7698** |
 
-### Experiment 7: Qwen3-8B Few-Shot Taxonomy
+Config: Same as basic zero-shot but with taxonomy-enriched system prompt (NASA ASRS subcategories + discriminative hints).
+
+### Experiment 8: Qwen3-8B Few-Shot Taxonomy
 
 | Category | Precision | Recall | F1 | ROC-AUC |
 |----------|-----------|--------|------|---------|
@@ -477,7 +882,9 @@ Config: QLoRA 4-bit NF4, r=16, alpha=16, target=[q_proj, v_proj], dropout=0.05. 
 | **MACRO** | **0.6414** | **0.4744** | **0.5255** | **0.7057** |
 | **MICRO** | **0.6426** | **0.4711** | **0.5436** | **0.7089** |
 
-### Experiment 8: Qwen3-8B Few-Shot Taxonomy + Thinking Mode
+Config: Same as basic few-shot but with taxonomy-enriched system prompt. 39 examples (3 per category).
+
+### Experiment 9: Qwen3-8B Few-Shot Taxonomy + Thinking Mode
 
 | Category | Precision | Recall | F1 | ROC-AUC |
 |----------|-----------|--------|------|---------|
@@ -497,9 +904,9 @@ Config: QLoRA 4-bit NF4, r=16, alpha=16, target=[q_proj, v_proj], dropout=0.05. 
 | **MACRO** | **0.7029** | **0.4450** | **0.5325** | **0.7045** |
 | **MICRO** | **0.7438** | **0.4442** | **0.5563** | **0.7065** |
 
-Config: enable_thinking=True, max_tokens=4096, max_model_len=32768, A100 GPU. 99.6% outputs had `<think>` blocks, avg 2,986 chars thinking per response. Runtime: 144 min on A100 (~$6.67). Marginal gain over non-thinking: Macro-F1 +0.007, Micro-F1 +0.013.
+Config: enable_thinking=True, max_tokens=4096, max_model_len=32768, A100 GPU. 99.6% outputs had <think> blocks, avg 2,986 chars thinking per response. Runtime: 144 min on A100 (~$6.67). Marginal gain over non-thinking: Macro-F1 +0.007, Micro-F1 +0.013.
 
-### Experiment 9: Mistral Large 3 Zero-Shot (taxonomy prompt, Batch API)
+### Experiment 10: Mistral Large 3 Zero-Shot (taxonomy prompt, Batch API)
 
 | Category | Precision | Recall | F1 | ROC-AUC |
 |----------|-----------|--------|------|---------|
@@ -521,7 +928,7 @@ Config: enable_thinking=True, max_tokens=4096, max_model_len=32768, A100 GPU. 99
 
 Config: mistral-large-latest, Mistral Batch API, temperature=0.0, max_tokens=256. Parse failures: 2/8,044 (0.0%). Runtime: ~5 min. Cost: $0 (free tier).
 
-### Experiment 10: Mistral Large 3 Few-Shot (taxonomy prompt, Batch API)
+### Experiment 11: Mistral Large 3 Few-Shot (taxonomy prompt, Batch API)
 
 | Category | Precision | Recall | F1 | ROC-AUC |
 |----------|-----------|--------|------|---------|
@@ -541,7 +948,9 @@ Config: mistral-large-latest, Mistral Batch API, temperature=0.0, max_tokens=256
 | **MACRO** | **0.6245** | **0.6941** | **0.6398** | **0.7931** |
 | **MICRO** | **0.6468** | **0.7303** | **0.6860** | **0.8246** |
 
-### Experiment 11: Ministral 8B Zero-Shot (basic prompt, FP8)
+Config: mistral-large-latest, Mistral Batch API, temperature=0.0, max_tokens=256. 26 examples (2 per category). Runtime: ~4 min. Cost: $0 (free tier).
+
+### Experiment 12: Ministral 8B Zero-Shot (basic prompt, FP8)
 
 | Category | Precision | Recall | F1 | ROC-AUC |
 |----------|-----------|--------|------|---------|
@@ -561,7 +970,9 @@ Config: mistral-large-latest, Mistral Batch API, temperature=0.0, max_tokens=256
 | **MACRO** | **0.4937** | **0.6298** | **0.4906** | **0.7439** |
 | **MICRO** | **0.4856** | **0.6169** | **0.5434** | **0.7420** |
 
-### Experiment 12: Ministral 8B Few-Shot (basic prompt, FP8)
+Config: Ministral-3-8B-Instruct-2512 (FP8 multimodal wrapper), vLLM on Modal L4.
+
+### Experiment 13: Ministral 8B Few-Shot (basic prompt, FP8)
 
 | Category | Precision | Recall | F1 | ROC-AUC |
 |----------|-----------|--------|------|---------|
@@ -581,7 +992,9 @@ Config: mistral-large-latest, Mistral Batch API, temperature=0.0, max_tokens=256
 | **MACRO** | **0.5877** | **0.5644** | **0.5398** | **0.7460** |
 | **MICRO** | **0.5926** | **0.4895** | **0.5361** | **0.7105** |
 
-### Experiment 13: Ministral 8B Fine-Tuned (LoRA on FP8)
+Config: Same model, 39 examples (3 per category), batch_size=16.
+
+### Experiment 14: Ministral 8B Fine-Tuned (LoRA on FP8)
 
 | Category | Precision | Recall | F1 | ROC-AUC |
 |----------|-----------|--------|------|---------|
@@ -602,6 +1015,392 @@ Config: mistral-large-latest, Mistral Batch API, temperature=0.0, max_tokens=256
 | **MICRO** | **0.4853** | **0.6123** | **0.5415** | **0.7401** |
 
 Note: Ministral fine-tuning was LoRA on FP8 (not true QLoRA on 4-bit NF4). This produced essentially no improvement over zero-shot. The model became a "yes-machine" with high recall but very low precision.
+
+### Experiment 15: DeepSeek V3.2 Zero-Shot (taxonomy prompt, DeepInfra API)
+
+| Category | Precision | Recall | F1 | ROC-AUC |
+|----------|-----------|--------|------|---------|
+| Aircraft Equipment Problem | 0.8735 | 0.6883 | 0.7699 | 0.8242 |
+| Airspace Violation | 0.6627 | 0.3522 | 0.4600 | 0.6724 |
+| ATC Issue | 0.4828 | 0.3078 | 0.3759 | 0.6200 |
+| Conflict | 0.8755 | 0.6981 | 0.7768 | 0.8309 |
+| Deviation - Altitude | 0.6999 | 0.8132 | 0.7523 | 0.8723 |
+| Deviation - Procedural | 0.6892 | 0.8664 | 0.7677 | 0.5669 |
+| Deviation - Speed | 0.7850 | 0.3605 | 0.4941 | 0.6788 |
+| Deviation - Track/Heading | 0.7768 | 0.5604 | 0.6511 | 0.7695 |
+| Flight Deck/Cabin Event | 0.7882 | 0.5846 | 0.6713 | 0.7863 |
+| Ground Event/Encounter | 0.4668 | 0.5732 | 0.5146 | 0.7572 |
+| Ground Excursion | 0.5989 | 0.6474 | 0.6222 | 0.8189 |
+| Ground Incursion | 0.7951 | 0.5486 | 0.6492 | 0.7687 |
+| Inflight Event/Encounter | 0.6097 | 0.5680 | 0.5881 | 0.7316 |
+| **MACRO** | **0.7003** | **0.5822** | **0.6225** | **0.7460** |
+| **MICRO** | **0.7074** | **0.6800** | **0.6934** | **0.8114** |
+
+Config: deepseek-ai/DeepSeek-V3.2 (671B MoE), DeepInfra API, temperature=0.0, max_tokens=500. 50 concurrent requests via aiohttp. Prefix caching: ~62%. Parse failures: 3/8044 (0.0%). Runtime: ~6.5 min. Cost: ~$1.39.
+
+### Experiment 16: DeepSeek V3.2 Zero-Shot + Thinking (taxonomy prompt, DeepInfra API)
+
+| Category | Precision | Recall | F1 | ROC-AUC |
+|----------|-----------|--------|------|---------|
+| Aircraft Equipment Problem | 0.8612 | 0.7832 | 0.8203 | 0.8664 |
+| Airspace Violation | 0.6007 | 0.5723 | 0.5862 | 0.7783 |
+| ATC Issue | 0.4408 | 0.6849 | 0.5364 | 0.7532 |
+| Conflict | 0.8330 | 0.8400 | 0.8365 | 0.8892 |
+| Deviation - Altitude | 0.7392 | 0.8147 | 0.7751 | 0.8791 |
+| Deviation - Procedural | 0.7968 | 0.7205 | 0.7568 | 0.6880 |
+| Deviation - Speed | 0.5948 | 0.5923 | 0.5935 | 0.7901 |
+| Deviation - Track/Heading | 0.7206 | 0.6610 | 0.6895 | 0.8135 |
+| Flight Deck/Cabin Event | 0.7454 | 0.6998 | 0.7219 | 0.8407 |
+| Ground Event/Encounter | 0.4866 | 0.6305 | 0.5493 | 0.7854 |
+| Ground Excursion | 0.5565 | 0.7399 | 0.6352 | 0.8635 |
+| Ground Incursion | 0.7641 | 0.6235 | 0.6867 | 0.8042 |
+| Inflight Event/Encounter | 0.6835 | 0.6402 | 0.6611 | 0.7773 |
+| **MACRO** | **0.6787** | **0.6925** | **0.6807** | **0.8099** |
+| **MICRO** | **0.7205** | **0.7247** | **0.7226** | **0.8337** |
+
+Config: Same as non-thinking but reasoning=True, max_tokens=4096. Reasoning via reasoning_content field (clean JSON in content). Prefix caching: ~63%. Parse failures: 46/8044 empty (0.6%). Runtime: ~291 min. Cost: ~$6.73. Thinking adds +0.058 Macro-F1 at 671B scale.
+
+### Experiment 17: Classic ML Subcategory (TF-IDF + XGBoost, 48 labels, 32,089 train)
+
+| Category | Precision | Recall | F1 | ROC-AUC |
+|----------|-----------|--------|------|---------|
+| ATC Issue | 0.6159 | 0.7660 | 0.6828 | 0.9285 |
+| Aircraft Equipment Problem: Critical | 0.6122 | 0.8026 | 0.6946 | 0.9317 |
+| Aircraft Equipment Problem: Less Severe | 0.3686 | 0.5801 | 0.4508 | 0.8224 |
+| Airspace Violation | 0.5000 | 0.7192 | 0.5899 | 0.9374 |
+| Conflict: Airborne Conflict | 0.5433 | 0.7515 | 0.6306 | 0.9251 |
+| Conflict: Ground Conflict | 0.4544 | 0.7145 | 0.5555 | 0.9270 |
+| Conflict: NMAC | 0.5806 | 0.7840 | 0.6671 | 0.9604 |
+| Deviation - Altitude: Crossing Restriction Not Met | 0.6417 | 0.6763 | 0.6586 | 0.9788 |
+| Deviation - Altitude: Excursion From Assigned Altitude | 0.3892 | 0.6597 | 0.4895 | 0.9083 |
+| Deviation - Altitude: Overshoot | 0.5007 | 0.6914 | 0.5808 | 0.9397 |
+| Deviation - Altitude: Undershoot | 0.4531 | 0.4328 | 0.4427 | 0.8973 |
+| Deviation - Procedural: Clearance | 0.6612 | 0.7530 | 0.7041 | 0.8835 |
+| Deviation - Procedural: FAR | 0.4395 | 0.6442 | 0.5225 | 0.8145 |
+| Deviation - Procedural: Hazardous Material Violation | 0.8974 | 0.7609 | 0.8235 | 0.9888 |
+| Deviation - Procedural: Landing Without Clearance | 0.5882 | 0.1724 | 0.2667 | 0.9640 |
+| Deviation - Procedural: MEL/CDL | 0.4533 | 0.4789 | 0.4658 | 0.9759 |
+| Deviation - Procedural: Maintenance | 0.5375 | 0.6938 | 0.6058 | 0.9601 |
+| Deviation - Procedural: Other/Unknown | 0.1567 | 0.1789 | 0.1671 | 0.7244 |
+| Deviation - Procedural: Published Material/Policy | 0.6235 | 0.6423 | 0.6328 | 0.7600 |
+| Deviation - Procedural: Unauthorized Flight Operations (UAS) | 0.4375 | 0.4828 | 0.4590 | 0.9634 |
+| Deviation - Procedural: Weight And Balance | 0.4615 | 0.2449 | 0.3200 | 0.9859 |
+| Deviation - Speed | 0.4980 | 0.5431 | 0.5196 | 0.9497 |
+| Deviation - Track/Heading | 0.6056 | 0.7327 | 0.6631 | 0.9296 |
+| Flight Deck/Cabin Event: Illness/Injury | 0.6415 | 0.6018 | 0.6210 | 0.9755 |
+| Flight Deck/Cabin Event: Other/Unknown | 0.2805 | 0.3780 | 0.3221 | 0.8943 |
+| Flight Deck/Cabin Event: Passenger Misconduct | 0.8000 | 0.7792 | 0.7895 | 0.9850 |
+| Flight Deck/Cabin Event: Smoke/Fire/Fumes/Odor | 0.7778 | 0.8561 | 0.8151 | 0.9920 |
+| Ground Event/Encounter: Gear Up Landing | 0.2692 | 0.2188 | 0.2414 | 0.9701 |
+| Ground Event/Encounter: Ground Equipment Issue | 0.3333 | 0.0714 | 0.1176 | 0.8996 |
+| Ground Event/Encounter: Ground Strike - Aircraft | 0.5577 | 0.4833 | 0.5179 | 0.9823 |
+| Ground Event/Encounter: Loss Of Aircraft Control | 0.4658 | 0.5743 | 0.5144 | 0.9609 |
+| Ground Event/Encounter: Object | 0.7500 | 0.1957 | 0.3103 | 0.9778 |
+| Ground Event/Encounter: Other/Unknown | 0.2082 | 0.4064 | 0.2753 | 0.8561 |
+| Ground Event/Encounter: Vehicle | 0.2500 | 0.1224 | 0.1644 | 0.9526 |
+| Ground Event/Encounter: Weather/Turbulence | 0.0000 | 0.0000 | 0.0000 | 0.9680 |
+| Ground Excursion: Runway | 0.5865 | 0.5778 | 0.5821 | 0.9865 |
+| Ground Excursion: Taxiway | 0.6154 | 0.2353 | 0.3404 | 0.9873 |
+| Ground Incursion: Runway | 0.6180 | 0.8240 | 0.7063 | 0.9767 |
+| Ground Incursion: Taxiway | 0.4000 | 0.3585 | 0.3781 | 0.9660 |
+| Inflight Event/Encounter: Bird/Animal | 0.4808 | 0.7812 | 0.5952 | 0.9513 |
+| Inflight Event/Encounter: CFTT/CFIT | 0.6575 | 0.6704 | 0.6639 | 0.9577 |
+| Inflight Event/Encounter: Fuel Issue | 0.6786 | 0.8559 | 0.7570 | 0.9891 |
+| Inflight Event/Encounter: Loss Of Aircraft Control | 0.3820 | 0.5065 | 0.4355 | 0.9177 |
+| Inflight Event/Encounter: Other/Unknown | 0.2277 | 0.2782 | 0.2505 | 0.7877 |
+| Inflight Event/Encounter: Unstabilized Approach | 0.4201 | 0.4176 | 0.4189 | 0.9345 |
+| Inflight Event/Encounter: VFR In IMC | 0.6173 | 0.5208 | 0.5650 | 0.9788 |
+| Inflight Event/Encounter: Wake Vortex Encounter | 0.8018 | 0.8241 | 0.8128 | 0.9895 |
+| Inflight Event/Encounter: Weather/Turbulence | 0.6254 | 0.7766 | 0.6928 | 0.9418 |
+| **MACRO** | **0.5097** | **0.5463** | **0.5100** | **0.9341** |
+| **MICRO** | **0.5405** | **0.6731** | **0.5995** | **0.9556** |
+
+Config: Same TF-IDF + XGBoost params as parent baseline. 48 independent binary classifiers. Runtime: 142 min on Modal 32-core CPU (~$3.03).
+
+### Experiment 18: Classic ML Tuned Subcategory (TF-IDF + XGBoost, 48 labels, 32,089 train)
+
+| Category | Precision | Recall | F1 | ROC-AUC |
+|----------|-----------|--------|------|---------|
+| ATC Issue | 0.6210 | 0.7740 | 0.6891 | 0.9272 |
+| Aircraft Equipment Problem: Critical | 0.6235 | 0.8018 | 0.7015 | 0.9320 |
+| Aircraft Equipment Problem: Less Severe | 0.3755 | 0.5957 | 0.4606 | 0.8217 |
+| Airspace Violation | 0.4989 | 0.7035 | 0.5838 | 0.9350 |
+| Conflict: Airborne Conflict | 0.5467 | 0.7596 | 0.6358 | 0.9269 |
+| Conflict: Ground Conflict | 0.4560 | 0.7178 | 0.5577 | 0.9255 |
+| Conflict: NMAC | 0.5729 | 0.7619 | 0.6540 | 0.9615 |
+| Deviation - Altitude: Crossing Restriction Not Met | 0.6482 | 0.6805 | 0.6640 | 0.9801 |
+| Deviation - Altitude: Excursion From Assigned Altitude | 0.3852 | 0.6548 | 0.4851 | 0.9062 |
+| Deviation - Altitude: Overshoot | 0.5000 | 0.6836 | 0.5776 | 0.9388 |
+| Deviation - Altitude: Undershoot | 0.4560 | 0.4254 | 0.4402 | 0.8928 |
+| Deviation - Procedural: Clearance | 0.6639 | 0.7555 | 0.7068 | 0.8831 |
+| Deviation - Procedural: FAR | 0.4314 | 0.6382 | 0.5148 | 0.8111 |
+| Deviation - Procedural: Hazardous Material Violation | 0.8571 | 0.7826 | 0.8182 | 0.9882 |
+| Deviation - Procedural: Landing Without Clearance | 0.7143 | 0.1724 | 0.2778 | 0.9619 |
+| Deviation - Procedural: MEL/CDL | 0.4458 | 0.5211 | 0.4805 | 0.9803 |
+| Deviation - Procedural: Maintenance | 0.5324 | 0.7016 | 0.6054 | 0.9600 |
+| Deviation - Procedural: Other/Unknown | 0.1734 | 0.2263 | 0.1963 | 0.7221 |
+| Deviation - Procedural: Published Material/Policy | 0.6236 | 0.6460 | 0.6346 | 0.7612 |
+| Deviation - Procedural: Unauthorized Flight Operations (UAS) | 0.4412 | 0.5172 | 0.4762 | 0.9750 |
+| Deviation - Procedural: Weight And Balance | 0.4000 | 0.2449 | 0.3038 | 0.9844 |
+| Deviation - Speed | 0.5233 | 0.5819 | 0.5510 | 0.9507 |
+| Deviation - Track/Heading | 0.5959 | 0.7178 | 0.6512 | 0.9301 |
+| Flight Deck/Cabin Event: Illness/Injury | 0.6436 | 0.5752 | 0.6075 | 0.9748 |
+| Flight Deck/Cabin Event: Other/Unknown | 0.2467 | 0.3415 | 0.2864 | 0.8896 |
+| Flight Deck/Cabin Event: Passenger Misconduct | 0.7945 | 0.7532 | 0.7733 | 0.9851 |
+| Flight Deck/Cabin Event: Smoke/Fire/Fumes/Odor | 0.7888 | 0.8597 | 0.8227 | 0.9927 |
+| Ground Event/Encounter: Gear Up Landing | 0.3077 | 0.2500 | 0.2759 | 0.9694 |
+| Ground Event/Encounter: Ground Equipment Issue | 0.4167 | 0.1190 | 0.1852 | 0.9072 |
+| Ground Event/Encounter: Ground Strike - Aircraft | 0.5686 | 0.4833 | 0.5225 | 0.9791 |
+| Ground Event/Encounter: Loss Of Aircraft Control | 0.4560 | 0.5823 | 0.5115 | 0.9614 |
+| Ground Event/Encounter: Object | 0.6923 | 0.1957 | 0.3051 | 0.9801 |
+| Ground Event/Encounter: Other/Unknown | 0.2087 | 0.4183 | 0.2785 | 0.8545 |
+| Ground Event/Encounter: Vehicle | 0.1500 | 0.0612 | 0.0870 | 0.9572 |
+| Ground Event/Encounter: Weather/Turbulence | 0.5000 | 0.0400 | 0.0741 | 0.9629 |
+| Ground Excursion: Runway | 0.5878 | 0.5704 | 0.5789 | 0.9835 |
+| Ground Excursion: Taxiway | 0.5556 | 0.1471 | 0.2326 | 0.9883 |
+| Ground Incursion: Runway | 0.6302 | 0.8219 | 0.7134 | 0.9755 |
+| Ground Incursion: Taxiway | 0.3600 | 0.3396 | 0.3495 | 0.9624 |
+| Inflight Event/Encounter: Bird/Animal | 0.4808 | 0.7812 | 0.5952 | 0.9517 |
+| Inflight Event/Encounter: CFTT/CFIT | 0.6559 | 0.6816 | 0.6685 | 0.9571 |
+| Inflight Event/Encounter: Fuel Issue | 0.6786 | 0.8559 | 0.7570 | 0.9917 |
+| Inflight Event/Encounter: Loss Of Aircraft Control | 0.3697 | 0.5032 | 0.4262 | 0.9188 |
+| Inflight Event/Encounter: Other/Unknown | 0.2310 | 0.2823 | 0.2541 | 0.7805 |
+| Inflight Event/Encounter: Unstabilized Approach | 0.4540 | 0.4647 | 0.4593 | 0.9348 |
+| Inflight Event/Encounter: VFR In IMC | 0.6049 | 0.5104 | 0.5537 | 0.9762 |
+| Inflight Event/Encounter: Wake Vortex Encounter | 0.8037 | 0.7963 | 0.8000 | 0.9901 |
+| Inflight Event/Encounter: Weather/Turbulence | 0.6211 | 0.7827 | 0.6926 | 0.9446 |
+| **MACRO** | **0.5186** | **0.5475** | **0.5099** | **0.9339** |
+| **MICRO** | **0.5399** | **0.6746** | **0.5998** | **0.9553** |
+
+Config: Same params as baseline, retrained via Phase 3. Delta vs subcategory baseline: Macro-F1 -0.0001, Micro-F1 +0.0003. Near-identical.
+
+### Experiment 19: Mistral Large 3 Zero-Shot Subcategory (48 labels, taxonomy prompt)
+
+| Category | Precision | Recall | F1 | ROC-AUC |
+|----------|-----------|--------|------|---------|
+| ATC Issue | 0.3989 | 0.8173 | 0.5361 | 0.7825 |
+| Aircraft Equipment Problem: Critical | 0.6393 | 0.7186 | 0.6766 | 0.8193 |
+| Aircraft Equipment Problem: Less Severe | 0.3729 | 0.3247 | 0.3472 | 0.6249 |
+| Airspace Violation | 0.6446 | 0.4921 | 0.5581 | 0.7405 |
+| Conflict: Airborne Conflict | 0.5376 | 0.7840 | 0.6378 | 0.8447 |
+| Conflict: Ground Conflict | 0.7741 | 0.3409 | 0.4734 | 0.6664 |
+| Conflict: NMAC | 0.5281 | 0.7517 | 0.6204 | 0.8493 |
+| Deviation - Altitude: Crossing Restriction Not Met | 0.6293 | 0.6763 | 0.6520 | 0.8320 |
+| Deviation - Altitude: Excursion From Assigned Altitude | 0.3290 | 0.6468 | 0.4361 | 0.7681 |
+| Deviation - Altitude: Overshoot | 0.5169 | 0.2988 | 0.3787 | 0.6399 |
+| Deviation - Altitude: Undershoot | 0.0060 | 0.0075 | 0.0066 | 0.4932 |
+| Deviation - Procedural: Clearance | 0.5584 | 0.5076 | 0.5318 | 0.6703 |
+| Deviation - Procedural: FAR | 0.7530 | 0.0827 | 0.1490 | 0.5382 |
+| Deviation - Procedural: Hazardous Material Violation | 0.8000 | 0.7826 | 0.7912 | 0.8907 |
+| Deviation - Procedural: Landing Without Clearance | 0.4727 | 0.4483 | 0.4602 | 0.7223 |
+| Deviation - Procedural: MEL/CDL | 0.2783 | 0.9014 | 0.4252 | 0.9403 |
+| Deviation - Procedural: Maintenance | 0.4564 | 0.6899 | 0.5494 | 0.8313 |
+| Deviation - Procedural: Other/Unknown | 0.0246 | 0.0158 | 0.0192 | 0.5003 |
+| Deviation - Procedural: Published Material/Policy | 0.6301 | 0.2883 | 0.3956 | 0.5872 |
+| Deviation - Procedural: Unauthorized Flight Operations (UAS) | 0.5676 | 0.7241 | 0.6364 | 0.8611 |
+| Deviation - Procedural: Weight And Balance | 0.1928 | 0.3265 | 0.2424 | 0.6591 |
+| Deviation - Speed | 0.6058 | 0.5431 | 0.5727 | 0.7663 |
+| Deviation - Track/Heading | 0.6729 | 0.6550 | 0.6638 | 0.8064 |
+| Flight Deck/Cabin Event: Illness/Injury | 0.4464 | 0.6637 | 0.5338 | 0.8260 |
+| Flight Deck/Cabin Event: Other/Unknown | 0.3187 | 0.1768 | 0.2275 | 0.5845 |
+| Flight Deck/Cabin Event: Passenger Misconduct | 0.8816 | 0.8701 | 0.8758 | 0.9345 |
+| Flight Deck/Cabin Event: Smoke/Fire/Fumes/Odor | 0.7814 | 0.8741 | 0.8251 | 0.9327 |
+| Ground Event/Encounter: Gear Up Landing | 0.2989 | 0.8125 | 0.4370 | 0.9024 |
+| Ground Event/Encounter: Ground Equipment Issue | 0.0556 | 0.0238 | 0.0333 | 0.5108 |
+| Ground Event/Encounter: Ground Strike - Aircraft | 0.1604 | 0.5000 | 0.2429 | 0.7401 |
+| Ground Event/Encounter: Loss Of Aircraft Control | 0.5507 | 0.5020 | 0.5252 | 0.7444 |
+| Ground Event/Encounter: Object | 0.1100 | 0.4783 | 0.1789 | 0.7280 |
+| Ground Event/Encounter: Other/Unknown | 0.2215 | 0.2869 | 0.2500 | 0.6271 |
+| Ground Event/Encounter: Vehicle | 0.1875 | 0.6735 | 0.2933 | 0.8278 |
+| Ground Event/Encounter: Weather/Turbulence | 0.0714 | 0.1600 | 0.0988 | 0.5767 |
+| Ground Excursion: Runway | 0.6296 | 0.7556 | 0.6869 | 0.8740 |
+| Ground Excursion: Taxiway | 0.5455 | 0.3529 | 0.4286 | 0.6758 |
+| Ground Incursion: Runway | 0.6421 | 0.7764 | 0.7029 | 0.8743 |
+| Ground Incursion: Taxiway | 0.4390 | 0.1698 | 0.2449 | 0.5835 |
+| Inflight Event/Encounter: Bird/Animal | 0.3733 | 0.8750 | 0.5234 | 0.9346 |
+| Inflight Event/Encounter: CFTT/CFIT | 0.7627 | 0.2514 | 0.3782 | 0.6239 |
+| Inflight Event/Encounter: Fuel Issue | 0.3722 | 0.6036 | 0.4605 | 0.7947 |
+| Inflight Event/Encounter: Loss Of Aircraft Control | 0.4415 | 0.2677 | 0.3333 | 0.6271 |
+| Inflight Event/Encounter: Other/Unknown | 0.1432 | 0.2137 | 0.1715 | 0.5865 |
+| Inflight Event/Encounter: Unstabilized Approach | 0.3454 | 0.5059 | 0.4105 | 0.7426 |
+| Inflight Event/Encounter: VFR In IMC | 0.4127 | 0.8125 | 0.5474 | 0.8992 |
+| Inflight Event/Encounter: Wake Vortex Encounter | 0.6494 | 0.9259 | 0.7634 | 0.9595 |
+| Inflight Event/Encounter: Weather/Turbulence | 0.7770 | 0.5189 | 0.6223 | 0.7510 |
+| **MACRO** | **0.4585** | **0.5182** | **0.4491** | **0.7437** |
+| **MICRO** | **0.4999** | **0.4878** | **0.4938** | **0.7298** |
+
+Config: mistral-large-latest, real-time API (batch API was stuck). 48-label taxonomy-enriched prompt. Runtime: ~119 min, 7 network errors, 0.1% parse failures. Cost: paid plan.
+
+### Experiment 20: DeepSeek V3.2 Zero-Shot Subcategory (48 labels, taxonomy prompt)
+
+| Category | Precision | Recall | F1 | ROC-AUC |
+|----------|-----------|--------|------|---------|
+| ATC Issue | 0.5380 | 0.4050 | 0.4621 | 0.6669 |
+| Aircraft Equipment Problem: Critical | 0.6441 | 0.6846 | 0.6637 | 0.8049 |
+| Aircraft Equipment Problem: Less Severe | 0.4707 | 0.2161 | 0.2962 | 0.5914 |
+| Airspace Violation | 0.6875 | 0.3123 | 0.4295 | 0.6532 |
+| Conflict: Airborne Conflict | 0.6204 | 0.5669 | 0.5925 | 0.7591 |
+| Conflict: Ground Conflict | 0.7966 | 0.3768 | 0.5116 | 0.6844 |
+| Conflict: NMAC | 0.6031 | 0.7211 | 0.6569 | 0.8418 |
+| Deviation - Altitude: Crossing Restriction Not Met | 0.6933 | 0.6473 | 0.6695 | 0.8192 |
+| Deviation - Altitude: Excursion From Assigned Altitude | 0.3233 | 0.6774 | 0.4377 | 0.7793 |
+| Deviation - Altitude: Overshoot | 0.7857 | 0.0645 | 0.1191 | 0.5316 |
+| Deviation - Altitude: Undershoot | 0.0263 | 0.0149 | 0.0190 | 0.5028 |
+| Deviation - Procedural: Clearance | 0.4883 | 0.4975 | 0.4929 | 0.6403 |
+| Deviation - Procedural: FAR | 0.7196 | 0.1019 | 0.1784 | 0.5463 |
+| Deviation - Procedural: Hazardous Material Violation | 0.8250 | 0.7174 | 0.7674 | 0.8583 |
+| Deviation - Procedural: Landing Without Clearance | 0.3898 | 0.3966 | 0.3932 | 0.6960 |
+| Deviation - Procedural: MEL/CDL | 0.3471 | 0.8310 | 0.4896 | 0.9085 |
+| Deviation - Procedural: Maintenance | 0.6147 | 0.5504 | 0.5808 | 0.7695 |
+| Deviation - Procedural: Other/Unknown | 0.0462 | 0.1000 | 0.0632 | 0.5250 |
+| Deviation - Procedural: Published Material/Policy | 0.6495 | 0.1953 | 0.3003 | 0.5622 |
+| Deviation - Procedural: Unauthorized Flight Operations (UAS) | 0.4318 | 0.6552 | 0.5205 | 0.8260 |
+| Deviation - Procedural: Weight And Balance | 0.2424 | 0.1633 | 0.1951 | 0.5801 |
+| Deviation - Speed | 0.7619 | 0.4138 | 0.5363 | 0.7050 |
+| Deviation - Track/Heading | 0.7946 | 0.4696 | 0.5904 | 0.7268 |
+| Flight Deck/Cabin Event: Illness/Injury | 0.4512 | 0.6549 | 0.5343 | 0.8217 |
+| Flight Deck/Cabin Event: Other/Unknown | 0.1786 | 0.0305 | 0.0521 | 0.5138 |
+| Flight Deck/Cabin Event: Passenger Misconduct | 0.9492 | 0.7273 | 0.8235 | 0.8634 |
+| Flight Deck/Cabin Event: Smoke/Fire/Fumes/Odor | 0.8479 | 0.8022 | 0.8244 | 0.8985 |
+| Ground Event/Encounter: Gear Up Landing | 0.3200 | 0.7500 | 0.4486 | 0.8718 |
+| Ground Event/Encounter: Ground Equipment Issue | 0.1053 | 0.1429 | 0.1212 | 0.5682 |
+| Ground Event/Encounter: Ground Strike - Aircraft | 0.1678 | 0.4000 | 0.2365 | 0.6925 |
+| Ground Event/Encounter: Loss Of Aircraft Control | 0.6754 | 0.3092 | 0.4242 | 0.6522 |
+| Ground Event/Encounter: Object | 0.1646 | 0.2826 | 0.2080 | 0.6372 |
+| Ground Event/Encounter: Other/Unknown | 0.2880 | 0.2191 | 0.2489 | 0.6008 |
+| Ground Event/Encounter: Vehicle | 0.1942 | 0.5510 | 0.2872 | 0.7685 |
+| Ground Event/Encounter: Weather/Turbulence | 0.0667 | 0.0800 | 0.0727 | 0.5382 |
+| Ground Excursion: Runway | 0.6383 | 0.6667 | 0.6522 | 0.8301 |
+| Ground Excursion: Taxiway | 0.4783 | 0.3235 | 0.3860 | 0.6610 |
+| Ground Incursion: Runway | 0.7759 | 0.6812 | 0.7255 | 0.8343 |
+| Ground Incursion: Taxiway | 0.5152 | 0.1604 | 0.2446 | 0.5792 |
+| Inflight Event/Encounter: Bird/Animal | 0.4375 | 0.8750 | 0.5833 | 0.9352 |
+| Inflight Event/Encounter: CFTT/CFIT | 0.7710 | 0.2821 | 0.4131 | 0.6391 |
+| Inflight Event/Encounter: Fuel Issue | 0.3455 | 0.3423 | 0.3439 | 0.6666 |
+| Inflight Event/Encounter: Loss Of Aircraft Control | 0.4607 | 0.1323 | 0.2055 | 0.5630 |
+| Inflight Event/Encounter: Other/Unknown | 0.1422 | 0.1210 | 0.1307 | 0.5488 |
+| Inflight Event/Encounter: Unstabilized Approach | 0.3070 | 0.5706 | 0.3992 | 0.7713 |
+| Inflight Event/Encounter: VFR In IMC | 0.5573 | 0.7604 | 0.6432 | 0.8765 |
+| Inflight Event/Encounter: Wake Vortex Encounter | 0.5506 | 0.9074 | 0.6853 | 0.9486 |
+| Inflight Event/Encounter: Weather/Turbulence | 0.7552 | 0.4896 | 0.5941 | 0.7358 |
+| **MACRO** | **0.4926** | **0.4384** | **0.4220** | **0.7082** |
+| **MICRO** | **0.5361** | **0.3960** | **0.4555** | **0.6881** |
+
+Config: deepseek-ai/DeepSeek-V3.2, DeepInfra API, temperature=0.0, max_tokens=500. Prefix caching: ~79%. Parse failures: 3/8017 (0.0%). Runtime: ~7.5 min. Cost: ~$1.92.
+
+### Experiment 21: DeepSeek V3.2 Zero-Shot + Thinking Subcategory (48 labels, taxonomy prompt)
+
+| Category | Precision | Recall | F1 | ROC-AUC |
+|----------|-----------|--------|------|---------|
+| ATC Issue | 0.5174 | 0.7645 | 0.6171 | 0.8092 |
+| Aircraft Equipment Problem: Critical | 0.6796 | 0.5983 | 0.6364 | 0.7713 |
+| Aircraft Equipment Problem: Less Severe | 0.5035 | 0.2989 | 0.3751 | 0.6292 |
+| Airspace Violation | 0.7045 | 0.5489 | 0.6170 | 0.7697 |
+| Conflict: Airborne Conflict | 0.6240 | 0.5639 | 0.5924 | 0.7581 |
+| Conflict: Ground Conflict | 0.7921 | 0.5595 | 0.6558 | 0.7737 |
+| Conflict: NMAC | 0.6266 | 0.6735 | 0.6492 | 0.8209 |
+| Deviation - Altitude: Crossing Restriction Not Met | 0.7043 | 0.6722 | 0.6879 | 0.8317 |
+| Deviation - Altitude: Excursion From Assigned Altitude | 0.4784 | 0.5371 | 0.5061 | 0.7440 |
+| Deviation - Altitude: Overshoot | 0.7320 | 0.2188 | 0.3368 | 0.6066 |
+| Deviation - Altitude: Undershoot | 0.0211 | 0.0224 | 0.0217 | 0.5024 |
+| Deviation - Procedural: Clearance | 0.7198 | 0.3990 | 0.5134 | 0.6672 |
+| Deviation - Procedural: FAR | 0.7172 | 0.0688 | 0.1255 | 0.5312 |
+| Deviation - Procedural: Hazardous Material Violation | 0.8182 | 0.7826 | 0.8000 | 0.8908 |
+| Deviation - Procedural: Landing Without Clearance | 0.5750 | 0.3966 | 0.4694 | 0.6972 |
+| Deviation - Procedural: MEL/CDL | 0.3846 | 0.7042 | 0.4975 | 0.8471 |
+| Deviation - Procedural: Maintenance | 0.5327 | 0.6628 | 0.5907 | 0.8217 |
+| Deviation - Procedural: Other/Unknown | 0.0556 | 0.0421 | 0.0479 | 0.5124 |
+| Deviation - Procedural: Published Material/Policy | 0.7243 | 0.1832 | 0.2924 | 0.5681 |
+| Deviation - Procedural: Unauthorized Flight Operations (UAS) | 0.4681 | 0.7586 | 0.5789 | 0.8777 |
+| Deviation - Procedural: Weight And Balance | 0.2615 | 0.3469 | 0.2982 | 0.6705 |
+| Deviation - Speed | 0.7414 | 0.3707 | 0.4943 | 0.6834 |
+| Deviation - Track/Heading | 0.7227 | 0.3802 | 0.4983 | 0.6804 |
+| Flight Deck/Cabin Event: Illness/Injury | 0.5211 | 0.6549 | 0.5804 | 0.8231 |
+| Flight Deck/Cabin Event: Other/Unknown | 0.1930 | 0.0671 | 0.0995 | 0.5306 |
+| Flight Deck/Cabin Event: Passenger Misconduct | 0.9394 | 0.8052 | 0.8671 | 0.9023 |
+| Flight Deck/Cabin Event: Smoke/Fire/Fumes/Odor | 0.7863 | 0.6619 | 0.7188 | 0.8277 |
+| Ground Event/Encounter: Gear Up Landing | 0.4667 | 0.4375 | 0.4516 | 0.7177 |
+| Ground Event/Encounter: Ground Equipment Issue | 0.1216 | 0.2143 | 0.1552 | 0.6031 |
+| Ground Event/Encounter: Ground Strike - Aircraft | 0.1770 | 0.3333 | 0.2312 | 0.6608 |
+| Ground Event/Encounter: Loss Of Aircraft Control | 0.6127 | 0.3494 | 0.4450 | 0.6712 |
+| Ground Event/Encounter: Object | 0.1515 | 0.2174 | 0.1786 | 0.6052 |
+| Ground Event/Encounter: Other/Unknown | 0.1915 | 0.0359 | 0.0604 | 0.5155 |
+| Ground Event/Encounter: Vehicle | 0.2676 | 0.3878 | 0.3167 | 0.6906 |
+| Ground Event/Encounter: Weather/Turbulence | 0.0556 | 0.1200 | 0.0759 | 0.5568 |
+| Ground Excursion: Runway | 0.7045 | 0.4593 | 0.5561 | 0.7280 |
+| Ground Excursion: Taxiway | 0.5556 | 0.2941 | 0.3846 | 0.6466 |
+| Ground Incursion: Runway | 0.8328 | 0.5259 | 0.6447 | 0.7596 |
+| Ground Incursion: Taxiway | 0.6190 | 0.1226 | 0.2047 | 0.5608 |
+| Inflight Event/Encounter: Bird/Animal | 0.5000 | 0.4062 | 0.4483 | 0.7023 |
+| Inflight Event/Encounter: CFTT/CFIT | 0.7143 | 0.1257 | 0.2138 | 0.5617 |
+| Inflight Event/Encounter: Fuel Issue | 0.4203 | 0.5225 | 0.4659 | 0.7562 |
+| Inflight Event/Encounter: Loss Of Aircraft Control | 0.5632 | 0.1581 | 0.2469 | 0.5766 |
+| Inflight Event/Encounter: Other/Unknown | 0.2500 | 0.0363 | 0.0634 | 0.5164 |
+| Inflight Event/Encounter: Unstabilized Approach | 0.3218 | 0.3824 | 0.3495 | 0.6824 |
+| Inflight Event/Encounter: VFR In IMC | 0.6452 | 0.2083 | 0.3150 | 0.6035 |
+| Inflight Event/Encounter: Wake Vortex Encounter | 0.7857 | 0.6111 | 0.6875 | 0.8044 |
+| Inflight Event/Encounter: Weather/Turbulence | 0.7054 | 0.3040 | 0.4249 | 0.6448 |
+| **MACRO** | **0.5251** | **0.3957** | **0.4185** | **0.6898** |
+| **MICRO** | **0.5989** | **0.3815** | **0.4661** | **0.6834** |
+
+Config: Same as non-thinking but reasoning=True, max_tokens=4096. 21.6% parse failures (1729/8017 empty) -- reasoning tokens exhaust max_tokens. Runtime: ~545 min. Cost: ~$5.24. Thinking HURTS subcategory: -0.003 Macro-F1.
+
+### Experiment 22: Qwen3-8B Zero-Shot Subcategory (48 labels, taxonomy prompt)
+
+| Category | Precision | Recall | F1 | ROC-AUC |
+|----------|-----------|--------|------|---------|
+| ATC Issue | 0.4428 | 0.1335 | 0.2052 | 0.5496 |
+| Aircraft Equipment Problem: Critical | 0.6245 | 0.4402 | 0.5164 | 0.6940 |
+| Aircraft Equipment Problem: Less Severe | 0.4396 | 0.0414 | 0.0756 | 0.5171 |
+| Airspace Violation | 0.6667 | 0.0442 | 0.0828 | 0.5216 |
+| Conflict: Airborne Conflict | 0.3725 | 0.7170 | 0.4903 | 0.7738 |
+| Conflict: Ground Conflict | 0.9444 | 0.0277 | 0.0539 | 0.5138 |
+| Conflict: NMAC | 0.4286 | 0.1633 | 0.2365 | 0.5730 |
+| Deviation - Altitude: Crossing Restriction Not Met | 0.4815 | 0.2158 | 0.2980 | 0.6043 |
+| Deviation - Altitude: Excursion From Assigned Altitude | 0.3620 | 0.0952 | 0.1507 | 0.5406 |
+| Deviation - Altitude: Overshoot | 0.3448 | 0.1953 | 0.2494 | 0.5850 |
+| Deviation - Altitude: Undershoot | 0.0147 | 0.0149 | 0.0148 | 0.4990 |
+| Deviation - Procedural: Clearance | 0.4883 | 0.7267 | 0.5841 | 0.7049 |
+| Deviation - Procedural: FAR | 0.2943 | 0.1878 | 0.2293 | 0.5416 |
+| Deviation - Procedural: Hazardous Material Violation | 0.4400 | 0.7174 | 0.5455 | 0.8561 |
+| Deviation - Procedural: Landing Without Clearance | 0.0553 | 0.4828 | 0.0993 | 0.7114 |
+| Deviation - Procedural: MEL/CDL | 0.2389 | 0.8310 | 0.3711 | 0.9037 |
+| Deviation - Procedural: Maintenance | 0.4000 | 0.2248 | 0.2878 | 0.6068 |
+| Deviation - Procedural: Other/Unknown | 0.0261 | 0.2526 | 0.0472 | 0.5117 |
+| Deviation - Procedural: Published Material/Policy | 0.5920 | 0.1785 | 0.2744 | 0.5478 |
+| Deviation - Procedural: Unauthorized Flight Operations (UAS) | 0.1792 | 0.6552 | 0.2815 | 0.8221 |
+| Deviation - Procedural: Weight And Balance | 0.0654 | 0.2041 | 0.0990 | 0.5931 |
+| Deviation - Speed | 0.5000 | 0.1034 | 0.1714 | 0.5502 |
+| Deviation - Track/Heading | 0.6136 | 0.0288 | 0.0549 | 0.5132 |
+| Flight Deck/Cabin Event: Illness/Injury | 0.4103 | 0.5664 | 0.4758 | 0.7774 |
+| Flight Deck/Cabin Event: Other/Unknown | 0.0788 | 0.0976 | 0.0872 | 0.5369 |
+| Flight Deck/Cabin Event: Passenger Misconduct | 0.5248 | 0.6883 | 0.5955 | 0.8411 |
+| Flight Deck/Cabin Event: Smoke/Fire/Fumes/Odor | 0.7331 | 0.6223 | 0.6732 | 0.8071 |
+| Ground Event/Encounter: Gear Up Landing | 0.1057 | 0.4062 | 0.1677 | 0.6962 |
+| Ground Event/Encounter: Ground Equipment Issue | 0.0357 | 0.0238 | 0.0286 | 0.5102 |
+| Ground Event/Encounter: Ground Strike - Aircraft | 0.0503 | 0.1667 | 0.0772 | 0.5715 |
+| Ground Event/Encounter: Loss Of Aircraft Control | 0.2876 | 0.2610 | 0.2737 | 0.6202 |
+| Ground Event/Encounter: Object | 0.0468 | 0.7391 | 0.0880 | 0.8261 |
+| Ground Event/Encounter: Other/Unknown | 0.0963 | 0.1235 | 0.1082 | 0.5430 |
+| Ground Event/Encounter: Vehicle | 0.1263 | 0.2449 | 0.1667 | 0.6172 |
+| Ground Event/Encounter: Weather/Turbulence | 0.0164 | 0.0400 | 0.0233 | 0.5162 |
+| Ground Excursion: Runway | 0.5125 | 0.3037 | 0.3814 | 0.6494 |
+| Ground Excursion: Taxiway | 0.2000 | 0.2941 | 0.2381 | 0.6446 |
+| Ground Incursion: Runway | 0.4306 | 0.1284 | 0.1978 | 0.5587 |
+| Ground Incursion: Taxiway | 0.1892 | 0.1321 | 0.1556 | 0.5622 |
+| Inflight Event/Encounter: Bird/Animal | 0.2347 | 0.7188 | 0.3538 | 0.8547 |
+| Inflight Event/Encounter: CFTT/CFIT | 0.0769 | 0.0028 | 0.0054 | 0.5006 |
+| Inflight Event/Encounter: Fuel Issue | 0.1481 | 0.1441 | 0.1461 | 0.5663 |
+| Inflight Event/Encounter: Loss Of Aircraft Control | 0.1900 | 0.1839 | 0.1869 | 0.5762 |
+| Inflight Event/Encounter: Other/Unknown | 0.0824 | 0.0605 | 0.0698 | 0.5195 |
+| Inflight Event/Encounter: Unstabilized Approach | 0.2402 | 0.3235 | 0.2757 | 0.6507 |
+| Inflight Event/Encounter: VFR In IMC | 0.2708 | 0.1354 | 0.1806 | 0.5655 |
+| Inflight Event/Encounter: Wake Vortex Encounter | 0.4437 | 0.6574 | 0.5299 | 0.8231 |
+| Inflight Event/Encounter: Weather/Turbulence | 0.4098 | 0.3468 | 0.3757 | 0.6450 |
+| **MACRO** | **0.3116** | **0.2936** | **0.2350** | **0.6294** |
+| **MICRO** | **0.3340** | **0.2789** | **0.3040** | **0.6234** |
+
+Config: Qwen3-8B, vLLM on Modal L4, taxonomy-enriched prompt. Runtime: ~30 min (~$0.40). Dramatic drop from parent: Macro-F1 0.499->0.235, Micro-F1 0.605->0.304.
 
 ---
 
@@ -791,6 +1590,37 @@ Mistral Large experiments use file-based Batch API instead of real-time API:
 - Results downloaded as JSONL, parsed via `custom_id` matching to test set ACNs
 - Mistral Large wraps JSON in markdown code fences -- stripped via regex before parsing
 
+### DeepSeek V3.2 API Specifics
+
+DeepSeek V3.2 experiments use the DeepInfra OpenAI-compatible API:
+- Endpoint: `https://api.deepinfra.com/v1/openai/chat/completions`
+- Model: `deepseek-ai/DeepSeek-V3.2`
+- temperature=0.0, max_tokens=500 (non-thinking) / 4096 (thinking)
+- 50 concurrent async requests via aiohttp
+- Taxonomy-enriched system prompt (same as Mistral Large 3)
+- Thinking mode: `reasoning_effort="high"` in request payload
+- Reasoning tokens returned via `reasoning_content` field in `choices[0].message` (NOT `<think>` blocks)
+- Content field has clean JSON -- no stripping needed
+- Prefix caching: identical system prompts get ~62-82% cache hits across requests
+- Checkpoint logic: results saved as JSON every 100 requests, resumable
+- Script: `scripts/deepseek_v32_deepinfra.py` (`--reasoning` flag for thinking mode)
+
+### DeepSeek V3.2 API Specifics
+
+DeepSeek V3.2 experiments use the DeepInfra OpenAI-compatible API:
+- Endpoint: `https://api.deepinfra.com/v1/openai/chat/completions`
+- Model: `deepseek-ai/DeepSeek-V3.2`
+- temperature=0.0, max_tokens=500 (non-thinking) / 4096 (thinking)
+- 50 concurrent async requests via aiohttp
+- Taxonomy-enriched system prompt (same as Mistral Large 3)
+- Thinking mode: `reasoning_effort="high"` in request payload
+- Reasoning tokens returned via `reasoning_content` field in `choices[0].message` (NOT `<think>` blocks)
+- Content field has clean JSON -- no stripping needed
+- Prefix caching: identical system prompts get ~62-82% cache hits across requests
+- Checkpoint logic: results saved as JSON every 100 requests, resumable
+- Script: `scripts/deepseek_v32_deepinfra.py` (`--reasoning` flag for thinking mode)
+
+
 ---
 
 ## Section 8: Model Configuration Details
@@ -801,8 +1631,10 @@ Mistral Large experiments use file-based Batch API instead of real-time API:
 |-------|------|-----------|---------|--------------|---------|
 | XGBoost | Gradient boosted trees | N/A | Apache 2.0 | N/A | Local CPU |
 | Qwen/Qwen3-8B | CausalLM (text-only) | 8B | Apache 2.0 | 4-bit NF4 (QLoRA) / FP16 (vLLM) | Modal (L4/A100) |
-| mistral-large-latest | Chat model | ~123B (est.) | Proprietary | N/A (API) | Mistral Batch API |
+| mistral-large-latest | Chat model (MoE) | 675B MoE (41B active) | Apache 2.0 | N/A (API) | Mistral Batch API |
 | Ministral-3-8B-Instruct-2512 | Multimodal (Mistral3ForConditionalGeneration) | 8B | Apache 2.0 | FP8 | Modal (L4/A100) |
+| deepseek-ai/DeepSeek-V3.2 | MoE (non-reasoning / reasoning) | 671B MoE | Proprietary | N/A (API) | DeepInfra API |
+| deepseek-ai/DeepSeek-V3.2 | MoE (non-reasoning / reasoning) | 671B MoE | Proprietary | N/A (API) | DeepInfra API |
 
 ### Classic ML (XGBoost) Configuration
 
@@ -901,6 +1733,51 @@ Result: Fine-tuning produced no improvement (Macro-F1: 0.489 vs 0.491 zero-shot)
 Reason for archival: FP8 multimodal wrapper prevented proper QLoRA; switched to Qwen3-8B
 ```
 
+### DeepSeek V3.2 Configuration
+
+```
+Model: deepseek-ai/DeepSeek-V3.2
+Architecture: Mixture of Experts (MoE), 671B total parameters
+API: DeepInfra (OpenAI-compatible endpoint)
+Temperature: 0.0
+Max Tokens: 500 (non-thinking) / 4096 (thinking)
+Concurrency: 50 async requests via aiohttp
+Thinking Mode: reasoning_effort="high" in payload
+Reasoning Output: reasoning_content field (separate from content)
+Checkpoint: results_map JSON saved every 100 requests
+```
+
+### DeepInfra Pricing (DeepSeek V3.2)
+
+| Token Type | Price per M tokens |
+|------------|-------------------|
+| Input (uncached) | $0.26 |
+| Input (cached) | $0.13 |
+| Output | $0.38 |
+
+### DeepSeek V3.2 Configuration
+
+```
+Model: deepseek-ai/DeepSeek-V3.2
+Architecture: Mixture of Experts (MoE), 671B total parameters
+API: DeepInfra (OpenAI-compatible endpoint)
+Temperature: 0.0
+Max Tokens: 500 (non-thinking) / 4096 (thinking)
+Concurrency: 50 async requests via aiohttp
+Thinking Mode: reasoning_effort="high" in payload
+Reasoning Output: reasoning_content field (separate from content)
+Checkpoint: results_map JSON saved every 100 requests
+```
+
+### DeepInfra Pricing (DeepSeek V3.2)
+
+| Token Type | Price per M tokens |
+|------------|-------------------|
+| Input (uncached) | $0.26 |
+| Input (cached) | $0.13 |
+| Output | $0.38 |
+
+
 ---
 
 ## Section 9: Compute & Cost Log
@@ -924,17 +1801,26 @@ Reason for archival: FP8 multimodal wrapper prevented proper QLoRA; switched to 
 | 13 | Few-shot taxonomy (Qwen3) | L4 (Modal) | ~33.6 min | ~$0.45 | 2026-02-14 |
 | 14 | Zero-shot LLM (Mistral Large 3) | API (Batch) | ~5 min | $0 (free tier) | 2026-02-14 |
 | 15 | Few-shot taxonomy + thinking (Qwen3) | A100 (Modal) | ~144 min | ~$6.67 | 2026-02-14 |
+| 16 | Classic ML subcategory (48 XGBoost) | 32-core CPU (Modal) | ~142 min | ~$3.03 | 2026-02-15 |
+| 17 | Zero-shot subcategory (Mistral Large 3) | API (Real-time) | ~119 min | paid plan | 2026-02-16 |
+| 18 | Zero-shot subcategory (Qwen3-8B) | L4 (Modal) | ~30 min | ~$0.40 | 2026-02-16 |
+| 19 | Zero-shot parent (DeepSeek V3.2) | API (DeepInfra) | ~6.5 min | ~$1.39 | 2026-02-16 |
+| 20 | Zero-shot subcategory (DeepSeek V3.2) | API (DeepInfra) | ~7.5 min | ~$1.92 | 2026-02-16 |
+| 21 | Zero-shot + thinking parent (DeepSeek V3.2) | API (DeepInfra) | ~291 min | ~$6.73 | 2026-02-17 |
+| 22 | Zero-shot + thinking subcategory (DeepSeek V3.2) | API (DeepInfra) | ~545 min | ~$5.24 | 2026-02-17 |
+| 23 | Classic ML tuning Phase 3 | 32-core CPU (Modal) | ~154 min | ~$3.30 | 2026-02-17 |
 
 ### Cost Summary
 
 | Category | Cost |
 |----------|------|
 | Ministral 8B (Modal) | ~$11.61 |
-| Qwen3-8B (Modal) | ~$19.05 |
-| Classic ML full (Modal CPU) | ~$0.64 |
-| Mistral Large 3 (API) | $0 (free tier) |
+| Qwen3-8B (Modal) | ~$19.45 |
+| Classic ML (Modal CPU) | ~$6.97 |
+| Mistral Large 3 (API) | paid plan |
+| DeepSeek V3.2 (DeepInfra) | ~$15.28 |
 | Classic ML 32K (local) | $0 |
-| **Total** | **~$31.30** |
+| **Total** | **~$54.30** |
 
 ### GPU Pricing Reference (Modal)
 
@@ -952,6 +1838,10 @@ Reason for archival: FP8 multimodal wrapper prevented proper QLoRA; switched to 
 |------|-------------|
 | `results/co_occurrence_heatmap.png` | 13x13 heatmap showing pairwise co-occurrence counts between all anomaly categories. Generated in Notebook 01 (data exploration). Shows that Deviation-Procedural co-occurs heavily with all other categories. |
 | `results/classic_ml_f1_barchart.png` | Bar chart comparing per-category F1 scores for the Classic ML 32K baseline. Generated in Notebook 02. Shows Conflict and Aircraft Equipment Problem as the best-performing categories. |
+
+| `results/classic_ml_subcategory_f1_barchart.png` | Bar chart comparing per-subcategory F1 scores for Classic ML subcategory baseline (48 labels). Generated in Notebook 05. |
+
+| `results/classic_ml_subcategory_f1_barchart.png` | Bar chart comparing per-subcategory F1 scores for Classic ML subcategory baseline (48 labels). Generated in Notebook 05. |
 
 Note: Additional plots (comparison charts, confusion matrices, etc.) may be generated during thesis writing but are not yet in the results directory. The thesis writer should create additional visualizations from the per-category metrics tables above.
 
@@ -1013,69 +1903,156 @@ Deviation-Procedural appears in 8 of top 10 combinations (reflecting its 65.4% p
 
 ## Section 12: Error Analysis Hints
 
-### F1 Cross-Comparison Across All 13 Experiments
+### F1 Cross-Comparison Across All 16 Parent Experiments
 
-| Category | CML32K | CML164K | Q-ZS | Q-FS | Q-FT | Q-ZStx | Q-FStx | Q-FStk | ML3-ZS | ML3-FS | Min-ZS | Min-FS | Min-FT |
-|----------|--------|---------|------|------|------|--------|--------|--------|--------|--------|--------|--------|--------|
-| Aircraft Equipment Problem | 0.816 | 0.827 | 0.718 | 0.532 | 0.782 | 0.600 | 0.424 | 0.673 | 0.815 | 0.754 | 0.773 | 0.692 | 0.766 |
-| Airspace Violation | 0.568 | 0.517 | 0.297 | 0.450 | 0.120 | 0.335 | 0.458 | 0.487 | 0.516 | 0.499 | 0.317 | 0.527 | 0.320 |
-| ATC Issue | 0.672 | 0.666 | 0.456 | 0.460 | 0.384 | 0.410 | 0.482 | 0.409 | 0.531 | 0.528 | 0.485 | 0.476 | 0.482 |
-| Conflict | 0.801 | 0.810 | 0.689 | 0.730 | 0.723 | 0.690 | 0.727 | 0.744 | 0.734 | 0.739 | 0.752 | 0.719 | 0.752 |
-| Deviation - Altitude | 0.729 | 0.736 | 0.672 | 0.655 | 0.689 | 0.550 | 0.651 | 0.621 | 0.759 | 0.750 | 0.657 | 0.648 | 0.651 |
-| Deviation - Procedural | 0.795 | 0.795 | 0.353 | 0.200 | 0.749 | 0.770 | 0.507 | 0.507 | 0.793 | 0.767 | 0.607 | 0.395 | 0.600 |
-| Deviation - Speed | 0.577 | 0.512 | 0.545 | 0.494 | 0.494 | 0.428 | 0.489 | 0.438 | 0.612 | 0.595 | 0.536 | 0.512 | 0.535 |
-| Deviation - Track/Heading | 0.655 | 0.646 | 0.411 | 0.474 | 0.487 | 0.277 | 0.495 | 0.318 | 0.680 | 0.687 | 0.538 | 0.574 | 0.538 |
-| Flight Deck/Cabin Event | 0.738 | 0.716 | 0.231 | 0.490 | 0.359 | 0.540 | 0.675 | 0.676 | 0.660 | 0.693 | 0.236 | 0.442 | 0.243 |
-| Ground Event/Encounter | 0.592 | 0.574 | 0.312 | 0.103 | 0.518 | 0.405 | 0.430 | 0.471 | 0.546 | 0.520 | 0.396 | 0.445 | 0.397 |
-| Ground Excursion | 0.572 | 0.566 | 0.403 | 0.295 | 0.385 | 0.404 | 0.348 | 0.545 | 0.610 | 0.552 | 0.350 | 0.480 | 0.334 |
-| Ground Incursion | 0.729 | 0.698 | 0.415 | 0.463 | 0.490 | 0.519 | 0.580 | 0.508 | 0.668 | 0.660 | 0.335 | 0.615 | 0.346 |
-| Inflight Event/Encounter | 0.734 | 0.747 | 0.464 | 0.536 | 0.446 | 0.559 | 0.567 | 0.524 | 0.628 | 0.574 | 0.395 | 0.491 | 0.397 |
-| **MACRO** | **0.691** | **0.678** | **0.459** | **0.452** | **0.510** | **0.499** | **0.526** | **0.533** | **0.658** | **0.640** | **0.491** | **0.540** | **0.489** |
-| **MICRO** | **0.746** | **0.739** | **0.473** | **0.467** | **0.632** | **0.605** | **0.544** | **0.556** | **0.712** | **0.686** | **0.543** | **0.536** | **0.541** |
+| Category | CML | CMLf | CMLt | Q-ZS | Q-FS | Q-FT | Q-ZSt | Q-FSt | Q-FStk | ML3-ZS | ML3-FS | Min-ZS | Min-FS | Min-FT | DS-ZS | DS-ZStk |
+|----------|-----|------|------|------|------|------|-------|-------|--------|--------|--------|--------|--------|--------|-------|---------|
+| Aircraft Equipment Problem | 0.816 | 0.827 | 0.818 | 0.718 | 0.532 | 0.783 | 0.600 | 0.424 | 0.673 | 0.816 | 0.754 | 0.773 | 0.692 | 0.766 | 0.770 | 0.820 |
+| Airspace Violation | 0.568 | 0.517 | 0.586 | 0.297 | 0.450 | 0.120 | 0.335 | 0.459 | 0.487 | 0.516 | 0.499 | 0.318 | 0.527 | 0.320 | 0.460 | 0.586 |
+| ATC Issue | 0.672 | 0.666 | 0.671 | 0.456 | 0.460 | 0.384 | 0.410 | 0.482 | 0.409 | 0.531 | 0.528 | 0.485 | 0.476 | 0.482 | 0.376 | 0.536 |
+| Conflict | 0.801 | 0.810 | 0.800 | 0.689 | 0.730 | 0.724 | 0.690 | 0.727 | 0.744 | 0.734 | 0.739 | 0.753 | 0.720 | 0.752 | 0.777 | 0.837 |
+| Deviation - Altitude | 0.729 | 0.736 | 0.729 | 0.672 | 0.655 | 0.689 | 0.551 | 0.651 | 0.622 | 0.759 | 0.750 | 0.657 | 0.648 | 0.651 | 0.752 | 0.775 |
+| Deviation - Procedural | 0.795 | 0.795 | 0.793 | 0.353 | 0.200 | 0.749 | 0.770 | 0.507 | 0.507 | 0.793 | 0.767 | 0.607 | 0.395 | 0.600 | 0.768 | 0.757 |
+| Deviation - Speed | 0.577 | 0.512 | 0.564 | 0.545 | 0.494 | 0.494 | 0.428 | 0.490 | 0.438 | 0.612 | 0.595 | 0.536 | 0.512 | 0.535 | 0.494 | 0.594 |
+| Deviation - Track/Heading | 0.655 | 0.646 | 0.648 | 0.411 | 0.474 | 0.487 | 0.277 | 0.495 | 0.318 | 0.680 | 0.687 | 0.538 | 0.574 | 0.538 | 0.651 | 0.690 |
+| Flight Deck/Cabin Event | 0.738 | 0.716 | 0.741 | 0.231 | 0.490 | 0.359 | 0.540 | 0.675 | 0.676 | 0.660 | 0.693 | 0.236 | 0.442 | 0.243 | 0.671 | 0.722 |
+| Ground Event/Encounter | 0.592 | 0.574 | 0.593 | 0.312 | 0.103 | 0.518 | 0.405 | 0.430 | 0.471 | 0.546 | 0.520 | 0.396 | 0.445 | 0.397 | 0.515 | 0.549 |
+| Ground Excursion | 0.572 | 0.566 | 0.609 | 0.403 | 0.295 | 0.385 | 0.404 | 0.348 | 0.546 | 0.610 | 0.552 | 0.350 | 0.480 | 0.334 | 0.622 | 0.635 |
+| Ground Incursion | 0.729 | 0.698 | 0.720 | 0.415 | 0.463 | 0.490 | 0.519 | 0.580 | 0.508 | 0.668 | 0.660 | 0.335 | 0.615 | 0.346 | 0.649 | 0.687 |
+| Inflight Event/Encounter | 0.734 | 0.747 | 0.734 | 0.464 | 0.536 | 0.446 | 0.559 | 0.567 | 0.524 | 0.628 | 0.574 | 0.395 | 0.491 | 0.397 | 0.588 | 0.661 |
+| **MACRO** | **0.691** | **0.678** | **0.693** | **0.459** | **0.453** | **0.510** | **0.499** | **0.526** | **0.533** | **0.658** | **0.640** | **0.491** | **0.540** | **0.489** | **0.623** | **0.681** |
+| **MICRO** | **0.746** | **0.739** | **0.745** | **0.473** | **0.468** | **0.632** | **0.605** | **0.544** | **0.556** | **0.712** | **0.686** | **0.543** | **0.536** | **0.542** | **0.693** | **0.723** |
 
-Legend: CML=Classic ML, Q=Qwen3-8B, ML3=Mistral Large 3, Min=Ministral 8B, ZS=zero-shot, FS=few-shot, FT=fine-tuned, tx=taxonomy, tk=thinking
+Legend: CML=Classic ML 32K, CMLf=Classic ML 164K, CMLt=Classic ML Tuned, Q=Qwen3-8B, ML3=Mistral Large 3, Min=Ministral 8B, DS=DeepSeek V3.2, ZS=zero-shot, FS=few-shot, FT=fine-tuned, t=taxonomy, tk=thinking
 
-### Hard vs Easy Categories (across all 13 experiments)
+### Hard vs Easy Categories (across all 16 parent experiments)
 
 | Category | Min F1 | Max F1 | Range | Below 0.55 | Above 0.70 | Difficulty |
 |----------|--------|--------|-------|-----------|-----------|------------|
-| Conflict | 0.689 | 0.810 | 0.121 | 0/13 | 11/13 | EASY |
-| Deviation - Altitude | 0.550 | 0.759 | 0.208 | 0/13 | 4/13 | EASY |
-| Aircraft Equipment Problem | 0.424 | 0.827 | 0.403 | 2/13 | 8/13 | MODERATE |
-| Deviation - Procedural | 0.200 | 0.795 | 0.595 | 5/13 | 6/13 | VARIABLE |
-| Flight Deck/Cabin Event | 0.231 | 0.738 | 0.507 | 7/13 | 2/13 | HARD |
-| Inflight Event/Encounter | 0.395 | 0.747 | 0.353 | 7/13 | 2/13 | HARD |
-| Ground Incursion | 0.335 | 0.729 | 0.394 | 7/13 | 1/13 | HARD |
-| Deviation - Track/Heading | 0.277 | 0.687 | 0.410 | 8/13 | 0/13 | HARD |
-| Ground Excursion | 0.295 | 0.610 | 0.315 | 9/13 | 0/13 | VERY HARD |
-| Deviation - Speed | 0.428 | 0.612 | 0.184 | 10/13 | 0/13 | VERY HARD |
-| ATC Issue | 0.384 | 0.672 | 0.288 | 11/13 | 0/13 | VERY HARD |
-| Ground Event/Encounter | 0.103 | 0.592 | 0.489 | 11/13 | 0/13 | VERY HARD |
-| Airspace Violation | 0.120 | 0.568 | 0.448 | 12/13 | 0/13 | VERY HARD |
+| Conflict | 0.689 | 0.837 | 0.148 | 0/16 | 14/16 | EASY |
+| Deviation - Altitude | 0.551 | 0.775 | 0.225 | 0/16 | 7/16 | EASY |
+| Aircraft Equipment Problem | 0.424 | 0.827 | 0.403 | 2/16 | 11/16 | MODERATE |
+| Deviation - Procedural | 0.200 | 0.795 | 0.595 | 5/16 | 9/16 | VARIABLE |
+| Flight Deck/Cabin Event | 0.231 | 0.741 | 0.510 | 7/16 | 4/16 | HARD |
+| Ground Incursion | 0.335 | 0.729 | 0.394 | 7/16 | 2/16 | HARD |
+| Inflight Event/Encounter | 0.395 | 0.747 | 0.353 | 7/16 | 3/16 | HARD |
+| Deviation - Track/Heading | 0.277 | 0.690 | 0.413 | 7/16 | 0/16 | HARD |
+| Ground Excursion | 0.295 | 0.635 | 0.340 | 9/16 | 0/16 | VERY HARD |
+| Deviation - Speed | 0.428 | 0.612 | 0.184 | 11/16 | 0/16 | VERY HARD |
+| ATC Issue | 0.376 | 0.672 | 0.296 | 13/16 | 0/16 | VERY HARD |
+| Ground Event/Encounter | 0.103 | 0.593 | 0.490 | 13/16 | 0/16 | VERY HARD |
+| Airspace Violation | 0.120 | 0.586 | 0.466 | 13/16 | 0/16 | VERY HARD |
 
 ### Key Error Analysis Observations
 
 **Consistently easy categories (F1 > 0.70 in most experiments):**
-- **Conflict** (min F1 = 0.689, range = 0.121): Most consistent across all models. Clear lexical signals (separation, TCAS, conflict, near-miss). Even zero-shot LLMs achieve F1 > 0.68.
-- **Aircraft Equipment Problem** (above 0.70 in 8/13): Strong lexical cues (malfunction, failure, MEL, maintenance). Only struggles with taxonomy few-shot Qwen3 (0.424) where high precision killed recall.
+- **Conflict** (min F1 = 0.689, range = 0.148): Most consistent across all 16 models. Clear lexical signals (separation, TCAS, conflict, near-miss). Even zero-shot LLMs achieve F1 > 0.68. DeepSeek V3.2 + thinking achieves the highest F1 (0.837).
+- **Aircraft Equipment Problem** (above 0.70 in 11/16): Strong lexical cues (malfunction, failure, MEL, maintenance). Only struggles with taxonomy few-shot Qwen3 (0.424) where high precision killed recall. DeepSeek V3.2 + thinking matches Classic ML at 0.820.
 
 **Consistently hard categories (F1 < 0.55 in most experiments):**
-- **Airspace Violation** (12/13 below 0.55): Rare (4.0% prevalence), short narratives, easily confused with ATC Issue and Deviation-Procedural. Fine-tuned Qwen3 collapsed to F1=0.120.
-- **Ground Event/Encounter** (11/13 below 0.55): Semantically overlaps with Ground Excursion and Ground Incursion. Qwen3 few-shot basic collapsed to F1=0.103.
-- **ATC Issue** (11/13 below 0.55): Frequently co-occurs with Conflict (57% overlap), making it hard to distinguish as a separate category.
-- **Deviation - Speed** (10/13 below 0.55): Very rare (2.9% prevalence), short narratives, often co-occurs with Deviation-Altitude.
+- **Airspace Violation** (13/16 below 0.55): Rare (4.0% prevalence), short narratives, easily confused with ATC Issue and Deviation-Procedural. Fine-tuned Qwen3 collapsed to F1=0.120. Best: Classic ML Tuned and DeepSeek+thinking (both 0.586).
+- **Ground Event/Encounter** (13/16 below 0.55): Semantically overlaps with Ground Excursion and Ground Incursion. Qwen3 few-shot basic collapsed to F1=0.103.
+- **ATC Issue** (13/16 below 0.55): Frequently co-occurs with Conflict (57% overlap), making it hard to distinguish as a separate category. Classic ML (0.672) is best by a wide margin.
+- **Deviation - Speed** (11/16 below 0.55): Very rare (2.9% prevalence), short narratives, often co-occurs with Deviation-Altitude. Best: Mistral Large ZS (0.612).
 
 **Most variable category:**
 - **Deviation - Procedural** (range = 0.595, min = 0.200, max = 0.795): The broadest category (65.4% prevalence) has wildly different F1 depending on model type. Classic ML and Mistral Large achieve F1 ~0.79, but Qwen3 few-shot basic collapses to F1 = 0.200. The taxonomy prompt dramatically helps (0.353 -> 0.770 zero-shot), suggesting small models need explicit category boundary definitions for broad categories.
 
-**Key insight: Model size vs prompting strategy:**
-- Classic ML (XGBoost) dominates all LLM approaches on Macro-F1 (0.691 vs best LLM 0.658)
-- Mistral Large 3 (~123B params) comes closest to Classic ML, especially with taxonomy prompting
-- 8B models (Qwen3, Ministral) significantly underperform, even with fine-tuning
-- Taxonomy prompting provides the largest gains for small models: Qwen3 ZS Micro-F1 jumps from 0.473 to 0.605 (+0.132)
-- Fine-tuning helps Qwen3 on Micro-F1 (0.632) but not Macro-F1 (0.510), suggesting it improves common categories at the expense of rare ones
-- Thinking mode provides negligible improvement (+0.007 Macro-F1) at 12x the compute cost
+**Key insights -- Model size vs prompting strategy:**
+- Classic ML (XGBoost) dominates all LLM approaches on Macro-F1 (0.693 vs best LLM 0.681)
+- DeepSeek V3.2 + thinking (671B MoE, 0.681) is the best LLM, within 0.012 of XGBoost, but costs $6.73 and takes ~5 hours
+- Mistral Large 3 (675B MoE/41B active, 0.658) is the best cost-efficient LLM ($0, 5 min via free batch API)
+- 8B models (Qwen3, Ministral) peak at ~0.54 Macro-F1 -- far below XGBoost
+- Taxonomy-enriched prompts provide the largest gains for 8B models: Qwen3 ZS Micro-F1 jumps from 0.473 to 0.605 (+0.132)
+- Fine-tuning helps Qwen3 on Micro-F1 (0.632) but not Macro-F1 (0.510), improving common categories at the expense of rare ones
+- Thinking mode scales with model size: +0.058 F1 at 671B, +0.007 at 8B
+- Thinking mode HURTS on 48-label subcategory task (-0.003 F1, 21.6% parse failures from token exhaustion)
 
----
+### FINAL_EXPERIMENT_SUMMARY Tables
+
+The following tables from `results/FINAL_EXPERIMENT_SUMMARY.md` provide cross-cutting analysis:
+
+#### Table 3: TF-IDF Ablation (3-Fold CV, XGBoost Baseline Params)
+
+| Config | max_features | ngram_range | sublinear_tf | min_df | CV Macro-F1 | CV Micro-F1 | Wall (s) |
+|--------|-------------|-------------|--------------|--------|-------------|-------------|----------|
+| no_sublinear | 50,000 | (1,2) | False | 1 | **0.6296** | **0.6929** | 1285 |
+| baseline | 50,000 | (1,2) | True | 1 | 0.6280 | 0.6922 | 1245 |
+| min_df_3 | 50,000 | (1,2) | True | 3 | 0.6279 | 0.6921 | 1298 |
+| fewer_features | 20,000 | (1,2) | True | 1 | 0.6278 | 0.6918 | 967 |
+| trigram | 50,000 | (1,3) | True | 1 | 0.6277 | 0.6910 | 1468 |
+| trigram_100k | 100,000 | (1,3) | True | 1 | 0.6263 | 0.6901 | 1645 |
+| more_features | 100,000 | (1,2) | True | 1 | 0.6261 | 0.6911 | 1389 |
+| unigram_only | 50,000 | (1,1) | True | 1 | 0.6248 | 0.6900 | 525 |
+
+**Conclusion:** Total range = 0.0048 Macro-F1. TF-IDF hyperparameters have negligible impact.
+
+#### Table 4: Classic ML Model Comparison (RandomizedSearchCV, 3-Fold CV)
+
+| Model | Best Params | CV Macro-F1 | Test Macro-F1 | Test Micro-F1 | RSCV Time |
+|-------|------------|-------------|---------------|---------------|-----------|
+| **XGBoost** | n_est=300, depth=6, lr=0.1, hist, scale_pos_weight | **0.6791** | **0.6906** | 0.7459 | 23 min |
+| LogisticRegression | C=1.45, L2, SAGA, balanced | 0.5035 | 0.6701 | 0.7375 | 212 min |
+| LinearSVC | C=0.113, squared_hinge, balanced | 0.4725 | 0.6550 | **0.7496** | 4 min |
+
+#### Table 5: Prompt Engineering Impact (Qwen3-8B, Parent Task)
+
+| Prompt Strategy | Approach | Macro-F1 | Micro-F1 | Delta Macro-F1 |
+|-----------------|----------|----------|----------|----------------|
+| basic | Zero-shot | 0.459 | 0.473 | -- |
+| taxonomy | Zero-shot | 0.499 | 0.605 | +0.040 |
+| basic | Few-shot | 0.453 | 0.468 | -- |
+| taxonomy | Few-shot | 0.526 | 0.544 | +0.073 |
+| taxonomy + thinking | Few-shot | 0.533 | 0.556 | +0.080 |
+
+#### Table 6: Thinking Mode Impact Across Model Scales
+
+| Model | Scale | Task | Without Thinking | With Thinking | Delta F1 | Cost Ratio |
+|-------|-------|------|-----------------|---------------|----------|------------|
+| Qwen3-8B | 8B | Parent (13) | 0.526 | 0.533 | +0.007 | 4.3x ($0.45 vs $6.67) |
+| DeepSeek V3.2 | 671B | Parent (13) | 0.623 | 0.681 | +0.058 | 4.8x ($1.39 vs $6.73) |
+| DeepSeek V3.2 | 671B | Subcat (48) | 0.422 | 0.419 | -0.003 | 2.7x ($1.92 vs $5.24) |
+
+#### Table 7: Fine-Tuning Impact (8B Models)
+
+| Model | Zero-Shot F1 | Fine-Tuned F1 | Delta | Training Cost | Training Time |
+|-------|-------------|---------------|-------|---------------|---------------|
+| Qwen3-8B (QLoRA 4-bit NF4) | 0.459 | 0.510 | +0.051 | ~$10.83 | 3h48m (A100) |
+| Ministral 8B (LoRA on FP8) | 0.491 | 0.489 | -0.002 | ~$10.95 | 3h48m (A100) |
+
+#### Table 8: Per-Category F1 Comparison (Top 5 Models, Parent Task)
+
+| Category | XGBoost 32K | DeepSeek+Think | Mistral Large ZS | DeepSeek ZS | Qwen3 FS Tax |
+|----------|-------------|----------------|-------------------|-------------|--------------|
+| Aircraft Equipment Problem | 0.816 | 0.820 | 0.816 | 0.770 | 0.424 |
+| Airspace Violation | 0.568 | 0.586 | 0.516 | 0.460 | 0.459 |
+| ATC Issue | 0.672 | 0.536 | 0.531 | 0.376 | 0.482 |
+| Conflict | 0.801 | 0.837 | 0.734 | 0.777 | 0.727 |
+| Deviation - Altitude | 0.729 | 0.775 | 0.759 | 0.752 | 0.651 |
+| Deviation - Procedural | 0.795 | 0.757 | 0.793 | 0.768 | 0.507 |
+| Deviation - Speed | 0.577 | 0.594 | 0.612 | 0.494 | 0.490 |
+| Deviation - Track/Heading | 0.655 | 0.690 | 0.680 | 0.651 | 0.495 |
+| Flight Deck/Cabin Event | 0.738 | 0.722 | 0.660 | 0.671 | 0.675 |
+| Ground Event/Encounter | 0.592 | 0.549 | 0.546 | 0.515 | 0.430 |
+| Ground Excursion | 0.572 | 0.635 | 0.610 | 0.622 | 0.348 |
+| Ground Incursion | 0.729 | 0.687 | 0.668 | 0.649 | 0.580 |
+| Inflight Event/Encounter | 0.734 | 0.661 | 0.628 | 0.588 | 0.567 |
+| **MACRO** | **0.691** | **0.681** | **0.658** | **0.623** | **0.526** |
+
+XGBoost wins 7/13 categories. DeepSeek+Thinking wins 6/13 (Conflict, Altitude, Speed, Track/Heading, Airspace Violation, Ground Excursion).
+
+### Key Findings (from FINAL_EXPERIMENT_SUMMARY.md)
+
+1. **Classic ML (TF-IDF + XGBoost) is the overall winner** for this multi-label classification task, with Macro-F1 0.693 and the highest AUC (0.932). It requires no GPU, minimal tuning, and runs in minutes.
+
+2. **LLMs close the gap but don't surpass Classic ML.** The best LLM (DeepSeek V3.2 671B + thinking, 0.681 F1) comes within 0.012 of XGBoost but costs $6.73 and takes 5 hours.
+
+3. **Model scale matters more than technique.** MoE 670B+ models (0.62–0.68 Macro-F1) dramatically outperform dense 8B models (0.45–0.54). Both Mistral Large 3 (675B MoE/41B active) and DeepSeek V3.2 (671B MoE/37B active) are sparse MoE architectures. Within a size class, prompt engineering and fine-tuning provide only modest improvements. Mistral Large 3 outperforms DeepSeek V3.2 on zero-shot (0.658 vs 0.623), but DeepSeek with thinking mode (0.681) closes the gap to XGBoost.
+
+4. **Taxonomy-enriched prompts are the most cost-effective LLM improvement** (+0.04-0.08 F1 for free, just better prompts). Thinking mode and fine-tuning are expensive with diminishing returns.
+
+5. **Subcategory (48-label) classification is hard for everyone.** All models drop 0.18-0.46 F1 going from 13 to 48 labels. Classic ML maintains the lead with AUC 0.934 -- its ranking quality is preserved even when hard classification thresholds suffer.
+
+6. **XGBoost hyperparameters are robust.** Extensive tuning (TF-IDF ablation + 3-model comparison + RandomizedSearchCV) confirmed the baseline config as near-optimal (delta < 0.005 F1).
 
 *End of thesis_context.md*

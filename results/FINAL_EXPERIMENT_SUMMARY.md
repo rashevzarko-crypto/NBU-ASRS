@@ -16,8 +16,8 @@
 | 2 | XGBoost (baseline) | -- | Classic ML | -- | 0.6906 | 0.7459 | 0.9320 | -- | 55 min | $0 | CPU (local) |
 | 3 | DeepSeek V3.2 | 671B MoE | Zero-shot + thinking | taxonomy | 0.6807 | 0.7226 | 0.8099 | 0.6% | 291 min | ~$6.73 | DeepInfra API |
 | 4 | XGBoost (164K full) | -- | Classic ML | -- | 0.6777 | 0.7385 | 0.9421 | -- | 30 min | ~$0.64 | 32-core CPU (Modal) |
-| 5 | Mistral Large 3 | ~123B | Zero-shot | taxonomy | 0.6579 | 0.7121 | 0.7934 | 0.0% | 5 min | $0 | Mistral Batch API |
-| 6 | Mistral Large 3 | ~123B | Few-shot (2/cat) | taxonomy | 0.6398 | 0.6860 | 0.7931 | 0.0% | 4 min | $0 | Mistral Batch API |
+| 5 | Mistral Large 3 | 675B MoE (41B active) | Zero-shot | taxonomy | 0.6579 | 0.7121 | 0.7934 | 0.0% | 5 min | $0 | Mistral Batch API |
+| 6 | Mistral Large 3 | 675B MoE (41B active) | Few-shot (2/cat) | taxonomy | 0.6398 | 0.6860 | 0.7931 | 0.0% | 4 min | $0 | Mistral Batch API |
 | 7 | DeepSeek V3.2 | 671B MoE | Zero-shot | taxonomy | 0.6225 | 0.6934 | 0.7460 | 0.0% | 6.5 min | ~$1.39 | DeepInfra API |
 | 8 | Ministral 8B | 8B | Few-shot (3/cat) | basic | 0.5398 | 0.5361 | 0.7460 | 0% | 30.5 min | ~$0.41 | L4 (Modal) |
 | 9 | Qwen3-8B | 8B | Few-shot (3/cat) + thinking | taxonomy | 0.5325 | 0.5563 | 0.7045 | 0% | 144 min | ~$6.67 | A100 (Modal) |
@@ -47,7 +47,7 @@
 |---|-------|------|----------|----------|----------|-----------|------------|---------|------|
 | 1 | XGBoost (baseline) | -- | Classic ML | 0.5100 | 0.5995 | 0.9341 | -- | 142 min | ~$3.03 |
 | 2 | XGBoost (tuned) | -- | Classic ML | 0.5099 | 0.5998 | 0.9339 | -- | 154 min | ~$3.30 |
-| 3 | Mistral Large 3 | ~123B | Zero-shot (taxonomy) | 0.4491 | 0.4938 | 0.7437 | 0.1% | 119 min | paid |
+| 3 | Mistral Large 3 | 675B MoE (41B active) | Zero-shot (taxonomy) | 0.4491 | 0.4938 | 0.7437 | 0.1% | 119 min | paid |
 | 4 | DeepSeek V3.2 | 671B MoE | Zero-shot | 0.4220 | 0.4555 | 0.7082 | 0.0% | 7.5 min | ~$1.92 |
 | 5 | DeepSeek V3.2 | 671B MoE | Zero-shot + thinking | 0.4185 | 0.4661 | 0.6898 | 21.6% | 545 min | ~$5.24 |
 | 6 | Qwen3-8B | 8B | Zero-shot (taxonomy) | 0.2350 | 0.3040 | 0.6294 | 0% | 30 min | ~$0.40 |
@@ -179,7 +179,7 @@ XGBoost wins 7/13 categories. DeepSeek+Thinking wins 6/13 (Conflict, Altitude, S
 
 2. **LLMs close the gap but don't surpass Classic ML.** The best LLM (DeepSeek V3.2 671B + thinking, 0.681 F1) comes within 0.012 of XGBoost but costs $6.73 and takes 5 hours.
 
-3. **Model scale matters more than technique.** The ranking by Macro-F1 closely follows model size: 671B > ~123B > 8B. Within a size class, prompt engineering and fine-tuning provide only modest improvements.
+3. **Model scale matters more than technique.** MoE 670B+ models (0.62–0.68 Macro-F1) dramatically outperform dense 8B models (0.45–0.54). Both Mistral Large 3 (675B MoE/41B active) and DeepSeek V3.2 (671B MoE/37B active) are sparse MoE architectures. Within a size class, prompt engineering and fine-tuning provide only modest improvements. Mistral Large 3 outperforms DeepSeek V3.2 on zero-shot (0.658 vs 0.623), but DeepSeek with thinking mode (0.681) closes the gap to XGBoost.
 
 4. **Taxonomy-enriched prompts are the most cost-effective LLM improvement** (+0.04-0.08 F1 for free, just better prompts). Thinking mode and fine-tuning are expensive with diminishing returns.
 
