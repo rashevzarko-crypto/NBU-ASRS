@@ -1,6 +1,6 @@
 # NBU-ASRS Project Status
 
-Last updated: 2026-02-16 (Subcategory ZS experiments: Mistral Large Macro-F1 0.449, Qwen3 Macro-F1 0.235)
+Last updated: 2026-02-17 (Classic ML tuning Phase 3 complete — baseline confirmed optimal)
 
 > **Model switch #1:** Changed from meta-llama/Llama-3.1-8B-Instruct to mistralai/Ministral-3-8B-Instruct-2512 on 2026-02-13 (Llama gate approval delay).
 >
@@ -32,6 +32,12 @@ Last updated: 2026-02-16 (Subcategory ZS experiments: Mistral Large Macro-F1 0.4
 | Classic ML subcategory (48 labels) | ✅ Complete | `results/classic_ml_subcategory_metrics.csv`, `results/classic_ml_subcategory_predictions.csv`, `results/classic_ml_subcategory_summary.txt`, `results/classic_ml_subcategory_f1_barchart.png` |
 | Zero-shot subcategory (Mistral Large 3) | ✅ Complete | `results/mistral_large_subcategory_metrics.csv`, `results/mistral_large_subcategory_raw_outputs.csv`, `results/mistral_large_subcategory_summary.txt` |
 | Zero-shot subcategory (Qwen3-8B) | ✅ Complete | `results/qwen_zero_shot_subcategory_metrics.csv`, `results/qwen_zero_shot_subcategory_raw_outputs.csv`, `results/qwen_zero_shot_subcategory_summary.txt` |
+| Zero-shot parent (DeepSeek V3.2) | ✅ Complete | `results/deepseek_v32_parent_metrics.csv`, `results/deepseek_v32_parent_raw_outputs.csv`, `results/deepseek_v32_parent_summary.txt` |
+| Zero-shot subcategory (DeepSeek V3.2) | ✅ Complete | `results/deepseek_v32_subcategory_metrics.csv`, `results/deepseek_v32_subcategory_raw_outputs.csv`, `results/deepseek_v32_subcategory_summary.txt` |
+| Zero-shot + thinking parent (DeepSeek V3.2) | ✅ Complete | `results/deepseek_v32_thinking_parent_metrics.csv`, `results/deepseek_v32_thinking_parent_raw_outputs.csv`, `results/deepseek_v32_thinking_parent_summary.txt` |
+| Zero-shot + thinking subcategory (DeepSeek V3.2) | ✅ Complete | `results/deepseek_v32_thinking_subcategory_metrics.csv`, `results/deepseek_v32_thinking_subcategory_raw_outputs.csv`, `results/deepseek_v32_thinking_subcategory_summary.txt` |
+| Classic ML hyperparameter tuning | ✅ Complete | `results/tfidf_ablation.csv`, `results/model_comparison.csv`, `results/classic_ml_tuning_summary.txt` |
+| Classic ML tuned final eval | ✅ Complete | `results/classic_ml_tuned_parent_metrics.csv`, `results/classic_ml_tuned_subcategory_metrics.csv`, `results/classic_ml_tuned_parent_summary.txt`, `results/classic_ml_tuned_subcategory_summary.txt`, `results/classic_ml_tuned_result.json` |
 | Final comparison & visualization | ❌ Not started | |
 | Thesis writing | ❌ Not started | |
 
@@ -133,6 +139,23 @@ Last updated: 2026-02-16 (Subcategory ZS experiments: Mistral Large Macro-F1 0.4
 - Narrative truncation: examples 600 chars, test narratives 1500 chars
 - Batch processing: ~4 min for 8,044 reports, 0 failures, 2 parse failures (0.0%)
 
+### Zero-shot LLM (DeepSeek V3.2)
+- Model: deepseek-ai/DeepSeek-V3.2 (671B MoE, non-reasoning)
+- API: DeepInfra OpenAI-compatible, 50 concurrent requests via aiohttp
+- temperature=0.0, max_tokens=500
+- Taxonomy-enriched system prompt (same as Mistral Large 3)
+- Cost: $0.26/M input (uncached), $0.13/M (cached), $0.38/M output
+- Prefix caching: ~62% parent, ~79% subcategory
+- Parse failures: 3/8044 parent (0.0%), 3/8017 subcategory (0.0%)
+
+### Zero-shot + Thinking LLM (DeepSeek V3.2)
+- Model: deepseek-ai/DeepSeek-V3.2 (671B MoE, reasoning mode)
+- API: DeepInfra OpenAI-compatible, 50 concurrent requests via aiohttp
+- temperature=0.0, max_tokens=4096, reasoning=True
+- Taxonomy-enriched system prompt (same as non-thinking)
+- Reasoning tokens via `reasoning_content` field (clean JSON in `content`)
+- Script: `scripts/deepseek_v32_deepinfra.py` (same script, `--thinking` flag)
+
 ## Infrastructure
 
 - **Local (VS Code + Jupyter):** Data processing, classic ML, visualization
@@ -150,6 +173,8 @@ Last updated: 2026-02-16 (Subcategory ZS experiments: Mistral Large Macro-F1 0.4
 | Classic ML 164K | — | 0.678 | 0.739 | 0.942 |
 | Mistral Large 3 zero-shot | taxonomy | 0.658 | 0.712 | 0.793 |
 | Mistral Large 3 few-shot | taxonomy | 0.640 | 0.686 | 0.793 |
+| DeepSeek V3.2 zero-shot + thinking | taxonomy | 0.681 | 0.723 | 0.810 |
+| DeepSeek V3.2 zero-shot | taxonomy | 0.623 | 0.693 | 0.746 |
 | Ministral 8B few-shot | basic | 0.540 | 0.536 | 0.746 |
 | Qwen3-8B few-shot + thinking | taxonomy | 0.533 | 0.556 | 0.705 |
 | Qwen3-8B few-shot | taxonomy | 0.526 | 0.544 | 0.706 |
@@ -166,6 +191,8 @@ Last updated: 2026-02-16 (Subcategory ZS experiments: Mistral Large Macro-F1 0.4
 |-------|----------|----------|-----------|
 | Classic ML (XGBoost) | 0.510 | 0.600 | 0.934 |
 | Mistral Large 3 ZS | 0.449 | 0.494 | 0.744 |
+| DeepSeek V3.2 ZS | 0.422 | 0.456 | 0.708 |
+| DeepSeek V3.2 ZS + thinking | 0.419 | 0.466 | 0.690 |
 | Qwen3-8B ZS | 0.235 | 0.304 | 0.629 |
 
 Parent-group comparison (Classic ML):
@@ -185,6 +212,88 @@ Qwen3-8B subcategory highlights:
 - Worst: CFTT/CFIT (F1=0.005), Undershoot (F1=0.015), Ground Equipment (F1=0.029)
 - Dramatic drop from parent-level (Macro-F1: 0.499 → 0.235, Micro-F1: 0.605 → 0.304)
 - Runtime: ~30 min on Modal L4, vLLM engine crash after inference (results saved)
+
+### Classic ML Hyperparameter Tuning Results
+
+**TF-IDF Ablation (8 configs, 3-fold CV):**
+- All configs within 0.005 Macro-F1 (range: 0.6248 - 0.6296)
+- Best: no_sublinear (sublinear_tf=False), CV Macro-F1 = 0.6296
+- Baseline (sublinear_tf=True), CV Macro-F1 = 0.6280, delta = +0.0016
+- Conclusion: TF-IDF parameters have negligible impact
+
+**Model Comparison (RandomizedSearchCV, 3-fold CV):**
+
+| Model | CV Macro-F1 | Test Macro-F1 | Test Micro-F1 |
+|-------|------------|---------------|---------------|
+| XGBoost | 0.679 | 0.691 | 0.746 |
+| LogisticRegression | 0.504 | 0.670 | 0.738 |
+| LinearSVC | 0.473 | 0.655 | 0.750 |
+
+- XGBoost: baseline params (300 trees, depth 6, lr 0.1) are near-optimal
+- LinearSVC: highest Micro-F1 (0.750) but weaker Macro-F1 (0.655) — biases toward frequent labels
+- LogisticRegression: competitive but 3.5h for RSCV due to SAGA solver on sparse 50K features
+- Final results: existing baseline (Macro-F1 0.691, Micro-F1 0.746) confirmed as effectively tuned
+- Note: Modal billing limit reached during XGB hyperparameter search; baseline params confirmed optimal from 7/16 holdout combos
+
+**Phase 3 Final Evaluation (baseline XGBoost retrained + evaluated on both tasks):**
+
+| Task | Macro-F1 | Micro-F1 | Macro-AUC | vs Baseline |
+|------|----------|----------|-----------|-------------|
+| Parent (13-label) | 0.6928 | 0.7454 | 0.9321 | +0.002 / -0.001 |
+| Subcategory (48-label) | 0.5099 | 0.5998 | 0.9339 | -0.0001 / -0.0002 |
+
+- Retrained with baseline params (300 trees, depth 6, lr 0.1, hist, scale_pos_weight) on full train set
+- Per-label scale_pos_weight for class imbalance
+- Confirms baseline is effectively optimal — tuning provides negligible improvement
+- Script: `scripts/modal_classic_ml_phase3.py` (with Modal Volume for result persistence)
+
+### DeepSeek V3.2 Thinking Analysis
+
+**Parent (13-label):** Macro-F1 0.681 vs 0.623 non-thinking (+0.058). Significant improvement — thinking adds real value at 671B scale.
+- Biggest gains: Airspace Violation (+0.126 F1), ATC Issue (+0.160 F1), Ground Excursion (+0.013 F1)
+- Cost: $6.73 (vs $1.39 non-thinking, 4.8x more expensive), 291 min (vs 6.5 min, 45x slower)
+- 0.6% empty parse failures (46/8044), 14 failed requests
+
+**Subcategory (48-label):** Macro-F1 0.419 vs 0.422 non-thinking (-0.003). Thinking HURT performance.
+- 21.6% parse failures (1729/8017 empty) — thinking generates too-long outputs for 48-label task
+- Cost: $5.24 (vs $1.92 non-thinking, 2.7x), 545 min (vs 7.5 min, 73x slower)
+- Conclusion: thinking mode useful at 671B scale for parent categories, but fails on complex 48-label subcategory task
+
+### Per-Category Results (DeepSeek V3.2 Zero-Shot + Thinking, Parent)
+
+| Category | Precision | Recall | F1 | ROC-AUC |
+|----------|-----------|--------|-----|---------|
+| Aircraft Equipment Problem | 0.861 | 0.783 | 0.820 | 0.866 |
+| Airspace Violation | 0.601 | 0.572 | 0.586 | 0.778 |
+| ATC Issue | 0.441 | 0.685 | 0.536 | 0.753 |
+| Conflict | 0.833 | 0.840 | 0.837 | 0.889 |
+| Deviation - Altitude | 0.739 | 0.815 | 0.775 | 0.879 |
+| Deviation - Procedural | 0.797 | 0.721 | 0.757 | 0.688 |
+| Deviation - Speed | 0.595 | 0.592 | 0.594 | 0.790 |
+| Deviation - Track/Heading | 0.721 | 0.661 | 0.690 | 0.814 |
+| Flight Deck/Cabin Event | 0.745 | 0.700 | 0.722 | 0.841 |
+| Ground Event/Encounter | 0.487 | 0.631 | 0.549 | 0.785 |
+| Ground Excursion | 0.557 | 0.740 | 0.635 | 0.864 |
+| Ground Incursion | 0.764 | 0.624 | 0.687 | 0.804 |
+| Inflight Event/Encounter | 0.684 | 0.640 | 0.661 | 0.777 |
+
+### Per-Category Results (DeepSeek V3.2 Zero-Shot, Parent)
+
+| Category | Precision | Recall | F1 | ROC-AUC |
+|----------|-----------|--------|-----|---------|
+| Aircraft Equipment Problem | 0.874 | 0.688 | 0.770 | 0.824 |
+| Airspace Violation | 0.663 | 0.352 | 0.460 | 0.672 |
+| ATC Issue | 0.483 | 0.308 | 0.376 | 0.620 |
+| Conflict | 0.876 | 0.698 | 0.777 | 0.831 |
+| Deviation - Altitude | 0.700 | 0.813 | 0.752 | 0.872 |
+| Deviation - Procedural | 0.689 | 0.866 | 0.768 | 0.567 |
+| Deviation - Speed | 0.785 | 0.361 | 0.494 | 0.679 |
+| Deviation - Track/Heading | 0.777 | 0.560 | 0.651 | 0.770 |
+| Flight Deck/Cabin Event | 0.788 | 0.585 | 0.671 | 0.786 |
+| Ground Event/Encounter | 0.467 | 0.573 | 0.515 | 0.757 |
+| Ground Excursion | 0.599 | 0.647 | 0.622 | 0.819 |
+| Ground Incursion | 0.795 | 0.549 | 0.649 | 0.769 |
+| Inflight Event/Encounter | 0.610 | 0.568 | 0.588 | 0.732 |
 
 ### Ministral 3 8B (archived — see `results/ministral/`)
 
@@ -325,6 +434,12 @@ Qwen3-8B subcategory highlights:
 | Classic ML subcategory (48 XGBoost) | 32-core CPU (Modal) | ~142 min | ~$3.03 | 2026-02-15 |
 | Zero-shot subcategory (Mistral Large 3) | API (Real-time) | ~119 min | paid plan | 2026-02-16 |
 | Zero-shot subcategory (Qwen3-8B) | L4 (Modal) | ~30 min | ~$0.40 | 2026-02-16 |
+| Zero-shot parent (DeepSeek V3.2) | API (DeepInfra) | ~6.5 min | ~$1.39 | 2026-02-16 |
+| Zero-shot subcategory (DeepSeek V3.2) | API (DeepInfra) | ~7.5 min | ~$1.92 | 2026-02-16 |
+| Zero-shot + thinking parent (DeepSeek V3.2) | API (DeepInfra) | ~291 min | ~$6.73 | 2026-02-17 |
+| Zero-shot + thinking subcategory (DeepSeek V3.2) | API (DeepInfra) | ~545 min | ~$5.24 | 2026-02-17 |
+| Classic ML tuning Phase 3 | 32-core CPU (Modal) | ~154 min | ~$3.30 | 2026-02-17 |
 
-**Total Modal spend:** ~$34.73 (Ministral: ~$11.61 + Qwen3: ~$19.45 + Classic ML full: ~$0.64 + Classic ML subcategory: ~$3.03)
+**Total Modal spend:** ~$38.03 (Ministral: ~$11.61 + Qwen3: ~$19.45 + Classic ML full: ~$0.64 + Classic ML subcategory: ~$3.03 + Classic ML tuning Phase 3: ~$3.30)
 **Total Mistral API spend:** paid plan (real-time API for subcategory experiment)
+**Total DeepInfra spend:** ~$15.28 (DeepSeek V3.2: parent ~$1.39 + subcategory ~$1.92 + thinking parent ~$6.73 + thinking subcategory ~$5.24)

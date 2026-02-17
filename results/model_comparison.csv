@@ -1,0 +1,4 @@
+model,best_cv_f1,test_macro_f1,test_micro_f1,best_params,wall_seconds,notes
+LinearSVC,0.4725,0.655,0.7496,"{""C"": 0.113, ""loss"": ""squared_hinge"", ""class_weight"": ""balanced"", ""max_iter"": 5000}",236.0,"CalibratedClassifierCV wrapper, RandomizedSearchCV n_iter=30"
+LogisticRegression,0.5035,0.6701,0.7375,"{""C"": 1.45, ""penalty"": ""l2"", ""solver"": ""saga"", ""class_weight"": ""balanced"", ""max_iter"": 5000}",12711.0,"RandomizedSearchCV n_iter=30, SAGA solver"
+XGBoost,0.6791,0.6906,0.7459,"{""n_estimators"": 300, ""max_depth"": 6, ""learning_rate"": 0.1, ""tree_method"": ""hist"", ""scale_pos_weight"": ""auto""}",1391.0,Baseline params from holdout eval; full test from existing baseline run

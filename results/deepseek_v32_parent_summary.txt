@@ -1,0 +1,29 @@
+DeepSeek V3.2 Zero-Shot: Parent (13-label) Classification
+=============================================================================
+Test set: 8044 reports | Model: deepseek-ai/DeepSeek-V3.2
+API: DeepInfra, temperature=0.0, max_tokens=500
+Zero-shot: taxonomy-enriched prompt, 50 concurrent
+Wall time: 6.5 min | Failed: 0 | Cost: $1.387
+Tokens: 7,428,529 prompt (4,628,736 cached) + 150,910 completion
+Parse tiers: {'json': 8041, 'json_fuzzy': 0, 'regex': 0, 'fuzzy': 0, 'empty': 3}
+
+Category                             Precision     Recall         F1    ROC-AUC
+-----------------------------------------------------------------------------
+Aircraft Equipment Problem              0.8735     0.6883     0.7699     0.8242
+Airspace Violation                      0.6627     0.3522     0.4600     0.6724
+ATC Issue                               0.4828     0.3078     0.3759     0.6200
+Conflict                                0.8755     0.6981     0.7768     0.8309
+Deviation - Altitude                    0.6999     0.8132     0.7523     0.8723
+Deviation - Procedural                  0.6892     0.8664     0.7677     0.5669
+Deviation - Speed                       0.7850     0.3605     0.4941     0.6788
+Deviation - Track/Heading               0.7768     0.5604     0.6511     0.7695
+Flight Deck/Cabin Event                 0.7882     0.5846     0.6713     0.7863
+Ground Event/Encounter                  0.4668     0.5732     0.5146     0.7572
+Ground Excursion                        0.5989     0.6474     0.6222     0.8189
+Ground Incursion                        0.7951     0.5486     0.6492     0.7687
+Inflight Event/Encounter                0.6097     0.5680     0.5881     0.7316
+-----------------------------------------------------------------------------
+MACRO                                   0.7003     0.5822     0.6225     0.7460
+MICRO                                   0.7074     0.6800     0.6934     0.8114
+
+>>> Macro-F1: 0.6225  |  Micro-F1: 0.6934 <<<

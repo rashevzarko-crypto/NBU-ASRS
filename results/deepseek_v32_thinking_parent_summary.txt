@@ -1,0 +1,29 @@
+DeepSeek V3.2 Zero-Shot + Thinking: Parent (13-label) Classification
+=============================================================================
+Test set: 8044 reports | Model: deepseek-ai/DeepSeek-V3.2
+API: DeepInfra, temperature=0.0, max_tokens=4096, reasoning=True
+Zero-shot: taxonomy-enriched prompt, 50 concurrent
+Wall time: 291.3 min | Failed: 14 | Cost: $6.730
+Tokens: 7,416,246 prompt (4,670,144 cached) + 14,234,671 completion
+Parse tiers: {'json': 7995, 'json_fuzzy': 0, 'regex': 1, 'fuzzy': 2, 'empty': 46}
+
+Category                             Precision     Recall         F1    ROC-AUC
+-----------------------------------------------------------------------------
+Aircraft Equipment Problem              0.8612     0.7832     0.8203     0.8664
+Airspace Violation                      0.6007     0.5723     0.5862     0.7783
+ATC Issue                               0.4408     0.6849     0.5364     0.7532
+Conflict                                0.8330     0.8400     0.8365     0.8892
+Deviation - Altitude                    0.7392     0.8147     0.7751     0.8791
+Deviation - Procedural                  0.7968     0.7205     0.7568     0.6880
+Deviation - Speed                       0.5948     0.5923     0.5935     0.7901
+Deviation - Track/Heading               0.7206     0.6610     0.6895     0.8135
+Flight Deck/Cabin Event                 0.7454     0.6998     0.7219     0.8407
+Ground Event/Encounter                  0.4866     0.6305     0.5493     0.7854
+Ground Excursion                        0.5565     0.7399     0.6352     0.8635
+Ground Incursion                        0.7641     0.6235     0.6867     0.8042
+Inflight Event/Encounter                0.6835     0.6402     0.6611     0.7773
+-----------------------------------------------------------------------------
+MACRO                                   0.6787     0.6925     0.6807     0.8099
+MICRO                                   0.7205     0.7247     0.7226     0.8337
+
+>>> Macro-F1: 0.6807  |  Micro-F1: 0.7226 <<<

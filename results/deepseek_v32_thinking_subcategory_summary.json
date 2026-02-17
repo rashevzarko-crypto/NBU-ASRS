@@ -1,0 +1,23 @@
+{
+  "model": "deepseek-ai/DeepSeek-V3.2",
+  "mode": "subcategory",
+  "reasoning": true,
+  "n_test": 8017,
+  "n_categories": 48,
+  "macro_f1": 0.41849121051290755,
+  "micro_f1": 0.46610686579306737,
+  "macro_auc": 0.6898435309912587,
+  "wall_time_min": 544.742169257005,
+  "prompt_tokens": 9212239,
+  "completion_tokens": 10074137,
+  "cached_tokens": 7569472,
+  "estimated_cost_usd": 5.23932284,
+  "failed_requests": 1708,
+  "parse_tiers": {
+    "json": 6287,
+    "json_fuzzy": 0,
+    "regex": 1,
+    "fuzzy": 0,
+    "empty": 1729
+  }
+}

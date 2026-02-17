@@ -1,0 +1,47 @@
+Classic ML Hyperparameter Tuning Summary
+=================================================================
+
+Phase 1: TF-IDF Ablation (8 configs, 3-fold CV, XGBoost n_est=50)
+-----------------------------------------------------------------
+  baseline           Macro-F1=0.6280  Micro-F1=0.6922  (1245s)
+  unigram_only       Macro-F1=0.6248  Micro-F1=0.6900  (525s)
+  trigram            Macro-F1=0.6277  Micro-F1=0.6910  (1468s)
+  trigram_100k       Macro-F1=0.6263  Micro-F1=0.6901  (1645s)
+  fewer_features     Macro-F1=0.6278  Micro-F1=0.6918  (967s)
+  more_features      Macro-F1=0.6261  Micro-F1=0.6911  (1389s)
+  no_sublinear       Macro-F1=0.6296  Micro-F1=0.6929  (1285s)
+  min_df_3           Macro-F1=0.6279  Micro-F1=0.6921  (1298s)
+
+  Best: no_sublinear (CV Macro-F1=0.6296)
+  Range: 0.6248 - 0.6296 (delta 0.0048)
+  Conclusion: TF-IDF parameters have negligible impact on classification performance.
+
+Phase 2: Model Comparison (RandomizedSearchCV, best TF-IDF)
+-----------------------------------------------------------------
+  LinearSVC            CV-F1=0.4725  Test Macro-F1=0.6550  Test Micro-F1=0.7496
+  LogisticRegression   CV-F1=0.5035  Test Macro-F1=0.6701  Test Micro-F1=0.7375
+  XGBoost              CV-F1=0.6791  Test Macro-F1=0.6906  Test Micro-F1=0.7459
+
+  Best model: XGBoost
+  XGBoost baseline params (300 trees, depth 6, lr 0.1) are near-optimal.
+  LinearSVC: strong Micro-F1 (0.7496) but weaker Macro-F1 (0.6550)
+  LogisticRegression: competitive but slower (3.5h for RSCV)
+
+Phase 3: Final Evaluation
+-----------------------------------------------------------------
+  Parent (13-label):      Macro-F1=0.6906  Micro-F1=0.7459  AUC=0.9320
+  Subcategory (48-label):  Macro-F1=0.5100  Micro-F1=0.5995  AUC=0.9341
+
+  Note: Final evaluation uses baseline TF-IDF + XGBoost params since
+  tuning showed <0.005 F1 improvement across all configurations.
+  Existing baseline results (results/classic_ml_text_metrics.csv and
+  results/classic_ml_subcategory_metrics.csv) serve as the tuned results.
+
+Overall Conclusion
+-----------------------------------------------------------------
+  Classic ML (TF-IDF + XGBoost) is robust to hyperparameter choices.
+  The original baseline configuration is effectively optimal:
+    - TF-IDF: 50K features, bigrams, sublinear_tf (any setting works)
+    - XGBoost: 300 trees, depth 6, lr 0.1, per-label scale_pos_weight
+  This makes Classic ML a strong, low-maintenance baseline that requires
+  minimal tuning effort compared to LLM prompt engineering or fine-tuning.

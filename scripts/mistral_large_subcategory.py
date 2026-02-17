@@ -26,7 +26,7 @@ from sklearn.metrics import precision_score, recall_score, f1_score, roc_auc_sco
 # Constants
 # ---------------------------------------------------------------------------
 
-API_KEY = "8uo0c1gFEzkVS8j1eEVzO1Jb6yHXEp1B"
+API_KEY = os.environ.get("MISTRAL_API_KEY", "")
 MODEL = "mistral-large-latest"
 TEMPERATURE = 0.0
 MAX_TOKENS = 512

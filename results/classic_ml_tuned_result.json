@@ -1,0 +1,543 @@
+{
+  "tfidf_params": {
+    "max_features": "50000",
+    "ngram_range": "(1, 2)",
+    "sublinear_tf": "True",
+    "min_df": "1"
+  },
+  "xgb_params": {
+    "n_estimators": "300",
+    "max_depth": "6",
+    "learning_rate": "0.1",
+    "tree_method": "hist"
+  },
+  "parent_metrics": [
+    {
+      "Category": "Aircraft Equipment Problem",
+      "Precision": 0.8130640309411259,
+      "Recall": 0.8236830648672181,
+      "F1": 0.8183391003460208,
+      "ROC-AUC": 0.9439643283819636
+    },
+    {
+      "Category": "Airspace Violation",
+      "Precision": 0.5,
+      "Recall": 0.7075471698113207,
+      "F1": 0.5859375,
+      "ROC-AUC": 0.9360543586387221
+    },
+    {
+      "Category": "ATC Issue",
+      "Precision": 0.6076923076923076,
+      "Recall": 0.7490882567469,
+      "F1": 0.6710225416530545,
+      "ROC-AUC": 0.9157915953585888
+    },
+    {
+      "Category": "Conflict",
+      "Precision": 0.768344709897611,
+      "Recall": 0.8353432282003711,
+      "F1": 0.8004444444444444,
+      "ROC-AUC": 0.9436440252051908
+    },
+    {
+      "Category": "Deviation - Altitude",
+      "Precision": 0.6650031191515907,
+      "Recall": 0.8063540090771558,
+      "F1": 0.7288888888888889,
+      "ROC-AUC": 0.9477904872163163
+    },
+    {
+      "Category": "Deviation - Procedural",
+      "Precision": 0.80811078140455,
+      "Recall": 0.7786885245901639,
+      "F1": 0.7931268808853509,
+      "ROC-AUC": 0.7919213849443681
+    },
+    {
+      "Category": "Deviation - Speed",
+      "Precision": 0.5390625,
+      "Recall": 0.592274678111588,
+      "F1": 0.5644171779141104,
+      "ROC-AUC": 0.9491116028182991
+    },
+    {
+      "Category": "Deviation - Track/Heading",
+      "Precision": 0.581024349286314,
+      "Recall": 0.7330508474576272,
+      "F1": 0.6482435597189695,
+      "ROC-AUC": 0.928605126521843
+    },
+    {
+      "Category": "Flight Deck/Cabin Event",
+      "Precision": 0.7009345794392523,
+      "Recall": 0.7853403141361257,
+      "F1": 0.7407407407407407,
+      "ROC-AUC": 0.964305728514421
+    },
+    {
+      "Category": "Ground Event/Encounter",
+      "Precision": 0.5010416666666667,
+      "Recall": 0.7254901960784313,
+      "F1": 0.5927295132470733,
+      "ROC-AUC": 0.9259046963964999
+    },
+    {
+      "Category": "Ground Excursion",
+      "Precision": 0.5891891891891892,
+      "Recall": 0.630057803468208,
+      "F1": 0.6089385474860335,
+      "ROC-AUC": 0.9723298300705817
+    },
+    {
+      "Category": "Ground Incursion",
+      "Precision": 0.6385224274406333,
+      "Recall": 0.8245315161839863,
+      "F1": 0.7197026022304833,
+      "ROC-AUC": 0.9759726349297586
+    },
+    {
+      "Category": "Inflight Event/Encounter",
+      "Precision": 0.7048593350383632,
+      "Recall": 0.7651304830649639,
+      "F1": 0.7337593184238551,
+      "ROC-AUC": 0.9215774193470925
+    },
+    {
+      "Category": "MACRO",
+      "Precision": 0.6474499227805849,
+      "Recall": 0.7505061609072354,
+      "F1": 0.6927916012291558,
+      "ROC-AUC": 0.9320748629495113
+    },
+    {
+      "Category": "MICRO",
+      "Precision": 0.7121961269056448,
+      "Recall": 0.7819497851164895,
+      "F1": 0.74544474393531,
+      "ROC-AUC": 0.9498931148895522
+    }
+  ],
+  "parent_n_train": 31850,
+  "parent_n_test": 8044,
+  "parent_cats": [
+    "Aircraft Equipment Problem",
+    "Airspace Violation",
+    "ATC Issue",
+    "Conflict",
+    "Deviation - Altitude",
+    "Deviation - Procedural",
+    "Deviation - Speed",
+    "Deviation - Track/Heading",
+    "Flight Deck/Cabin Event",
+    "Ground Event/Encounter",
+    "Ground Excursion",
+    "Ground Incursion",
+    "Inflight Event/Encounter"
+  ],
+  "sub_metrics": [
+    {
+      "Category": "ATC Issue",
+      "Precision": 0.6209535020600353,
+      "Recall": 0.7740278796771827,
+      "F1": 0.6890920966688439,
+      "ROC-AUC": 0.9272221035080374
+    },
+    {
+      "Category": "Aircraft Equipment Problem: Critical",
+      "Precision": 0.6235294117647059,
+      "Recall": 0.8018154311649016,
+      "F1": 0.7015221707478491,
+      "ROC-AUC": 0.9320015501441115
+    },
+    {
+      "Category": "Aircraft Equipment Problem: Less Severe",
+      "Precision": 0.3754889178617992,
+      "Recall": 0.5956566701137539,
+      "F1": 0.4606157536985206,
+      "ROC-AUC": 0.8216892194181024
+    },
+    {
+      "Category": "Airspace Violation",
+      "Precision": 0.4988814317673378,
+      "Recall": 0.7034700315457413,
+      "F1": 0.5837696335078534,
+      "ROC-AUC": 0.9349797205948627
+    },
+    {
+      "Category": "Conflict: Airborne Conflict",
+      "Precision": 0.5467153284671533,
+      "Recall": 0.7596348884381339,
+      "F1": 0.6358234295415959,
+      "ROC-AUC": 0.9268764264198855
+    },
+    {
+      "Category": "Conflict: Ground Conflict",
+      "Precision": 0.45595854922279794,
+      "Recall": 0.7177814029363785,
+      "F1": 0.5576679340937896,
+      "ROC-AUC": 0.9255426501084465
+    },
+    {
+      "Category": "Conflict: NMAC",
+      "Precision": 0.5728900255754475,
+      "Recall": 0.7619047619047619,
+      "F1": 0.654014598540146,
+      "ROC-AUC": 0.9614932929693617
+    },
+    {
+      "Category": "Deviation - Altitude: Crossing Restriction Not Met",
+      "Precision": 0.6482213438735178,
+      "Recall": 0.6804979253112033,
+      "F1": 0.6639676113360324,
+      "ROC-AUC": 0.980106893431006
+    },
+    {
+      "Category": "Deviation - Altitude: Excursion From Assigned Altitude",
+      "Precision": 0.38519924098671726,
+      "Recall": 0.6548387096774193,
+      "F1": 0.4850657108721625,
+      "ROC-AUC": 0.9061729471843424
+    },
+    {
+      "Category": "Deviation - Altitude: Overshoot",
+      "Precision": 0.5,
+      "Recall": 0.68359375,
+      "F1": 0.5775577557755776,
+      "ROC-AUC": 0.9387974423301132
+    },
+    {
+      "Category": "Deviation - Altitude: Undershoot",
+      "Precision": 0.456,
+      "Recall": 0.4253731343283582,
+      "F1": 0.44015444015444016,
+      "ROC-AUC": 0.8928144069706019
+    },
+    {
+      "Category": "Deviation - Procedural: Clearance",
+      "Precision": 0.6639313688922044,
+      "Recall": 0.7555178268251274,
+      "F1": 0.7067699027198729,
+      "ROC-AUC": 0.8831303839543129
+    },
+    {
+      "Category": "Deviation - Procedural: FAR",
+      "Precision": 0.43138131426016985,
+      "Recall": 0.6382275132275133,
+      "F1": 0.5148039477193919,
+      "ROC-AUC": 0.8110823379655048
+    },
+    {
+      "Category": "Deviation - Procedural: Hazardous Material Violation",
+      "Precision": 0.8571428571428571,
+      "Recall": 0.782608695652174,
+      "F1": 0.8181818181818182,
+      "ROC-AUC": 0.988163614842936
+    },
+    {
+      "Category": "Deviation - Procedural: Landing Without Clearance",
+      "Precision": 0.7142857142857143,
+      "Recall": 0.1724137931034483,
+      "F1": 0.2777777777777778,
+      "ROC-AUC": 0.9619320569643561
+    },
+    {
+      "Category": "Deviation - Procedural: MEL/CDL",
+      "Precision": 0.4457831325301205,
+      "Recall": 0.5211267605633803,
+      "F1": 0.4805194805194805,
+      "ROC-AUC": 0.980332029934452
+    },
+    {
+      "Category": "Deviation - Procedural: Maintenance",
+      "Precision": 0.5323529411764706,
+      "Recall": 0.7015503875968992,
+      "F1": 0.6053511705685619,
+      "ROC-AUC": 0.960013427767304
+    },
+    {
+      "Category": "Deviation - Procedural: Other/Unknown",
+      "Precision": 0.17338709677419356,
+      "Recall": 0.22631578947368422,
+      "F1": 0.1963470319634703,
+      "ROC-AUC": 0.7220767518643293
+    },
+    {
+      "Category": "Deviation - Procedural: Published Material/Policy",
+      "Precision": 0.6235786953919809,
+      "Recall": 0.6460012399256044,
+      "F1": 0.6345919610231425,
+      "ROC-AUC": 0.7612199874144057
+    },
+    {
+      "Category": "Deviation - Procedural: Unauthorized Flight Operations (UAS)",
+      "Precision": 0.4411764705882353,
+      "Recall": 0.5172413793103449,
+      "F1": 0.47619047619047616,
+      "ROC-AUC": 0.9750099286861326
+    },
+    {
+      "Category": "Deviation - Procedural: Weight And Balance",
+      "Precision": 0.4,
+      "Recall": 0.24489795918367346,
+      "F1": 0.3037974683544304,
+      "ROC-AUC": 0.9844044545529055
+    },
+    {
+      "Category": "Deviation - Speed",
+      "Precision": 0.5232558139534884,
+      "Recall": 0.5818965517241379,
+      "F1": 0.5510204081632653,
+      "ROC-AUC": 0.9507098088720572
+    },
+    {
+      "Category": "Deviation - Track/Heading",
+      "Precision": 0.5959328028293546,
+      "Recall": 0.7177848775292864,
+      "F1": 0.6512077294685991,
+      "ROC-AUC": 0.9301182532926126
+    },
+    {
+      "Category": "Flight Deck/Cabin Event: Illness/Injury",
+      "Precision": 0.6435643564356436,
+      "Recall": 0.5752212389380531,
+      "F1": 0.6074766355140186,
+      "ROC-AUC": 0.9748016015191142
+    },
+    {
+      "Category": "Flight Deck/Cabin Event: Other/Unknown",
+      "Precision": 0.24669603524229075,
+      "Recall": 0.34146341463414637,
+      "F1": 0.2864450127877238,
+      "ROC-AUC": 0.889621955878288
+    },
+    {
+      "Category": "Flight Deck/Cabin Event: Passenger Misconduct",
+      "Precision": 0.7945205479452054,
+      "Recall": 0.7532467532467533,
+      "F1": 0.7733333333333333,
+      "ROC-AUC": 0.985122182603291
+    },
+    {
+      "Category": "Flight Deck/Cabin Event: Smoke/Fire/Fumes/Odor",
+      "Precision": 0.7887788778877888,
+      "Recall": 0.8597122302158273,
+      "F1": 0.8227194492254734,
+      "ROC-AUC": 0.9927155833157482
+    },
+    {
+      "Category": "Ground Event/Encounter: Gear Up Landing",
+      "Precision": 0.3076923076923077,
+      "Recall": 0.25,
+      "F1": 0.27586206896551724,
+      "ROC-AUC": 0.9694270507201002
+    },
+    {
+      "Category": "Ground Event/Encounter: Ground Equipment Issue",
+      "Precision": 0.4166666666666667,
+      "Recall": 0.11904761904761904,
+      "F1": 0.18518518518518517,
+      "ROC-AUC": 0.9072428720704583
+    },
+    {
+      "Category": "Ground Event/Encounter: Ground Strike - Aircraft",
+      "Precision": 0.5686274509803921,
+      "Recall": 0.48333333333333334,
+      "F1": 0.5225225225225225,
+      "ROC-AUC": 0.979112730928742
+    },
+    {
+      "Category": "Ground Event/Encounter: Loss Of Aircraft Control",
+      "Precision": 0.4559748427672956,
+      "Recall": 0.5823293172690763,
+      "F1": 0.5114638447971781,
+      "ROC-AUC": 0.9614296526993659
+    },
+    {
+      "Category": "Ground Event/Encounter: Object",
+      "Precision": 0.6923076923076923,
+      "Recall": 0.1956521739130435,
+      "F1": 0.3050847457627119,
+      "ROC-AUC": 0.9800772365040663
+    },
+    {
+      "Category": "Ground Event/Encounter: Other/Unknown",
+      "Precision": 0.20874751491053678,
+      "Recall": 0.41832669322709165,
+      "F1": 0.27851458885941643,
+      "ROC-AUC": 0.8544662452430813
+    },
+    {
+      "Category": "Ground Event/Encounter: Vehicle",
+      "Precision": 0.15,
+      "Recall": 0.061224489795918366,
+      "F1": 0.08695652173913043,
+      "ROC-AUC": 0.9571935701991641
+    },
+    {
+      "Category": "Ground Event/Encounter: Weather/Turbulence",
+      "Precision": 0.5,
+      "Recall": 0.04,
+      "F1": 0.07407407407407407,
+      "ROC-AUC": 0.9628678678678679
+    },
+    {
+      "Category": "Ground Excursion: Runway",
+      "Precision": 0.5877862595419847,
+      "Recall": 0.5703703703703704,
+      "F1": 0.5789473684210527,
+      "ROC-AUC": 0.9834663133064555
+    },
+    {
+      "Category": "Ground Excursion: Taxiway",
+      "Precision": 0.5555555555555556,
+      "Recall": 0.14705882352941177,
+      "F1": 0.23255813953488372,
+      "ROC-AUC": 0.9882728739748435
+    },
+    {
+      "Category": "Ground Incursion: Runway",
+      "Precision": 0.6301587301587301,
+      "Recall": 0.8219461697722568,
+      "F1": 0.7133872416891285,
+      "ROC-AUC": 0.9755345126935944
+    },
+    {
+      "Category": "Ground Incursion: Taxiway",
+      "Precision": 0.36,
+      "Recall": 0.33962264150943394,
+      "F1": 0.34951456310679613,
+      "ROC-AUC": 0.9623786320933594
+    },
+    {
+      "Category": "Inflight Event/Encounter: Bird/Animal",
+      "Precision": 0.4807692307692308,
+      "Recall": 0.78125,
+      "F1": 0.5952380952380952,
+      "ROC-AUC": 0.9517141515341264
+    },
+    {
+      "Category": "Inflight Event/Encounter: CFTT/CFIT",
+      "Precision": 0.6559139784946236,
+      "Recall": 0.6815642458100558,
+      "F1": 0.6684931506849315,
+      "ROC-AUC": 0.9571209538418671
+    },
+    {
+      "Category": "Inflight Event/Encounter: Fuel Issue",
+      "Precision": 0.6785714285714286,
+      "Recall": 0.8558558558558559,
+      "F1": 0.7569721115537849,
+      "ROC-AUC": 0.9917168623214665
+    },
+    {
+      "Category": "Inflight Event/Encounter: Loss Of Aircraft Control",
+      "Precision": 0.3696682464454976,
+      "Recall": 0.5032258064516129,
+      "F1": 0.4262295081967213,
+      "ROC-AUC": 0.9187525374920997
+    },
+    {
+      "Category": "Inflight Event/Encounter: Other/Unknown",
+      "Precision": 0.23102310231023102,
+      "Recall": 0.28225806451612906,
+      "F1": 0.2540834845735027,
+      "ROC-AUC": 0.7805172750260547
+    },
+    {
+      "Category": "Inflight Event/Encounter: Unstabilized Approach",
+      "Precision": 0.4540229885057471,
+      "Recall": 0.4647058823529412,
+      "F1": 0.45930232558139533,
+      "ROC-AUC": 0.9348458384245759
+    },
+    {
+      "Category": "Inflight Event/Encounter: VFR In IMC",
+      "Precision": 0.6049382716049383,
+      "Recall": 0.5104166666666666,
+      "F1": 0.5536723163841808,
+      "ROC-AUC": 0.9762314312165974
+    },
+    {
+      "Category": "Inflight Event/Encounter: Wake Vortex Encounter",
+      "Precision": 0.8037383177570093,
+      "Recall": 0.7962962962962963,
+      "F1": 0.8,
+      "ROC-AUC": 0.9900546962438478
+    },
+    {
+      "Category": "Inflight Event/Encounter: Weather/Turbulence",
+      "Precision": 0.6211240310077519,
+      "Recall": 0.7826617826617827,
+      "F1": 0.6925985953538628,
+      "ROC-AUC": 0.944611021715773
+    },
+    {
+      "Category": "MACRO",
+      "Precision": 0.5186019248533927,
+      "Recall": 0.5475201505963913,
+      "F1": 0.5099259414723275,
+      "ROC-AUC": 0.9338580278880028
+    },
+    {
+      "Category": "MICRO",
+      "Precision": 0.5398728636138708,
+      "Recall": 0.674577883472057,
+      "F1": 0.5997547361299053,
+      "ROC-AUC": 0.9553031656522308
+    }
+  ],
+  "sub_n_train": 32089,
+  "sub_n_test": 8017,
+  "sub_cats": [
+    "ATC Issue",
+    "Aircraft Equipment Problem: Critical",
+    "Aircraft Equipment Problem: Less Severe",
+    "Airspace Violation",
+    "Conflict: Airborne Conflict",
+    "Conflict: Ground Conflict",
+    "Conflict: NMAC",
+    "Deviation - Altitude: Crossing Restriction Not Met",
+    "Deviation - Altitude: Excursion From Assigned Altitude",
+    "Deviation - Altitude: Overshoot",
+    "Deviation - Altitude: Undershoot",
+    "Deviation - Procedural: Clearance",
+    "Deviation - Procedural: FAR",
+    "Deviation - Procedural: Hazardous Material Violation",
+    "Deviation - Procedural: Landing Without Clearance",
+    "Deviation - Procedural: MEL/CDL",
+    "Deviation - Procedural: Maintenance",
+    "Deviation - Procedural: Other/Unknown",
+    "Deviation - Procedural: Published Material/Policy",
+    "Deviation - Procedural: Unauthorized Flight Operations (UAS)",
+    "Deviation - Procedural: Weight And Balance",
+    "Deviation - Speed",
+    "Deviation - Track/Heading",
+    "Flight Deck/Cabin Event: Illness/Injury",
+    "Flight Deck/Cabin Event: Other/Unknown",
+    "Flight Deck/Cabin Event: Passenger Misconduct",
+    "Flight Deck/Cabin Event: Smoke/Fire/Fumes/Odor",
+    "Ground Event/Encounter: Gear Up Landing",
+    "Ground Event/Encounter: Ground Equipment Issue",
+    "Ground Event/Encounter: Ground Strike - Aircraft",
+    "Ground Event/Encounter: Loss Of Aircraft Control",
+    "Ground Event/Encounter: Object",
+    "Ground Event/Encounter: Other/Unknown",
+    "Ground Event/Encounter: Vehicle",
+    "Ground Event/Encounter: Weather/Turbulence",
+    "Ground Excursion: Runway",
+    "Ground Excursion: Taxiway",
+    "Ground Incursion: Runway",
+    "Ground Incursion: Taxiway",
+    "Inflight Event/Encounter: Bird/Animal",
+    "Inflight Event/Encounter: CFTT/CFIT",
+    "Inflight Event/Encounter: Fuel Issue",
+    "Inflight Event/Encounter: Loss Of Aircraft Control",
+    "Inflight Event/Encounter: Other/Unknown",
+    "Inflight Event/Encounter: Unstabilized Approach",
+    "Inflight Event/Encounter: VFR In IMC",
+    "Inflight Event/Encounter: Wake Vortex Encounter",
+    "Inflight Event/Encounter: Weather/Turbulence"
+  ],
+  "total_time_s": 9253.751408338547
+}
