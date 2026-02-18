@@ -16,6 +16,12 @@ results/classic_ml_subcategory_predictions.csv
 # Windows artifacts
 nul
 
+# Node.js
+node_modules/
+
+# Generated thesis (binary, regenerated from script)
+thesis.docx
+
 # Python
 __pycache__/
 *.py[cod]

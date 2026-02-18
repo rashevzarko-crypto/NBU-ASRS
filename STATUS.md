@@ -1,6 +1,6 @@
 # NBU-ASRS Project Status
 
-Last updated: 2026-02-17 (Added subcategory Figures 6 & 7 to visualization notebook)
+Last updated: 2026-02-18 (Thesis .docx generator complete — 117K+ chars, 30 tables, 9 figures)
 
 > **Correction (2026-02-17):** Mistral Large 3 (`mistral-large-latest`) is a 675B MoE (41B active) model, NOT ~123B. The 123B figure was Mistral Large 2 (mid-2024, dense). Updated all references across FINAL_EXPERIMENT_SUMMARY.md, thesis_context.md, generate_thesis_context.py, and 03_final_visualizations.ipynb. Regenerated Fig 4 (cost vs performance — corrected point sizes) and Fig 5 (replaced "scale effect" line plot with "Dense vs MoE Architecture" grouped scatter). Also corrected license from "Proprietary" to "Apache 2.0".
 >
@@ -41,7 +41,7 @@ Last updated: 2026-02-17 (Added subcategory Figures 6 & 7 to visualization noteb
 | Classic ML hyperparameter tuning | ✅ Complete | `results/tfidf_ablation.csv`, `results/model_comparison.csv`, `results/classic_ml_tuning_summary.txt` |
 | Classic ML tuned final eval | ✅ Complete | `results/classic_ml_tuned_parent_metrics.csv`, `results/classic_ml_tuned_subcategory_metrics.csv`, `results/classic_ml_tuned_parent_summary.txt`, `results/classic_ml_tuned_subcategory_summary.txt`, `results/classic_ml_tuned_result.json` |
 | Final comparison & visualization | ✅ Complete | `notebooks/03_final_visualizations.ipynb`, `results/fig_grand_comparison.png`, `results/fig_approach_summary.png`, `results/fig_category_heatmap.png`, `results/fig_cost_vs_performance.png`, `results/fig_scale_effect.png`, `results/fig_sub_grand_comparison.png`, `results/fig_parent_vs_sub.png` |
-| Thesis writing | ❌ Not started | |
+| Thesis writing (.docx generator) | ✅ Complete | `scripts/generate_thesis_docx.js`, `thesis.docx` (117K+ chars, 30 tables, 9 figures, ~70+ pages) |
 
 ## Dataset Parameters
 
