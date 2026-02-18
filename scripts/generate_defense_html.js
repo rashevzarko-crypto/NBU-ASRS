@@ -373,37 +373,8 @@ function main() {
   </div>
 </section>
 
-<!-- ═══ SLIDE 6: BUG STORY ═══ -->
+<!-- ═══ SLIDE 6: GRAND COMPARISON ═══ -->
 <section class="slide light" data-slide="5">
-  <div class="header-bar"><h2>Казус: Как бъг маскира представянето на модела</h2></div>
-  <div class="content">
-    <p style="font-size:15px; margin-bottom:16px; line-height:1.5;">
-      Mistral Large 3 (675B) първоначално показа Macro-F1 = 0.312 при zero-shot.<br>
-      Проблемът: парсерът за нормализация отхвърляше 43% от отговорите.
-    </p>
-    <div class="before-after">
-      <div class="ba-box" style="border-top:4px solid var(--red);">
-        <div style="color:var(--red); font-family:Georgia,serif; font-weight:700; font-size:15px;">ПРЕДИ (бъг)</div>
-        <div class="big-num" style="color:var(--red);">0.312</div>
-        <div class="ba-label">Macro-F1</div>
-        <div class="ba-detail">43% parse failures<br>_normalize() не разпознава<br>"Category: Subcategory" формат</div>
-      </div>
-      <div class="ba-arrow">\u279c</div>
-      <div class="ba-box" style="border-top:4px solid var(--green);">
-        <div style="color:var(--green); font-family:Georgia,serif; font-weight:700; font-size:15px;">СЛЕД (поправка)</div>
-        <div class="big-num" style="color:var(--green);">0.658</div>
-        <div class="ba-label">Macro-F1</div>
-        <div class="ba-detail">0% parse failures<br>colon-prefix stripping<br>преди exact match</div>
-      </div>
-    </div>
-    <div class="lesson-box">
-      \u26A0 Урок: Оценката на LLM зависи критично от качеството на post-processing pipeline. Бъг в парсера може да маскира реалното представяне.
-    </div>
-  </div>
-</section>
-
-<!-- ═══ SLIDE 7: GRAND COMPARISON ═══ -->
-<section class="slide light" data-slide="6">
   <div class="header-bar"><h2>Сравнение на всички модели (13 категории)</h2></div>
   <div class="content">
     <div class="fig-container">
@@ -415,8 +386,8 @@ function main() {
   </div>
 </section>
 
-<!-- ═══ SLIDE 8: BEST PER APPROACH ═══ -->
-<section class="slide light" data-slide="7">
+<!-- ═══ SLIDE 7: BEST PER APPROACH ═══ -->
+<section class="slide light" data-slide="6">
   <div class="header-bar"><h2>Най-добър модел по подход</h2></div>
   <div class="content">
     <div class="fig-container">
@@ -431,8 +402,8 @@ function main() {
   </div>
 </section>
 
-<!-- ═══ SLIDE 9: CATEGORY HEATMAP ═══ -->
-<section class="slide light" data-slide="8">
+<!-- ═══ SLIDE 8: CATEGORY HEATMAP ═══ -->
+<section class="slide light" data-slide="7">
   <div class="header-bar"><h2>F1 по категория и модел (хийтмап)</h2></div>
   <div class="content">
     <div class="fig-container">
@@ -442,8 +413,8 @@ function main() {
   </div>
 </section>
 
-<!-- ═══ SLIDE 10: COST VS PERFORMANCE ═══ -->
-<section class="slide light" data-slide="9">
+<!-- ═══ SLIDE 9: COST VS PERFORMANCE ═══ -->
+<section class="slide light" data-slide="8">
   <div class="header-bar"><h2>Цена срещу представяне</h2></div>
   <div class="content">
     <div class="fig-with-side">
@@ -469,8 +440,8 @@ function main() {
   </div>
 </section>
 
-<!-- ═══ SLIDE 11: SCALE VS TECHNIQUE ═══ -->
-<section class="slide light" data-slide="10">
+<!-- ═══ SLIDE 10: SCALE VS TECHNIQUE ═══ -->
+<section class="slide light" data-slide="9">
   <div class="header-bar"><h2>Мащаб срещу техника</h2></div>
   <div class="content">
     <div class="fig-with-side">
@@ -496,8 +467,8 @@ function main() {
   </div>
 </section>
 
-<!-- ═══ SLIDE 12: KEY FINDINGS ═══ -->
-<section class="slide light" data-slide="11">
+<!-- ═══ SLIDE 11: KEY FINDINGS ═══ -->
+<section class="slide light" data-slide="10">
   <div class="header-bar"><h2>Ключови находки</h2></div>
   <div class="content" style="gap:4px;">
     <div class="finding" style="--c:var(--green);"><div style="position:absolute;left:0;top:0;bottom:0;width:5px;border-radius:8px 0 0 8px;background:var(--green);"></div>
@@ -516,15 +487,11 @@ function main() {
       <h3 style="color:var(--red);">Thinking mode \u2014 нюансиран ефект</h3>
       <p>При 671B: +0.058 F1 за 13 лейбъла, но \u22120.003 за 48 лейбъла (21.6% parse failures). При 8B: пренебрежим ефект (+0.007).</p>
     </div>
-    <div class="finding" style="--c:var(--steel);"><div style="position:absolute;left:0;top:0;bottom:0;width:5px;border-radius:8px 0 0 8px;background:var(--steel);"></div>
-      <h3 style="color:var(--steel);">Post-processing е критичен</h3>
-      <p>Бъг в парсера маскира 43% от отговорите на Mistral Large 3 (0.312 \u2192 0.658). Оценката на LLM изисква robust pipeline.</p>
-    </div>
   </div>
 </section>
 
-<!-- ═══ SLIDE 13: CONCLUSION ═══ -->
-<section class="slide dark" data-slide="12">
+<!-- ═══ SLIDE 12: CONCLUSION ═══ -->
+<section class="slide dark" data-slide="11">
   <div class="content centered">
     <h1 style="font-size:32px;">Заключение</h1>
     <hr style="border:none; border-top:2px solid var(--sky); width:300px; margin:20px auto;">
@@ -547,8 +514,8 @@ function main() {
 </section>
 
 <!-- ═══ CONTROLS ═══ -->
-<div class="slide-counter" id="counter">1 / 13</div>
-<div class="progress-bar" id="progress" style="width:7.69%;"></div>
+<div class="slide-counter" id="counter">1 / 12</div>
+<div class="progress-bar" id="progress" style="width:8.33%;"></div>
 
 <script>
 (function() {

@@ -1,6 +1,6 @@
 /**
  * NBU Thesis Defense Presentation Generator — PPTX
- * Generates defense_presentation.pptx with 13 slides for a 10-15 minute defense.
+ * Generates defense_presentation.pptx with 12 slides for a 10-15 minute defense.
  *
  * Usage: node scripts/generate_defense_pptx.js
  * Output: defense_presentation.pptx in project root
@@ -396,102 +396,6 @@ function slideModelsUsed(pptx) {
   });
 }
 
-function slideBugStory(pptx) {
-  const slide = pptx.addSlide();
-  slide.background = { fill: C.bg };
-  addSlideHeader(slide, "Казус: Как бъг маскира представянето на модела");
-
-  // Story text
-  slide.addText("Mistral Large 3 (675B) първоначално показа Macro-F1 = 0.312 при zero-shot.\nПроблемът: парсерът за нормализация отхвърляше 43% от отговорите.", {
-    x: 0.6, y: 1.3, w: W - 1.2, h: 0.9,
-    fontFace: F.body, fontSize: 15, color: C.text,
-    lineSpacingMultiple: 1.3,
-  });
-
-  // Before box
-  slide.addShape("rect", {
-    x: 1.5, y: 2.6, w: 4.5, h: 2.8,
-    fill: { color: C.white },
-    rectRadius: 0.1,
-    shadow: makeShadow(),
-  });
-  slide.addShape("rect", {
-    x: 1.5, y: 2.6, w: 4.5, h: 0.06,
-    fill: { color: C.red },
-  });
-  slide.addText("ПРЕДИ (бъг)", {
-    x: 1.5, y: 2.75, w: 4.5, h: 0.4,
-    fontFace: F.heading, fontSize: 14, color: C.red,
-    bold: true, align: "center",
-  });
-  slide.addText("0.312", {
-    x: 1.5, y: 3.2, w: 4.5, h: 0.8,
-    fontFace: F.data, fontSize: 48, color: C.red,
-    bold: true, align: "center",
-  });
-  slide.addText("Macro-F1", {
-    x: 1.5, y: 4.0, w: 4.5, h: 0.35,
-    fontFace: F.body, fontSize: 14, color: C.muted,
-    align: "center",
-  });
-  slide.addText("43% parse failures\n_normalize() не разпознава\n\"Category: Subcategory\" формат", {
-    x: 1.7, y: 4.4, w: 4.1, h: 0.8,
-    fontFace: F.body, fontSize: 11, color: C.muted,
-    align: "center",
-  });
-
-  // Arrow
-  slide.addText("\u279c", {
-    x: 6.1, y: 3.3, w: 1.1, h: 0.8,
-    fontFace: F.body, fontSize: 48, color: C.sky,
-    bold: true, align: "center",
-  });
-
-  // After box
-  slide.addShape("rect", {
-    x: 7.3, y: 2.6, w: 4.5, h: 2.8,
-    fill: { color: C.white },
-    rectRadius: 0.1,
-    shadow: makeShadow(),
-  });
-  slide.addShape("rect", {
-    x: 7.3, y: 2.6, w: 4.5, h: 0.06,
-    fill: { color: C.green },
-  });
-  slide.addText("СЛЕД (поправка)", {
-    x: 7.3, y: 2.75, w: 4.5, h: 0.4,
-    fontFace: F.heading, fontSize: 14, color: C.green,
-    bold: true, align: "center",
-  });
-  slide.addText("0.658", {
-    x: 7.3, y: 3.2, w: 4.5, h: 0.8,
-    fontFace: F.data, fontSize: 48, color: C.green,
-    bold: true, align: "center",
-  });
-  slide.addText("Macro-F1", {
-    x: 7.3, y: 4.0, w: 4.5, h: 0.35,
-    fontFace: F.body, fontSize: 14, color: C.muted,
-    align: "center",
-  });
-  slide.addText("0% parse failures\ncolon-prefix stripping\nпреди exact match", {
-    x: 7.5, y: 4.4, w: 4.1, h: 0.8,
-    fontFace: F.body, fontSize: 11, color: C.muted,
-    align: "center",
-  });
-
-  // Lesson
-  slide.addShape("rect", {
-    x: 1.5, y: 5.8, w: W - 3, h: 0.8,
-    fill: { color: "FFF3CD" },
-    rectRadius: 0.08,
-  });
-  slide.addText("\u26A0  Урок: Оценката на LLM зависи критично от качеството на post-processing pipeline. Бъг в парсера може да маскира реалното представяне.", {
-    x: 1.7, y: 5.85, w: W - 3.4, h: 0.7,
-    fontFace: F.body, fontSize: 13, color: C.text,
-    valign: "middle",
-  });
-}
-
 function slideGrandComparison(pptx) {
   const slide = pptx.addSlide();
   slide.background = { fill: C.bg };
@@ -641,11 +545,6 @@ function slideKeyFindings(pptx) {
       title: "Thinking mode \u2014 нюансиран ефект",
       text: "При 671B: +0.058 F1 за 13 лейбъла, но \u22120.003 за 48 лейбъла (21.6% parse failures). При 8B: пренебрежим ефект (+0.007).",
     },
-    {
-      color: C.steel,
-      title: "Post-processing е критичен",
-      text: "Бъг в парсера маскира 43% от отговорите на Mistral Large 3 (0.312 \u2192 0.658). Оценката на LLM изисква robust pipeline.",
-    },
   ];
 
   const cardW = W - 1.2;
@@ -772,20 +671,19 @@ async function main() {
   pptx.title = "Multi-Label Classification of Aviation Safety Reports";
   pptx.subject = "NBU Master's Thesis Defense";
 
-  // Build all 13 slides
-  slideTitle(pptx);          // 1
+  // Build all 12 slides
+  slideTitle(pptx);            // 1
   slideResearchQuestion(pptx); // 2
-  slideDataset(pptx);         // 3
-  slideFourApproaches(pptx);  // 4
-  slideModelsUsed(pptx);      // 5
-  slideBugStory(pptx);        // 6
-  slideGrandComparison(pptx); // 7
-  slideApproachSummary(pptx); // 8
-  slideCategoryHeatmap(pptx); // 9
-  slideCostPerformance(pptx); // 10
-  slideScaleEffect(pptx);     // 11
-  slideKeyFindings(pptx);     // 12
-  slideConclusion(pptx);      // 13
+  slideDataset(pptx);          // 3
+  slideFourApproaches(pptx);   // 4
+  slideModelsUsed(pptx);       // 5
+  slideGrandComparison(pptx);  // 6
+  slideApproachSummary(pptx);  // 7
+  slideCategoryHeatmap(pptx);  // 8
+  slideCostPerformance(pptx);  // 9
+  slideScaleEffect(pptx);      // 10
+  slideKeyFindings(pptx);      // 11
+  slideConclusion(pptx);       // 12
 
   addSlideNumbers(pptx);
 
