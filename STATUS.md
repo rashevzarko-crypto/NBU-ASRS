@@ -1,6 +1,6 @@
 # NBU-ASRS Project Status
 
-Last updated: 2026-02-18 (Removed bug story slide from defense presentations — PPTX + HTML, 12 slides each)
+Last updated: 2026-02-18 (Rewrote defense presentations from 12 → 20 slides — PPTX + HTML, added methodology, results breakdown, analysis slides)
 
 > **Correction (2026-02-17):** Mistral Large 3 (`mistral-large-latest`) is a 675B MoE (41B active) model, NOT ~123B. The 123B figure was Mistral Large 2 (mid-2024, dense). Updated all references across FINAL_EXPERIMENT_SUMMARY.md, thesis_context.md, generate_thesis_context.py, and 03_final_visualizations.ipynb. Regenerated Fig 4 (cost vs performance — corrected point sizes) and Fig 5 (replaced "scale effect" line plot with "Dense vs MoE Architecture" grouped scatter). Also corrected license from "Proprietary" to "Apache 2.0".
 >
@@ -42,7 +42,7 @@ Last updated: 2026-02-18 (Removed bug story slide from defense presentations —
 | Classic ML tuned final eval | ✅ Complete | `results/classic_ml_tuned_parent_metrics.csv`, `results/classic_ml_tuned_subcategory_metrics.csv`, `results/classic_ml_tuned_parent_summary.txt`, `results/classic_ml_tuned_subcategory_summary.txt`, `results/classic_ml_tuned_result.json` |
 | Final comparison & visualization | ✅ Complete | `notebooks/03_final_visualizations.ipynb`, `results/fig_grand_comparison.png`, `results/fig_approach_summary.png`, `results/fig_category_heatmap.png`, `results/fig_cost_vs_performance.png`, `results/fig_scale_effect.png`, `results/fig_sub_grand_comparison.png`, `results/fig_parent_vs_sub.png` |
 | Thesis writing (.docx generator) | ✅ Complete | `scripts/generate_thesis_docx.js`, `thesis.docx` (117K+ chars, 30 tables, 9 figures, ~70+ pages) |
-| Defense presentation (PPTX + HTML) | ✅ Complete | `scripts/generate_defense_pptx.js`, `scripts/generate_defense_html.js`, `defense_presentation.pptx` (12 slides), `defense_presentation.html` (2.0MB, 12 slides, self-contained) |
+| Defense presentation (PPTX + HTML) | ✅ Complete | `scripts/generate_defense_pptx.js`, `scripts/generate_defense_html.js`, `defense_presentation.pptx` (20 slides), `defense_presentation.html` (2.2MB, 20 slides, self-contained) |
 
 ## Dataset Parameters
 
