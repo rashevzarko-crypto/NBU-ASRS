@@ -47,3 +47,28 @@ Thumbs.db
 
 # Environment
 .env
+
+# Claude Code artifacts
+CLAUDE.md
+STATUS.md
+.claude/
+
+# Thesis/presentation generation (not needed for reproducibility)
+thesis_context.md
+assignment.*
+defense_presentation.*
+scripts/generate_thesis_docx.js
+scripts/generate_defense_pptx.js
+scripts/generate_defense_html.js
+scripts/generate_assignment_docx.js
+scripts/generate_thesis_context.py
+scripts/generate_figures_tfidf_xgb.py
+scripts/convert_to_pdf.ps1
+scripts/save_tuning_results.py
+scripts/fix_mistral_large_zs.py
+scripts/fix_classic_ml_full_metrics.py
+package.json
+package-lock.json
+
+# Incomplete experiment checkpoints
+results/glm5_parent_checkpoint.json
